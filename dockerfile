@@ -40,6 +40,7 @@ RUN \
 ##### RUNNER
 
 FROM --platform=linux/amd64 node:16-alpine AS runner
+RUN apk add --no-cache libc6-compat openssl1.1-compat
 WORKDIR /app
 
 ENV NODE_ENV production
@@ -53,7 +54,7 @@ COPY --from=builder /app/next.config.mjs ./
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./        
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
