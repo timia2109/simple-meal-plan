@@ -45,7 +45,7 @@ export const MealEntry: React.FC<MealEntryProps> = ({
   // Upload the content on blur
   const onBlur = () => {
     setHasFocus(false);
-    if (mealValue !== query.data?.meal && mealValue.trim() !== "") {
+    if (mealValue !== query.data?.meal) {
       mutation.mutate({
         meal: mealValue,
         date: date.toISO(),
