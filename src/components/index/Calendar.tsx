@@ -15,7 +15,7 @@ export const Calendar: React.FC = () => {
         >
           <FontAwesomeIcon icon={faArrowLeft} className="p-2 text-white" />
         </button>
-        <div className="text-2xl font-extrabold text-white md:text-5xl">
+        <div className="text-2xl font-extrabold text-black md:text-5xl">
           {selectedMonth.setLocale("DE-de").monthLong} {selectedMonth.year}
         </div>
         <button
@@ -25,7 +25,7 @@ export const Calendar: React.FC = () => {
           <FontAwesomeIcon icon={faArrowRight} className="p-2 text-white" />
         </button>
       </div>
-      <div className="mt-5 grid w-full grid-cols-1 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7">
+      <div className="mt-5 grid w-full grid-cols-7">
         {flatDates.map((d) => (
           <MealEntry {...d} key={d.date.toISODate()} />
         ))}
