@@ -58,7 +58,7 @@ export const MealEntry: React.FC<MealEntryProps> = ({
 
   // Helper for textcolor
   const texts = {
-    "text-white": isCurrentMonth,
+    "text-black": isCurrentMonth,
     "text-gray-400": !isCurrentMonth,
   };
 
@@ -66,15 +66,15 @@ export const MealEntry: React.FC<MealEntryProps> = ({
     <div
       onClick={onClick}
       className={classNames({
-        "box-border h-fit w-full cursor-text border p-1 transition md:h-32":
+        "box-border h-fit w-full cursor-text border bg-white p-1 transition md:h-32":
           true,
         "flex flex-col justify-between": true,
         "border-blue-400": !hasFocus && isCurrentMonth,
-        "border-gray-600": !hasFocus && !isCurrentMonth,
+        "border-gray-400": !hasFocus && !isCurrentMonth,
         "hidden md:block": !isCurrentMonth,
         "border-dashed": !hasFocus && !isToday,
-        "border-2 border-white": hasFocus,
-        "border-solid border-yellow-400": isToday && !hasFocus,
+        "border-2 border-black": hasFocus,
+        "border-2 border-solid border-red-400": isToday && !hasFocus,
         ...texts,
       })}
     >
