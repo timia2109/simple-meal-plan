@@ -66,12 +66,11 @@ export const MealEntry: React.FC<MealEntryProps> = ({
     <div
       onClick={onClick}
       className={classNames({
-        "box-border h-fit w-full cursor-text border bg-white p-1 transition md:h-32":
+        "box-border h-[30vh] w-full cursor-text border bg-white p-1 transition md:h-32":
           true,
         "flex flex-col justify-between": true,
         "border-blue-400": !hasFocus && isCurrentMonth,
         "border-gray-400": !hasFocus && !isCurrentMonth,
-        "hidden md:block": !isCurrentMonth,
         "border-dashed": !hasFocus && !isToday,
         "border-2 border-black": hasFocus,
         "border-2 border-solid border-red-400": isToday && !hasFocus,
@@ -79,7 +78,7 @@ export const MealEntry: React.FC<MealEntryProps> = ({
       })}
     >
       <div className="flex justify-between">
-        <div className="font-extrabold">
+        <div className="overflow-hidden text-xs font-extrabold lg:text-lg">
           {date.setLocale("de-DE").weekdayShort} {date.day}
         </div>
         <div className="h-full w-5">
@@ -97,7 +96,7 @@ export const MealEntry: React.FC<MealEntryProps> = ({
         onFocus={() => setHasFocus(true)}
         onBlur={onBlur}
         className={classNames({
-          "w-full flex-grow resize-none break-words bg-transparent text-start text-white focus:border-none focus:outline-none":
+          "w-full flex-grow resize-none overflow-hidden break-words bg-transparent text-start text-xs text-white focus:border-none focus:outline-none lg:text-base":
             true,
           ...texts,
         })}
