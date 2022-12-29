@@ -1,10 +1,17 @@
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDateSelection } from "../../hooks/useActiveCell";
 import { useCalendar } from "../../hooks/useCalendar";
 import { MealEntry } from "./MealEntry";
 
 export const Calendar: React.FC = () => {
   const { flatDates, selectedMonth, toLastMonth, toNextMonth } = useCalendar();
+  const { changeSelectedDate, selectedDate } = useDateSelection(
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    flatDates[0]!.date,
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    flatDates[flatDates.length - 1]!.date
+  );
 
   return (
     <div className="w-full">
@@ -27,7 +34,12 @@ export const Calendar: React.FC = () => {
       </div>
       <div className="mt-5 grid w-full grid-cols-7">
         {flatDates.map((d) => (
-          <MealEntry {...d} key={d.date.toISODate()} />
+          <MealEntry
+            {...d}
+            key={d.date.toISODate()}
+            isActive={selectedDate?.hasSame(d.date, "day") ?? false}
+            dispatch={changeSelectedDate}
+          />
         ))}
       </div>
     </div>
