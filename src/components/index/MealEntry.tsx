@@ -2,7 +2,7 @@ import { faSync } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import { DateTime } from "luxon";
-import { createRef, useEffect, useMemo, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import { trpc } from "../../utils/trpc";
 
 type MealEntryProps = {
@@ -18,6 +18,8 @@ export const MealEntry: React.FC<MealEntryProps> = ({
   const [hasFocus, setHasFocus] = useState(false);
   // Input Value
   const [mealValue, setMealValue] = useState("");
+  // State if the current day is today (Next issue)
+  const [isToday, setIsToday] = useState(false);
   // Ref to textarea
   const textFieldRef = createRef<HTMLTextAreaElement>();
 
@@ -26,11 +28,10 @@ export const MealEntry: React.FC<MealEntryProps> = ({
     date: date.toISO(),
   });
 
-  const isToday = useMemo(
-    () =>
-      DateTime.now().startOf("day").valueOf() == date.startOf("day").valueOf(),
-    [date]
-  );
+  // Set via Effect (Next issue)
+  useEffect(() => {
+    setIsToday(date.hasSame(DateTime.now(), "day"));
+  }, [date]);
 
   // Keep Server State in Sync with current Value
   useEffect(() => {

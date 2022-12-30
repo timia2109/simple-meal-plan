@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export type DateEntity = {
   date: DateTime;
@@ -43,8 +43,9 @@ const buildDayRowsArray = ({ startPoint }: { startPoint: DateTime }) => {
 const factor = { month: 1 };
 
 export const useCalendar = () => {
+  // Static for Next
   const [selectedMonth, setSelectedMonth] = useState(
-    DateTime.now().startOf("month")
+    DateTime.fromSQL("2022-12-01")
   );
 
   const toNextMonth = () => setSelectedMonth((s) => s.plus(factor));
@@ -56,6 +57,12 @@ export const useCalendar = () => {
   );
 
   const flatDates = useMemo(() => dates.flatMap((e) => e), [dates]);
+
+  // Effect to set current mounth (Next issue)
+  useEffect(() => {
+    const currentMonth = DateTime.now().startOf("month");
+    setSelectedMonth(currentMonth);
+  }, []);
 
   return {
     toNextMonth,
