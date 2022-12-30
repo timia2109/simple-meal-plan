@@ -2,11 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { Calendar } from "../components/index/Calendar";
 
-// from-[#2e026d] to-[#15162c]
-
 const Home: NextPage = () => {
-  //const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
-
   return (
     <>
       <Head>
