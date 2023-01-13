@@ -28,14 +28,9 @@ type MealPlanAction<TReturn, TProps extends MealPlanOperationProps> = (
  * @param handler Handler to use
  * @returns result of the handler
  */
-function invokeMealPlanAction<
-  TReturn,
-  TProps extends DefaultInputType,
-  THandlerProps extends MealPlanOperationProps = TProps &
-    Exclude<MealPlanOperationProps, DefaultInputType>
->(
+function invokeMealPlanAction<TReturn, TProps extends DefaultInputType>(
   data: MutationInputProps<TProps>,
-  handler: MealPlanAction<TReturn, THandlerProps>
+  handler: MealPlanAction<TReturn, TProps & MealPlanOperationProps>
 ): Promise<TReturn> {
   const { ctx, input } = data;
   return handler({
@@ -44,28 +39,16 @@ function invokeMealPlanAction<
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     userId: ctx.session!.user!.id,
     ...input,
-  } as never); // IDK the TS error, when removing this
+  });
 }
-
-/** Create a function to direct use on trpc using a MealPlanHandler */
-const wrapMealPlanAction: <
-  TReturn,
-  TProps extends DefaultInputType,
-  THandlerProps extends MealPlanOperationProps = TProps &
-    Omit<MealPlanOperationProps, "mealPlanId">
->(
-  handler: MealPlanAction<TReturn, THandlerProps>
-) => (input: MutationInputProps<TProps>) => Promise<TReturn> =
-  (handler) => (input) =>
-    invokeMealPlanAction(input, handler);
 
 export const mealPlanRouter = router({
   createMealPlanInvitation: protectedProcedure
     .input(defaultInput)
-    .mutation(wrapMealPlanAction(createMealPlanInvitation)),
+    .mutation((o) => invokeMealPlanAction(o, createMealPlanInvitation)),
   leaveMealPlan: protectedProcedure
     .input(defaultInput)
-    .mutation(wrapMealPlanAction(leaveMealPlan)),
+    .mutation((o) => invokeMealPlanAction(o, leaveMealPlan)),
   readMealEntries: protectedProcedure
     .input(
       defaultInput.extend({
@@ -75,7 +58,7 @@ export const mealPlanRouter = router({
         }),
       })
     )
-    .query(wrapMealPlanAction(readMealEntries)),
+    .query((o) => invokeMealPlanAction(o, readMealEntries)),
   submitMealEntry: protectedProcedure
     .input(
       defaultInput.extend({
@@ -83,5 +66,5 @@ export const mealPlanRouter = router({
         meal: z.string(),
       })
     )
-    .mutation(wrapMealPlanAction(submitMealEntry)),
+    .mutation((o) => invokeMealPlanAction(o, submitMealEntry)),
 });
