@@ -34,3 +34,8 @@ const isAuthed = t.middleware(({ ctx, next }) => {
 export const protectedProcedure = t.procedure.use(isAuthed);
 
 export const publicProcedure = t.procedure;
+
+export type TRPCHandler<TProps> = {
+  ctx: Context;
+  input: TProps;
+};
