@@ -14,5 +14,12 @@ const config = {
     defaultLocale: "en",
   },
   output: "standalone",
+  images: {
+    remotePatterns: [
+      {
+        hostname: "img.shields.io",
+      },
+    ],
+  },
 };
 export default config;
