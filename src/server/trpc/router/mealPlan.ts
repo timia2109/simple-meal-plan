@@ -1,60 +1,62 @@
-import { DateTime } from "luxon";
 import { z } from "zod";
-import { publicProcedure, router } from "../trpc";
+import { createMealPlanInvitation } from "../../../dal/mealPlans/createMealPlanInvitation";
+import { leaveMealPlan } from "../../../dal/mealPlans/leaveMealPlan";
+import { MealPlanOperationProps } from "../../../dal/mealPlans/mealListAccessGuard";
+import { readMealEntries } from "../../../dal/mealPlans/readMealEntries";
+import { submitMealEntry } from "../../../dal/mealPlans/submitMealEntry";
+import { Context } from "../context";
+import { protectedProcedure, router } from "../trpc";
 
-const createDate = (isoDate: string) =>
-  DateTime.fromISO(isoDate).startOf("day").toJSDate();
+const defaultInput = z.object({
+  mealPlanId: z.string(),
+});
+
+type MutationInputProps<TProps extends z.infer<typeof defaultInput>> = {
+  ctx: Context;
+  input: TProps;
+};
+
+type Handler<TReturn, TProps extends MealPlanOperationProps> = (
+  props: TProps
+) => Promise<TReturn>;
+
+const invokeMealPlanAction: <
+  TReturn,
+  TProps extends z.infer<typeof defaultInput>
+>(
+  handler: Handler<TReturn, TProps & MealPlanOperationProps>
+) => (p: MutationInputProps<TProps>) => Promise<TReturn> = (handler) => {
+  return ({ ctx, input }) =>
+    handler({
+      ...input,
+      client: ctx.prisma,
+      userId: ctx.session!.user!.id,
+    });
+};
 
 export const mealPlanRouter = router({
-  getMealPlanFor: publicProcedure
+  createMealPlanInvitation: protectedProcedure
+    .input(defaultInput)
+    .mutation(invokeMealPlanAction(createMealPlanInvitation)),
+  leaveMealPlan: protectedProcedure
+    .input(defaultInput)
+    .mutation(invokeMealPlanAction(leaveMealPlan)),
+  readMealEntries: protectedProcedure
     .input(
-      z.object({
-        date: z.string(),
+      defaultInput.extend({
+        range: z.object({
+          begin: z.date(),
+          end: z.date(),
+        }),
       })
     )
-    .query(async ({ ctx, input: { date } }) => {
-      const queryDate = createDate(date);
-
-      const entry = await ctx.prisma.mealEntry.findUnique({
-        where: {
-          date: queryDate,
-        },
-      });
-
-      return entry;
-    }),
-  setMealPlanFor: publicProcedure
+    .query(invokeMealPlanAction(readMealEntries)),
+  submitMealEntry: protectedProcedure
     .input(
-      z.object({
-        date: z.string(),
+      defaultInput.extend({
+        date: z.date(),
         meal: z.string(),
       })
     )
-    .mutation(async ({ ctx: { prisma }, input: { date, meal } }) => {
-      const queryDate = createDate(date);
-
-      if (meal.trim().length === 0) {
-        const data = await prisma.mealEntry.delete({
-          where: {
-            date: queryDate,
-          },
-        });
-        return data;
-      }
-
-      const result = await prisma.mealEntry.upsert({
-        create: {
-          date: queryDate,
-          meal,
-        },
-        update: {
-          meal,
-        },
-        where: {
-          date: queryDate,
-        },
-      });
-
-      return result;
-    }),
+    .mutation(invokeMealPlanAction(submitMealEntry)),
 });
