@@ -4,7 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 import { env } from "../../../env/server.mjs";
-import { onCreateUser } from "../../../functions/user/onCreateUser.js";
+import { onCreateUser } from "../../../functions/user/onCreateUser";
 import { prisma } from "../../../server/db/client";
 
 export const authOptions: NextAuthOptions = {
