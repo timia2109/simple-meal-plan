@@ -1,8 +1,13 @@
-import type { PrismaClient } from "@prisma/client";
+import type { Prisma, PrismaClient } from "@prisma/client";
+import type { PrismaClientOptions } from "@prisma/client/runtime";
 
 /** Properties for functions that operate on a meal plan*/
 export type MealPlanOperationProps = {
-  client: PrismaClient;
+  client: PrismaClient<
+    PrismaClientOptions,
+    unknown,
+    Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined
+  >;
   userId: string;
   mealPlanId: string;
 };
