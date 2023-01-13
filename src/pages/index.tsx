@@ -1,48 +1,63 @@
-import { type NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
-import { Calendar } from "../components/index/Calendar";
+import { Card } from "../components/common/Card";
+import { Footer } from "../components/common/Footer";
+import { SignInButtons } from "../components/index/SignInButtons";
+import { getServerAuthSession } from "../server/common/get-server-auth-session";
 
 const Home: NextPage = () => {
+  const { t: tCommon } = useTranslation("common");
+  const { t } = useTranslation("index");
+
   return (
     <>
       <Head>
-        <title>Simple Meal Plan</title>
-        <meta name="description" content="A very simple meal plan" />
-        <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/apple-touch-icon.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/favicon-16x16.png"
-        />
-        <link rel="manifest" href="/site.webmanifest" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
-        <meta name="msapplication-TileColor" content="#5bbad5" />
-        <meta name="theme-color" content="#5bbad5" />
-
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-        />
+        <title>{tCommon("title")}</title>
       </Head>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-blue-300">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-          <Calendar />
+      <main className="min-h-screen bg-blue-300">
+        <div className="container flex flex-col items-center gap-5 px-4 py-3">
+          <h1 className="mb-3 text-5xl font-extrabold">{tCommon("title")}</h1>
+          <Card>
+            <p>{t("about")}</p>
+            <p>{t("info")}</p>
+          </Card>
+
+          <SignInButtons />
         </div>
       </main>
+
+      <Footer />
     </>
   );
 };
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps<any> = async ({
+  locale,
+  req,
+  res,
+}) => {
+  const translationsPromise = serverSideTranslations(locale ?? "en", [
+    "common",
+    "index",
+  ]);
+  const session = await getServerAuthSession({ req, res });
+
+  if (session !== null) {
+    return {
+      redirect: {
+        destination: "/mealPlan",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      ...(await translationsPromise),
+    },
+  };
+};
