@@ -98,7 +98,7 @@ export const MealEntryComponent: React.FC<MealEntryProps> = ({
         onFocus={() => setHasFocus(true)}
         onBlur={onBlur}
         className={classNames({
-          "w-full flex-grow resize-none overflow-hidden break-words bg-transparent text-start text-xs text-white focus:border-none focus:outline-none lg:text-base":
+          "w-full flex-grow resize-none overflow-hidden break-words bg-transparent text-start text-xs text-black focus:border-none focus:outline-none lg:text-base":
             true,
           ...texts,
         })}
