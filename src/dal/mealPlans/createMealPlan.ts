@@ -10,7 +10,8 @@ import type { PrismaClient } from "@prisma/client";
 export const createMealPlan = async (
   client: PrismaClient,
   userId: string,
-  title = ""
+  title = "",
+  isDefault = false
 ) => {
   const mealPlan = await client.mealPlan.create({
     data: {
@@ -21,7 +22,7 @@ export const createMealPlan = async (
   await client.mealPlanAssignment.create({
     data: {
       userId: userId,
-      userDefault: true,
+      userDefault: isDefault,
       mealPlanId: mealPlan.id,
     },
   });

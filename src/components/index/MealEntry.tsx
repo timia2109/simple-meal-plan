@@ -1,18 +1,24 @@
 import { faSync } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { MealEntry } from "@prisma/client";
 import classNames from "classnames";
 import { DateTime } from "luxon";
 import { createRef, useEffect, useState } from "react";
 import { trpc } from "../../utils/trpc";
 
 type MealEntryProps = {
-  date: DateTime;
+  dateTime: DateTime;
   isCurrentMonth: boolean;
+  entry: MealEntry;
+  isLoading: boolean;
 };
 
-export const MealEntry: React.FC<MealEntryProps> = ({
-  date,
+/** Component for a MealEntry */
+export const MealEntryComponent: React.FC<MealEntryProps> = ({
+  dateTime,
   isCurrentMonth,
+  entry,
+  isLoading,
 }) => {
   // Focus State
   const [hasFocus, setHasFocus] = useState(false);
@@ -23,20 +29,17 @@ export const MealEntry: React.FC<MealEntryProps> = ({
   // Ref to textarea
   const textFieldRef = createRef<HTMLTextAreaElement>();
 
-  const mutation = trpc.mealPlan.setMealPlanFor.useMutation();
-  const query = trpc.mealPlan.getMealPlanFor.useQuery({
-    date: date.toISO(),
-  });
+  const mutation = trpc.mealPlan.submitMealEntry.useMutation();
 
   // Set via Effect (Next issue)
   useEffect(() => {
-    setIsToday(date.hasSame(DateTime.now(), "day"));
-  }, [date]);
+    setIsToday(dateTime.hasSame(DateTime.now(), "day"));
+  }, [dateTime]);
 
   // Keep Server State in Sync with current Value
   useEffect(() => {
-    setMealValue(query.data?.meal ?? "");
-  }, [query.data?.meal]);
+    setMealValue(entry?.meal ?? "");
+  }, [entry?.meal]);
 
   // Focus the Element, when the div is clicked
   const onClick = () => {
@@ -46,16 +49,14 @@ export const MealEntry: React.FC<MealEntryProps> = ({
   // Upload the content on blur
   const onBlur = () => {
     setHasFocus(false);
-    if (mealValue !== query.data?.meal) {
+    if (mealValue !== entry?.meal) {
       mutation.mutate({
+        date: dateTime.toJSDate(),
         meal: mealValue,
-        date: date.toISO(),
+        mealPlanId: entry.mealPlanId,
       });
     }
   };
-
-  // Is anything loading
-  const isLoading = query.isLoading || query.isFetching || mutation.isLoading;
 
   // Helper for textcolor
   const texts = {
@@ -80,7 +81,7 @@ export const MealEntry: React.FC<MealEntryProps> = ({
     >
       <div className="flex justify-between">
         <div className="overflow-hidden text-xs font-extrabold lg:text-lg">
-          {date.setLocale("de-DE").weekdayShort} {date.day}
+          {dateTime.weekdayShort} {dateTime.day}
         </div>
         <div className="h-full w-5">
           {isLoading && (

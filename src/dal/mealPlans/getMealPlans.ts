@@ -6,7 +6,7 @@ import type { PrismaClient } from "@prisma/client";
  * @param userId User Id of the current user
  * @returns List of available Meal Plans
  */
-export const getMealPlan = (client: PrismaClient, userId: string) => {
+export const getMealPlans = (client: PrismaClient, userId: string) => {
   return client.mealPlan.findMany({
     where: {
       mealPlanAssignments: {

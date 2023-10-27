@@ -1,13 +1,13 @@
 import { z } from "zod";
 import { createMealPlan } from "../../../dal/mealPlans/createMealPlan";
-import { getMealPlan } from "../../../dal/mealPlans/getMealPlans";
+import { getMealPlans } from "../../../dal/mealPlans/getMealPlans";
 import { redeemMealPlanInvitation } from "../../../dal/user/redeemMealPlanInvitation";
 import { protectedProcedure, router } from "../trpc";
 
 /** Router for general MealPlan actions */
 export const mealPlansRouter = router({
   getMealPlans: protectedProcedure.query(({ ctx }) => {
-    return getMealPlan(ctx.prisma, ctx.session.user.id);
+    return getMealPlans(ctx.prisma, ctx.session.user.id);
   }),
   createMealPlan: protectedProcedure
     .input(

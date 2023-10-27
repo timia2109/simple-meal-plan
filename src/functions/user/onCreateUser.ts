@@ -6,5 +6,5 @@ import { prisma } from "../../server/db/client";
 /** Creates a meal plan for the current user */
 export const onCreateUser: EventCallbacks["createUser"] = async ({ user }) => {
   const client = prisma;
-  await createMealPlan(client, user.id);
+  await createMealPlan(client, user.id, "", true);
 };
