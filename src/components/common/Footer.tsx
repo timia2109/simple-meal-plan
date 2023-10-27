@@ -8,7 +8,7 @@ export const Footer: React.FC = () => {
 
   return (
     <footer
-      className="fixed bottom-0 left-0 z-20 w-full border-t border-gray-200
+      className=" w-full border-t border-gray-200
     bg-white p-4 text-white shadow dark:border-gray-600 
     dark:bg-gray-800 md:flex md:items-center md:justify-between md:p-6"
     >
