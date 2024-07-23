@@ -1,14 +1,12 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { env } from "./env/server.mjs";
 import { onCreateUser } from "./functions/user/onCreateUser";
-
-const prisma = new PrismaClient();
+import { prisma } from "./server/db/client";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: PrismaAdapter(prisma) as any,
+  adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
@@ -26,5 +24,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   events: {
     createUser: onCreateUser,
+  },
+  session: {
+    maxAge: env.SESSION_VALIDITY_IN_SECONDS,
   },
 });
