@@ -1,9 +1,10 @@
 import Head from "next/head";
-import { FC, PropsWithChildren } from "react";
+import type { FC, PropsWithChildren } from "react";
+import "./style.css";
 
 const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (
-    <>
+    <html>
       <Head>
         <meta name="description" content="A very simple meal plan" />
         <link rel="icon" href="/favicon.ico" />
@@ -35,7 +36,7 @@ const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
         />
       </Head>
       <body>{children}</body>
-    </>
+    </html>
   );
 };
 
