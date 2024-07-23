@@ -12,8 +12,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
-    // ...add more providers here
   ],
+  secret: env.NEXTAUTH_SECRET,
   callbacks: {
     session({ session, user }) {
       if (session.user) {
