@@ -1,12 +1,11 @@
-import createMiddleware from "next-intl/middleware";
+import { createI18nMiddleware } from "next-international/middleware";
 
 export const locales = ["en", "de"];
-export const i18nMatcher = ["/", `/(${locales.join("|")})/:path*`];
+export const i18nMatcher = [
+  "/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)",
+];
 
-export default createMiddleware({
-  // A list of all locales that are supported
+export default createI18nMiddleware({
   locales,
-
-  // Used when no locale matches
   defaultLocale: "en",
 });

@@ -1,22 +1,12 @@
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { I18nProviderClient } from "@/locales/client";
+import type { ReactElement } from "react";
 
 export default async function LocaleLayout({
-  children,
   params: { locale },
+  children,
 }: {
-  children: React.ReactNode;
   params: { locale: string };
+  children: ReactElement;
 }) {
-  const messages = await getMessages();
-
-  return (
-    <html lang={locale}>
-      <body>
-        <NextIntlClientProvider messages={messages}>
-          {children}
-        </NextIntlClientProvider>
-      </body>
-    </html>
-  );
+  return <I18nProviderClient locale={locale}>{children}</I18nProviderClient>;
 }

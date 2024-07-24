@@ -5,10 +5,6 @@
  */
 !process.env.SKIP_ENV_VALIDATION && (await import("./src/env/server.mjs"));
 
-import createNextIntlPlugin from "next-intl/plugin";
-
-const withNextIntl = createNextIntlPlugin();
-
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
@@ -22,4 +18,4 @@ const config = {
   },
 };
 
-export default withNextIntl(config);
+export default config;

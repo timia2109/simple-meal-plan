@@ -1,8 +1,8 @@
-import { useTranslations } from "next-intl";
+import { getScopedI18n } from "@/locales/server";
 import { SignInButton } from "./SignInButton";
 
-export default function LandingPage() {
-  const t = useTranslations("Landing");
+export default async function LandingPage() {
+  const t = await getScopedI18n("landing");
 
   return (
     <div className="p-12">
