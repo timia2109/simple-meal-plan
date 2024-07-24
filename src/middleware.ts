@@ -1,19 +1,22 @@
 "use server";
 import { authMiddleware } from "@/middlewares/authMiddleware";
-import i18nMiddleware, { i18nMatcher } from "@/middlewares/i18nMiddleware";
+import i18nMiddleware from "@/middlewares/i18nMiddleware";
 import { NextResponse, type NextRequest } from "next/server";
 
-function matches(path: string, matcher: string | string[]) {
-  if (Array.isArray(matcher)) {
-    return matcher.some((m) => path.match(m));
-  }
-  return path.match(matcher);
+const locales = ["en", "de"];
+
+function isI18nPath(path: string) {
+  return (
+    path == "" ||
+    path == "/" ||
+    locales.some((locale) => path.startsWith(`/${locale}`))
+  );
 }
 
 export const middleware = authMiddleware((req: NextRequest) => {
   const path = req.nextUrl.pathname;
 
-  if (matches(path, i18nMatcher)) {
+  if (isI18nPath(path)) {
     return i18nMiddleware(req);
   }
 
