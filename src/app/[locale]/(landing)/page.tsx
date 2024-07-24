@@ -1,5 +1,5 @@
 import { getScopedI18n } from "@/locales/server";
-import { SignInButton } from "./SignInButton";
+import { SignInButtons } from "./SignInButtons";
 
 export default async function LandingPage() {
   const t = await getScopedI18n("landing");
@@ -16,9 +16,9 @@ export default async function LandingPage() {
             </span>
           </h1>
 
-          <p className="text-center text-xl md:w-1/2">Main Text</p>
+          <p className="text-center text-xl md:w-1/2">{t("subtitle")}</p>
         </div>
-        <SignInButton />
+        <SignInButtons />
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           <div className="card w-96 bg-base-300 shadow-2xl">
             <div className="card-body">
