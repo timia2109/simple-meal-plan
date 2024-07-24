@@ -1,8 +1,11 @@
 import Head from "next/head";
-import type { FC, PropsWithChildren } from "react";
 import "./style.css";
 
-const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
+export default async function LocaleLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html>
       <Head>
@@ -38,6 +41,4 @@ const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
       <body>{children}</body>
     </html>
   );
-};
-
-export default Layout;
+}
