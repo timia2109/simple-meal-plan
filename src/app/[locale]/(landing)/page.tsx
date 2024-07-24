@@ -9,7 +9,7 @@ export default async function LandingPage() {
       <div className="fw-bolder flex flex-col items-center justify-center gap-16">
         <div className="flex flex-col items-center justify-center gap-8 ">
           <h1 className="text-6xl">
-            INDEX Text
+            {t("welcome")}
             <span className="bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text font-semibold text-transparent">
               {" "}
               {t("title")}
