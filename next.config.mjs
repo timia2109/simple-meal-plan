@@ -5,14 +5,13 @@
  */
 !process.env.SKIP_ENV_VALIDATION && (await import("./src/env/server.mjs"));
 
+import createNextIntlPlugin from "next-intl/plugin";
+
+const withNextIntl = createNextIntlPlugin();
+
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
-  swcMinify: true,
-  i18n: {
-    locales: ["en", "de"],
-    defaultLocale: "en",
-  },
   output: "standalone",
   images: {
     remotePatterns: [
@@ -22,4 +21,5 @@ const config = {
     ],
   },
 };
-export default config;
+
+export default withNextIntl(config);
