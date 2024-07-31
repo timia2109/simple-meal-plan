@@ -14,6 +14,9 @@ const config = {
       {
         hostname: "img.shields.io",
       },
+      {
+        hostname: "*.googleusercontent.com",
+      },
     ],
   },
 };
