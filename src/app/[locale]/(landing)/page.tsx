@@ -1,8 +1,13 @@
+import { auth } from "@/auth";
+import { redirectWithLocale } from "@/functions/user/redirectWithLocale";
 import { getScopedI18n } from "@/locales/server";
 import { SignInButtons } from "./SignInButtons";
 
 export default async function LandingPage() {
   const t = await getScopedI18n("landing");
+
+  const currentUser = await auth();
+  if (currentUser != null) redirectWithLocale(`/mealPlan`);
 
   return (
     <div className="p-12">
