@@ -1,6 +1,7 @@
 "use server";
 import { authMiddleware } from "@/middlewares/authMiddleware";
 import i18nMiddleware from "@/middlewares/i18nMiddleware";
+import type { AppRouteHandlerFnContext } from "next-auth/lib/types";
 import { NextResponse, type NextRequest } from "next/server";
 
 const locales = ["en", "de"];
@@ -13,7 +14,7 @@ function isI18nPath(path: string) {
   );
 }
 
-export const middleware = authMiddleware((req: NextRequest) => {
+function handleI18nRequest(req: NextRequest) {
   const path = req.nextUrl.pathname;
 
   if (isI18nPath(path)) {
@@ -21,4 +22,14 @@ export const middleware = authMiddleware((req: NextRequest) => {
   }
 
   return NextResponse.next();
-});
+}
+
+export function middleware(req: NextRequest, ctx: AppRouteHandlerFnContext) {
+  const path = req.nextUrl.pathname;
+
+  if (!path.startsWith("/api/auth")) {
+    return authMiddleware(handleI18nRequest)(req, ctx);
+  }
+
+  return NextResponse.next();
+}

@@ -5,9 +5,20 @@ import { onCreateUser } from "./functions/user/onCreateUser";
 import { prisma } from "./server/db/client";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  ...authConfig,
   adapter: PrismaAdapter(prisma),
   events: {
     createUser: onCreateUser,
   },
-  ...authConfig,
+  callbacks: {
+    ...authConfig.callbacks,
+    jwt: async (props) => {
+      const { token, user } = props;
+      if (user) {
+        // Add the user id to the token
+        token.id = user.id;
+      }
+      return token;
+    },
+  },
 });

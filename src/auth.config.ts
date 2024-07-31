@@ -1,20 +1,19 @@
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthConfig } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { env } from "./env/server.mjs";
 
-export const authConfig: NextAuthOptions = {
+export const authConfig: NextAuthConfig = {
   secret: env.NEXTAUTH_SECRET,
-  callbacks: {
-    session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
-      }
-      return session;
-    },
-  },
   session: {
     maxAge: env.SESSION_VALIDITY_IN_SECONDS,
     strategy: "jwt",
+  },
+  callbacks: {
+    async session(props) {
+      const { session, token } = props;
+      session.userId = token.id as string;
+      return session;
+    },
   },
   providers: [
     GoogleProvider({
