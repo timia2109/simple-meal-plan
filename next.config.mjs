@@ -8,18 +8,17 @@
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
-  swcMinify: true,
-  i18n: {
-    locales: ["en", "de"],
-    defaultLocale: "en",
-  },
   output: "standalone",
   images: {
     remotePatterns: [
       {
         hostname: "img.shields.io",
       },
+      {
+        hostname: "*.googleusercontent.com",
+      },
     ],
   },
 };
+
 export default config;

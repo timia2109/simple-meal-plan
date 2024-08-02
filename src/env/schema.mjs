@@ -11,6 +11,8 @@ export const serverSchema = z.object({
   GOOGLE_CLIENT_SECRET: z.string(),
   GOOGLE_CLIENT_ID: z.string(),
   INVITATION_VALIDITY: z.string().default("P30D"),
+  SESSION_VALIDITY_IN_SECONDS: z.number().default(60 * 60 * 24 * 30), // 30 days
+  NEXTAUTH_SECRET: z.string(),
 });
 
 /**
