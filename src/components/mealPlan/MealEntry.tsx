@@ -1,5 +1,7 @@
 "use client";
 import { updateMealEntry } from "@/actions/updateMealEntry";
+import { faCalendar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { MealEntry } from "@prisma/client";
 import classNames from "classnames";
 import { DateTime } from "luxon";
@@ -45,34 +47,32 @@ export const MealEntryComponent: React.FC<MealEntryProps> = ({
     formRef.current?.requestSubmit();
   };
 
-  // Helper for text color
-  const texts = {
-    "text-black": isCurrentMonth,
-    "text-gray-400": !isCurrentMonth,
-  };
-
   return (
     <div
       onClick={onClick}
       className={classNames({
-        "box-border h-[30vh] w-full cursor-text border bg-white p-1 transition md:h-32":
+        "box-border h-[30vh] w-full cursor-text border bg-base-100 p-1 transition md:h-32":
           true,
         "flex flex-col justify-between": true,
-        "border-blue-400": !hasFocus && isCurrentMonth,
-        "border-gray-400": !hasFocus && !isCurrentMonth,
+        "border-info": !hasFocus && isCurrentMonth,
+        "border-neutral-300": !hasFocus && !isCurrentMonth,
         "border-dashed": !hasFocus && !isToday,
-        "border-2 border-black": hasFocus,
-        "border-2 border-solid border-red-400": isToday && !hasFocus,
-        ...texts,
+        "border-2 border-primary": hasFocus,
+        "border-2 border-solid": isToday && !hasFocus,
+        "text-base-content": isCurrentMonth,
+        "text-neutral-400": !isCurrentMonth,
       })}
     >
-      <form action={updateMealEntry} ref={formRef}>
-        <input type="hidden" name="date" value={isoDate} />
+      <form action={updateMealEntry} ref={formRef} className="h-100">
+        <input type="hidden" name="date" value={dateTime.toSQLDate()!} />
         <input type="hidden" name="mealPlanId" value={mealPlanId} />
 
         <div className="flex justify-between">
           <div className="overflow-hidden text-xs font-extrabold lg:text-lg">
             {dateTime.weekdayShort} {dateTime.day}
+          </div>
+          <div className="h-full w-5">
+            {isToday && <FontAwesomeIcon icon={faCalendar} />}
           </div>
         </div>
 
@@ -83,9 +83,10 @@ export const MealEntryComponent: React.FC<MealEntryProps> = ({
           name="meal"
           onBlur={onBlur}
           className={classNames({
-            "w-full flex-grow resize-none overflow-hidden break-words bg-transparent text-start text-xs text-black focus:border-none focus:outline-none lg:text-base":
+            "h-100 w-full flex-grow resize-none overflow-hidden break-words bg-transparent text-start text-xs focus:border-none focus:outline-none lg:text-base":
               true,
-            ...texts,
+            "text-base-content": isCurrentMonth,
+            "text-neutral-400": !isCurrentMonth,
           })}
         />
       </form>
