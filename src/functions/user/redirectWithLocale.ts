@@ -6,6 +6,10 @@ import { redirect } from "next/navigation";
  * @example redirectWithLocale("/mealPlan")
  */
 export function redirectWithLocale(target: string) {
+  redirect(getLinkWithLocale(target));
+}
+
+export function getLinkWithLocale(target: string) {
   const locale = getCurrentLocale();
-  redirect(`/${locale}${target}`);
+  return `/${locale}${target}`;
 }
