@@ -10,4 +10,13 @@ export default {
   mealPlan: {
     defaultLabel: "Mein Essensplan",
   },
+  manageMealPlans: {
+    primary: "Standart",
+    new: "Neuer Essensplan",
+    create: "Erstellen",
+    delete: "Löschen",
+    manage: "Essenspläne verwalten",
+    setAsDefault: "Als Standart festlegen",
+    share: "Andere einladen",
+  },
 } as const;

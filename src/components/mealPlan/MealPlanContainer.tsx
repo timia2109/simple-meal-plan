@@ -46,7 +46,7 @@ export async function MealPlanContainer({ mealPlan, keyDate }: Props) {
 
   const monthMovementLink = useMonthMovementLink(mealPlan.id, keyDateTime);
   const dates = [...enumerateDates(range)];
-  const label = await getMealPlanLabel(mealPlan);
+  const label = await getMealPlanLabel(mealPlan, t);
   const title = label + " | " + t("landing.title");
 
   return (

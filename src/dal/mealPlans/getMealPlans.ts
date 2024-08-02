@@ -7,13 +7,10 @@ import { prisma } from "@/server/db/client";
  * @returns List of available Meal Plans
  */
 export function getMealPlans(userId: string) {
-  return prisma.mealPlan.findMany({
+  return prisma.mealPlanAssignment.findMany({
     where: {
-      mealPlanAssignments: {
-        some: {
-          userId: userId,
-        },
-      },
+      userId,
     },
+    include: { mealPlan: true },
   });
 }
