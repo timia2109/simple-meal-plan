@@ -7,7 +7,7 @@ import { z } from "zod";
 import { zfd } from "zod-form-data";
 
 const schema = zfd.formData({
-  date: z.string().datetime(),
+  date: z.string().date(),
   mealPlanId: z.string(),
   meal: z.string(),
 });
@@ -16,7 +16,7 @@ export async function updateMealEntry(formData: FormData) {
   const data = schema.safeParse(formData);
   if (!data.success) {
     return {
-      message: data.error.message,
+      message: data.error,
     };
   }
 
