@@ -7,7 +7,7 @@ export default async function LocaleLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html>
+    <html data-theme="light">
       <Head>
         <meta name="description" content="A very simple meal plan" />
         <link rel="icon" href="/favicon.ico" />
