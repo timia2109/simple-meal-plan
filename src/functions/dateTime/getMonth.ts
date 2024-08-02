@@ -12,10 +12,9 @@ export const calendarShowWeeks = 6;
 export const getMonthRange: (startTime: DateLike) => DateTimeRange = (
   startTime
 ) => {
-  const startDate = convertToDateTime(startTime).toUTC();
+  const startDate = convertToDateTime(startTime);
 
   const begin = startDate.startOf("month").startOf("week");
-
   const end = begin.plus({ weeks: calendarShowWeeks }).endOf("week");
 
   return { begin, end };
