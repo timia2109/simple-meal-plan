@@ -77,11 +77,11 @@ export async function NavBar() {
       <div className="navbar-end">
         {currentUser.user?.image && (
           <div className="avatar">
-            <div className="w-24 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100">
+            <div className="w-10 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100">
               <Image
                 src={currentUser.user.image}
-                width={64}
-                height={64}
+                width={32}
+                height={32}
                 alt="User profile image"
               />
             </div>
