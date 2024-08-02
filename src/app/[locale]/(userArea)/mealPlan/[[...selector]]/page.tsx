@@ -21,7 +21,7 @@ export default async function MealPlanPage({ params }: Props) {
 
   return (
     <div className="container mx-auto">
-      <MealPlanContainer keyDate={keyDate} mealPlan={mealPlan} />;
+      <MealPlanContainer keyDate={keyDate} mealPlan={mealPlan} />
     </div>
   );
 }
