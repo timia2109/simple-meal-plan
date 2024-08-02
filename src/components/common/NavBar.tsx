@@ -1,10 +1,15 @@
 import { auth } from "@/auth";
+import { getLinkWithLocale } from "@/functions/user/redirectWithLocale";
+import { getScopedI18n } from "@/locales/server";
 import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export async function NavBar() {
   const currentUser = await auth();
   if (currentUser == null) redirect("/");
+
+  const t = await getScopedI18n("landing");
 
   return (
     <div className="navbar bg-base-100">
@@ -49,7 +54,12 @@ export async function NavBar() {
             </li>
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">Simple Meal Plan</a>
+        <Link
+          href={getLinkWithLocale("/mealPlan")}
+          className="btn btn-ghost text-xl"
+        >
+          {t("title")}
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
