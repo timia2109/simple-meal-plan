@@ -4,8 +4,9 @@ import type { DateLike } from "@/functions/dateTime/convertToDateTime";
 import { convertToDateTime } from "@/functions/dateTime/convertToDateTime";
 import { enumerateDates } from "@/functions/dateTime/enumerateDates";
 import { getMonthRange } from "@/functions/dateTime/getMonth";
+import { getMealPlanLabel } from "@/functions/user/getMealPlanLabel";
 import { getLinkWithLocale } from "@/functions/user/redirectWithLocale";
-import { getCurrentLocale } from "@/locales/server";
+import { getCurrentLocale, getI18n } from "@/locales/server";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import type { MealPlan } from "@prisma/client";
 import { DateTime } from "luxon";
@@ -30,6 +31,7 @@ export async function MealPlanContainer({ mealPlan, keyDate }: Props) {
   const locale = getCurrentLocale();
   const keyDateTime = convertToDateTime(keyDate).setLocale(locale);
   const range = getMonthRange(keyDateTime);
+  const t = await getI18n();
 
   const entries = await readMealEntries({
     mealPlanId: mealPlan.id,
@@ -44,9 +46,12 @@ export async function MealPlanContainer({ mealPlan, keyDate }: Props) {
 
   const monthMovementLink = useMonthMovementLink(mealPlan.id, keyDateTime);
   const dates = [...enumerateDates(range)];
+  const label = await getMealPlanLabel(mealPlan);
+  const title = label + " | " + t("landing.title");
 
   return (
     <div className="w-full">
+      <title>{title}</title>
       <div className="flex justify-between">
         <MoveMonthButton icon={faArrowLeft} href={monthMovementLink(-1)} />
 
