@@ -1,32 +1,17 @@
-import type { DateTime } from "luxon";
-import type { DateLikeRange } from "../../types/TimeRange";
-
-type DateInstance<TProps extends object> = {
-  dateTime: DateTime;
-} & TProps;
+import { toDateTimeRange, type DateLikeRange } from "../../types/TimeRange";
 
 /**
  * Enumerates all Dates in the Range
  * @param range The range
- * @param appender A function to increase the object by properties
  */
-export function* enumerateDates<TAppend extends object = Record<never, never>>(
-  range: DateLikeRange,
-  appender?: (date: DateTime) => TAppend
-) {
+export function* enumerateDates(range: DateLikeRange) {
+  const dtRange = toDateTimeRange(range);
+
   for (
-    let current = range.begin;
-    current <= range.end;
+    let current = dtRange.begin;
+    current <= dtRange.end;
     current = current.plus({ day: 1 })
   ) {
-    let data = {
-      dateTime: current,
-    } as Partial<DateInstance<TAppend>>;
-
-    if (appender !== undefined) {
-      data = { ...data, ...appender(current) };
-    }
-
-    yield data as DateInstance<TAppend>;
+    yield current;
   }
 }
