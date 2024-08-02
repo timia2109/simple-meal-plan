@@ -2,7 +2,7 @@ import type { DateTimeRange } from "../../types/TimeRange";
 import { convertToDateTime, type DateLike } from "./convertToDateTime";
 
 /** Weeks that the calendar shows */
-export const calendarShowWeeks = 6;
+export const calendarShowWeeks = 5;
 
 /**
  * Calculates the Date Range for the calendar
