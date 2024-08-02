@@ -15,7 +15,7 @@ type Props = {
  */
 const isCurrentlyValid = (invitation: MealPlanInvite) => {
   const now = DateTime.now();
-  const validity = Duration.fromISO(env.INVITATION_VALIDITY);
+  const validity = Duration.fromISO(env.INVITATION_VALIDITY!);
   return DateTime.fromJSDate(invitation.createdAt).plus(validity) >= now;
 };
 

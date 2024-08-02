@@ -7,6 +7,7 @@ import { prisma } from "./server/db/client";
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   adapter: PrismaAdapter(prisma),
+  trustHost: true,
   events: {
     createUser: onCreateUser,
   },
