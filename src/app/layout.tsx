@@ -38,7 +38,7 @@ export default async function LocaleLayout({
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
         />
       </Head>
-      <body>{children}</body>
+      <body className="bg-base-100">{children}</body>
     </html>
   );
 }
