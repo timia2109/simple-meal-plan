@@ -1,24 +1,23 @@
+import { prisma } from "@/server/db/client";
 import { generate } from "randomstring";
-import {
-  withMealListAccessGuard,
-  type MealPlanOperationProps,
-} from "./mealListAccessGuard";
 
-type Props = MealPlanOperationProps;
+type Props = {
+  userId: string;
+  mealPlanId: string;
+};
 
 const stringLength = 12;
 
 /** Creates a invitation to a MealList */
-export const createMealPlanInvitation = withMealListAccessGuard(
-  ({ client, mealPlanId, userId }: Props) =>
-    client.mealPlanInvite.create({
-      data: {
-        createdByUserId: userId,
-        mealPlanId: mealPlanId,
-        invitationCode: generate({
-          length: stringLength,
-          capitalization: "uppercase",
-        }),
-      },
-    })
-);
+export function createMealPlanInvitation({ mealPlanId, userId }: Props) {
+  return prisma.mealPlanInvite.create({
+    data: {
+      createdByUserId: userId,
+      mealPlanId: mealPlanId,
+      invitationCode: generate({
+        length: stringLength,
+        capitalization: "uppercase",
+      }),
+    },
+  });
+}

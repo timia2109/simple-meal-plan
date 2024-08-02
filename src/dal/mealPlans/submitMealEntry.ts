@@ -8,7 +8,7 @@ type Props = {
 };
 
 /** Creates or updates a meal entry */
-export const submitMealEntry = async ({ date, mealPlanId, meal }: Props) => {
+export async function submitMealEntry({ date, mealPlanId, meal }: Props) {
   if (meal.trim().length === 0) {
     try {
       const data = await prisma.mealEntry.delete({
@@ -20,7 +20,7 @@ export const submitMealEntry = async ({ date, mealPlanId, meal }: Props) => {
         },
       });
       return data;
-    } catch (e) {
+    } catch {
       // If there is no element, return a mock element
       const mockItem: MealEntry = {
         createdAt: new Date(),
@@ -51,4 +51,4 @@ export const submitMealEntry = async ({ date, mealPlanId, meal }: Props) => {
   });
 
   return result;
-};
+}

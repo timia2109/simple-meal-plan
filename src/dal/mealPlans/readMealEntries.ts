@@ -11,7 +11,7 @@ type Props = {
  * @param param0 Params
  * @returns The elements on this mealplan
  */
-export const readMealEntries = async ({ mealPlanId, range }: Props) => {
+export async function readMealEntries({ mealPlanId, range }: Props) {
   const { begin, end } = toDateRange(range);
   return prisma.mealEntry.findMany({
     where: {
@@ -22,4 +22,4 @@ export const readMealEntries = async ({ mealPlanId, range }: Props) => {
       },
     },
   });
-};
+}

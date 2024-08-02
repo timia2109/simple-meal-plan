@@ -7,7 +7,7 @@ import { prisma } from "@/server/db/client";
  * @param mealPlanId Id of the mealplan or null if the default should used
  * @returns The MealPlan if the user is allowed (else null)
  */
-export const getMealPlan = (userId: string, mealPlanId: string | null) => {
+export function getMealPlan(userId: string, mealPlanId: string | null) {
   if (mealPlanId === null) {
     return prisma.mealPlan.findFirst({
       where: {
@@ -31,4 +31,4 @@ export const getMealPlan = (userId: string, mealPlanId: string | null) => {
       id: mealPlanId,
     },
   });
-};
+}

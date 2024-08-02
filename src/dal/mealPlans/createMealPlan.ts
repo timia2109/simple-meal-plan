@@ -1,4 +1,4 @@
-import type { PrismaClient } from "@prisma/client";
+import { prisma } from "@/server/db/client";
 
 /**
  * Creates a empty MealPlan and assign it to the user
@@ -7,19 +7,18 @@ import type { PrismaClient } from "@prisma/client";
  * @param title Title of the MealPlan (optional)
  * @returns The created MealPlan
  */
-export const createMealPlan = async (
-  client: PrismaClient,
+export async function createMealPlan(
   userId: string,
   title = "",
   isDefault = false
-) => {
-  const mealPlan = await client.mealPlan.create({
+) {
+  const mealPlan = await prisma.mealPlan.create({
     data: {
       title,
     },
   });
 
-  await client.mealPlanAssignment.create({
+  await prisma.mealPlanAssignment.create({
     data: {
       userId: userId,
       userDefault: isDefault,
@@ -28,4 +27,4 @@ export const createMealPlan = async (
   });
 
   return mealPlan;
-};
+}

@@ -1,19 +1,18 @@
-import { useTranslation } from "next-i18next";
+import { useScopedI18n } from "@/locales/client";
 import Image from "next/image";
-import React from "react";
 import { env } from "../../env/client.mjs";
 
-export const Footer: React.FC = () => {
-  const { t } = useTranslation("common");
+export async function Footer() {
+  const t = useScopedI18n("landing");
 
   return (
     <footer
       className=" w-full border-t border-gray-200
-    bg-white p-4 text-white shadow dark:border-gray-600 
-    dark:bg-gray-800 md:flex md:items-center md:justify-between md:p-6"
+    bg-white p-4 text-white shadow md:flex 
+    md:items-center md:justify-between md:p-6 dark:border-gray-600 dark:bg-gray-800"
     >
       <div>
-        {t("productName")}
+        {t("title")}
         <a
           href="https://timitt.dev"
           target="_blank"
@@ -43,4 +42,4 @@ export const Footer: React.FC = () => {
       </div>
     </footer>
   );
-};
+}

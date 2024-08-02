@@ -1,7 +1,6 @@
 "use server";
 import { authMiddleware } from "@/middlewares/authMiddleware";
 import i18nMiddleware from "@/middlewares/i18nMiddleware";
-import type { AppRouteHandlerFnContext } from "next-auth/lib/types";
 import { NextResponse, type NextRequest } from "next/server";
 
 const locales = ["en", "de"];
@@ -24,7 +23,8 @@ function handleI18nRequest(req: NextRequest) {
   return NextResponse.next();
 }
 
-export function middleware(req: NextRequest, ctx: AppRouteHandlerFnContext) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function middleware(req: NextRequest, ctx: any) {
   const path = req.nextUrl.pathname;
 
   if (!path.startsWith("/api/auth")) {
