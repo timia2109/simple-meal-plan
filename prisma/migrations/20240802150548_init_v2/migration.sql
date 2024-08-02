@@ -4,14 +4,14 @@ CREATE TABLE `MealEntry` (
     `meal` TEXT NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
-    `mealPlanId` VARCHAR(191) NOT NULL,
+    `mealPlanId` CHAR(25) NOT NULL,
 
     UNIQUE INDEX `MealEntry_date_mealPlanId_key`(`date`, `mealPlanId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `MealPlan` (
-    `id` VARCHAR(191) NOT NULL,
+    `id` CHAR(25) NOT NULL,
     `title` TEXT NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -19,8 +19,8 @@ CREATE TABLE `MealPlan` (
 
 -- CreateTable
 CREATE TABLE `MealPlanAssignment` (
-    `mealPlanId` VARCHAR(191) NOT NULL,
-    `userId` VARCHAR(191) NOT NULL,
+    `mealPlanId` CHAR(25) NOT NULL,
+    `userId` CHAR(25) NOT NULL,
     `userDefault` BOOLEAN NOT NULL,
 
     UNIQUE INDEX `MealPlanAssignment_mealPlanId_userId_key`(`mealPlanId`, `userId`)
@@ -29,7 +29,7 @@ CREATE TABLE `MealPlanAssignment` (
 -- CreateTable
 CREATE TABLE `MealPlanInvite` (
     `invitationCode` CHAR(12) NOT NULL,
-    `mealPlanId` VARCHAR(191) NOT NULL,
+    `mealPlanId` CHAR(25) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `createdByUserId` VARCHAR(191) NULL,
 
@@ -38,7 +38,7 @@ CREATE TABLE `MealPlanInvite` (
 
 -- CreateTable
 CREATE TABLE `User` (
-    `id` VARCHAR(191) NOT NULL,
+    `id` CHAR(25) NOT NULL,
     `name` VARCHAR(191) NULL,
     `username` VARCHAR(191) NULL,
     `email` VARCHAR(191) NULL,
@@ -54,8 +54,8 @@ CREATE TABLE `User` (
 
 -- CreateTable
 CREATE TABLE `Account` (
-    `id` VARCHAR(191) NOT NULL,
-    `userId` VARCHAR(191) NOT NULL,
+    `id` CHAR(25) NOT NULL,
+    `userId` CHAR(25) NOT NULL,
     `type` VARCHAR(191) NOT NULL,
     `provider` VARCHAR(191) NOT NULL,
     `providerAccountId` VARCHAR(191) NOT NULL,
@@ -78,9 +78,9 @@ CREATE TABLE `Account` (
 
 -- CreateTable
 CREATE TABLE `Session` (
-    `id` VARCHAR(191) NOT NULL,
+    `id` CHAR(25) NOT NULL,
     `sessionToken` VARCHAR(191) NOT NULL,
-    `userId` VARCHAR(191) NOT NULL,
+    `userId` CHAR(25) NOT NULL,
     `expires` DATETIME(3) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,

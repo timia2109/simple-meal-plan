@@ -16,22 +16,22 @@ model MealEntry {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  mealPlanId String
+  mealPlanId String   @db.Char(25)
   mealPlan   MealPlan @relation(fields: [mealPlanId], references: [id], onDelete: Cascade)
 
   @@unique([date, mealPlanId])
 }
 
 model MealPlan {
-  id                  String               @id @default(cuid())
+  id                  String               @id @default(cuid()) @db.Char(25)
   title               String               @db.Text
   mealPlanAssignments MealPlanAssignment[]
   mealEntries         MealEntry[]
 }
 
 model MealPlanAssignment {
-  mealPlanId  String
-  userId      String
+  mealPlanId  String   @db.Char(25)
+  userId      String   @db.Char(25)
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   mealPlan    MealPlan @relation(fields: [mealPlanId], references: [id], onDelete: Cascade)
   userDefault Boolean
@@ -41,7 +41,7 @@ model MealPlanAssignment {
 
 model MealPlanInvite {
   invitationCode  String   @id @db.Char(12)
-  mealPlanId      String
+  mealPlanId      String   @db.Char(25)
   createdAt       DateTime @default(now())
   createdByUserId String?
 
@@ -49,7 +49,7 @@ model MealPlanInvite {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String    @id @default(cuid()) @db.Char(25)
   name          String?
   username      String?   @unique
   email         String?   @unique
@@ -66,8 +66,8 @@ model User {
 }
 
 model Account {
-  id                       String  @id @default(cuid())
-  userId                   String  @unique
+  id                       String  @id @default(cuid()) @db.Char(25)
+  userId                   String  @unique @db.Char(25)
   type                     String
   provider                 String
   providerAccountId        String
@@ -89,9 +89,9 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid())
+  id           String   @id @default(cuid()) @db.Char(25)
   sessionToken String   @unique
-  userId       String
+  userId       String   @db.Char(25)
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id])
 
