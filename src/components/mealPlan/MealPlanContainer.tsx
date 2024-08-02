@@ -7,11 +7,10 @@ import { getMonthRange } from "@/functions/dateTime/getMonth";
 import { getLinkWithLocale } from "@/functions/user/redirectWithLocale";
 import { getCurrentLocale } from "@/locales/server";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { MealPlan } from "@prisma/client";
 import { DateTime } from "luxon";
-import Link from "next/link";
 import { MealEntryComponent } from "./MealEntry";
+import { MoveMonthButton } from "./MoveMonthButton";
 
 type Props = {
   mealPlan: MealPlan;
@@ -49,21 +48,13 @@ export async function MealPlanContainer({ mealPlan, keyDate }: Props) {
   return (
     <div className="w-full">
       <div className="flex justify-between">
-        <Link
-          className="h-10 w-10 rounded-full border bg-gray-500 transition hover:bg-gray-300"
-          href={monthMovementLink(-1)}
-        >
-          <FontAwesomeIcon icon={faArrowLeft} className="p-2 text-white" />
-        </Link>
-        <div className="text-2xl font-extrabold text-black md:text-5xl">
+        <MoveMonthButton icon={faArrowLeft} href={monthMovementLink(-1)} />
+
+        <div className="text-2xl font-extrabold md:text-5xl">
           {keyDateTime.monthLong} {keyDateTime.year}
         </div>
-        <Link
-          className="h-10 w-10 rounded-full border bg-gray-500 transition hover:bg-gray-300"
-          href={monthMovementLink(1)}
-        >
-          <FontAwesomeIcon icon={faArrowRight} className="p-2 text-white" />
-        </Link>
+
+        <MoveMonthButton icon={faArrowRight} href={monthMovementLink(1)} />
       </div>
       <div className="mt-5 grid w-full grid-cols-7">
         {dates.map((d) => (
