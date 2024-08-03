@@ -6,6 +6,7 @@ export default {
     signinWith: "Anmelden mit {name}",
     author: "Tim Ittermann",
     privacy: "Datenschutz",
+    myMealPlans: "Meine Essenspläne",
   },
   mealPlan: {
     defaultLabel: "Mein Essensplan",
@@ -18,5 +19,6 @@ export default {
     manage: "Essenspläne verwalten",
     setAsDefault: "Als Standart festlegen",
     share: "Andere einladen",
+    open: "Ansehen",
   },
 } as const;
