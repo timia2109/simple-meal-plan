@@ -44,6 +44,7 @@ model MealPlanInvite {
   mealPlanId      String   @db.Char(25)
   createdAt       DateTime @default(now())
   createdByUserId String?
+  expiresAt       DateTime
 
   user User? @relation(fields: [createdByUserId], references: [id], onDelete: SetNull)
 }
