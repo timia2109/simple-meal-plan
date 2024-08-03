@@ -1,5 +1,6 @@
 "use client";
 
+import { setDefaultMealPlan } from "@/actions/setDefaultMealPlan";
 import { useI18n } from "@/locales/client";
 import {
   faCrown,
@@ -22,11 +23,13 @@ export const MealPlanActions: FC<Props> = ({
   mealPlanAssignment,
 }) => {
   const t = useI18n();
+  const id = mealPlan.id;
 
   return (
     <div className="join">
       {!mealPlanAssignment.userDefault && (
         <button
+          onClick={() => setDefaultMealPlan(id)}
           className="btn btn-primary join-item"
           title={t("manageMealPlans.setAsDefault")}
         >
