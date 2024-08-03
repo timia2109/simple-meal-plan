@@ -29,4 +29,14 @@ export default {
     confirm: "Bestätigen",
     cancel: "Abbrechen",
   },
+  invite: {
+    title: "Andere einladen",
+    invite: "Lade andere zu deinem Essensplan {title} ein",
+    inviteMessage: "Lade andere ein, um gemeinsam Mahlzeiten zu planen.",
+    inviteHint:
+      "Sende den folgenden Link an deine Freunde, um diese einzuladen.",
+    shareVia: "Teilen über {name}",
+    shareText:
+      "Hey, möchtest du an meinem Essensplan teilnehmen? Dann klicke auf den folgenden Link: {invitationLink}",
+  },
 } as const;

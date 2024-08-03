@@ -3,19 +3,37 @@ import { prisma } from "@/server/db/client";
 import { DateTime, Duration } from "luxon";
 import { generate } from "randomstring";
 
-type Props = {
-  userId: string;
-  mealPlanId: string;
-};
-
 const stringLength = 12;
 const invitationExpiresIn = Duration.fromISO(env.INVITATION_VALIDITY);
 
-/** Creates a invitation to a MealList */
-export function createMealPlanInvitation({ mealPlanId, userId }: Props) {
+/**
+ * Creates an Invitation (or return a valid one if it exists) for a Meal Plan
+ * @param mealPlanId Meal Plan Id
+ * @param userId User Id
+ * @returns A invitation code
+ */
+export async function createMealPlanInvitation(
+  mealPlanId: string,
+  userId: string
+) {
+  const now = new Date();
+
+  // Check for existing invitation
+  const existingInvitation = await prisma.mealPlanInvite.findFirst({
+    where: {
+      mealPlanId: mealPlanId,
+      createdByUserId: userId,
+      expiresAt: {
+        gt: now,
+      },
+    },
+  });
+
+  if (existingInvitation) return existingInvitation;
+
   const expiration = DateTime.now().plus(invitationExpiresIn);
 
-  return prisma.mealPlanInvite.create({
+  return await prisma.mealPlanInvite.create({
     data: {
       createdByUserId: userId,
       mealPlanId: mealPlanId,

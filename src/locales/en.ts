@@ -29,4 +29,14 @@ export default {
     confirm: "Confirm",
     cancel: "Cancel",
   },
+  invite: {
+    title: "Invite others",
+    invite: "Invite to your Meal Plan: {title}",
+    inviteMessage:
+      "Invite others to join your meal plan and plan meals together.",
+    inviteHint: "Send the following link to invite others.",
+    shareVia: "Share via {name}",
+    shareText:
+      "Hey, do you want to join my meal plan? Then click on the following link: {invitationLink}",
+  },
 } as const;
