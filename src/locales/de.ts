@@ -21,5 +21,12 @@ export default {
     setAsDefault: "Als Standart festlegen",
     share: "Andere einladen",
     open: "Ansehen",
+    leaveTitle: "Essensplan verlassen?",
+    leaveMessage:
+      "Möchtest du den Essensplan wirklich verlassen? Wenn niemand weiteres in dem Essensplan ist, wird dieser gelöscht.",
+  },
+  confirmModal: {
+    confirm: "Bestätigen",
+    cancel: "Abbrechen",
   },
 } as const;

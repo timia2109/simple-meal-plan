@@ -2,17 +2,13 @@
 
 import { setDefaultMealPlan } from "@/actions/setDefaultMealPlan";
 import { useI18n } from "@/locales/client";
-import {
-  faCrown,
-  faEye,
-  faTrash,
-  faUserPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCrown, faEye, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { MealPlan, MealPlanAssignment } from "@prisma/client";
 import type { FC } from "react";
 import { TooltipButton } from "../common/TooltipButton";
 import { TooltipLink } from "../common/TooltipLink";
+import { LeaveMealPlanButton } from "./LeaveMealPlanButton";
 
 type Props = {
   mealPlan: MealPlan;
@@ -50,17 +46,7 @@ export const MealPlanActions: FC<Props> = ({
       >
         <FontAwesomeIcon icon={faUserPlus} />
       </TooltipButton>
-      <TooltipButton
-        className="btn btn-outline btn-error join-item"
-        title={
-          mealPlanAssignment.userDefault
-            ? t("manageMealPlans.disabledDelete")
-            : t("manageMealPlans.delete")
-        }
-        disabled={mealPlanAssignment.userDefault}
-      >
-        <FontAwesomeIcon icon={faTrash} />
-      </TooltipButton>
+      <LeaveMealPlanButton mealPlanAssignment={mealPlanAssignment} />
     </div>
   );
 };
