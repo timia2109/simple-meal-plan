@@ -12,5 +12,10 @@ export function getMealPlans(userId: string) {
       userId,
     },
     include: { mealPlan: true },
+    orderBy: {
+      mealPlan: {
+        title: "asc",
+      },
+    },
   });
 }
