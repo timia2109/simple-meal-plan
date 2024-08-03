@@ -16,6 +16,7 @@ export default {
     new: "Neuer Essensplan",
     create: "Erstellen",
     delete: "Löschen",
+    disabledDelete: "Du kannst deinen Standart Essensplan nicht löschen",
     manage: "Essenspläne verwalten",
     setAsDefault: "Als Standart festlegen",
     share: "Andere einladen",

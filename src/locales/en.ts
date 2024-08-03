@@ -16,6 +16,7 @@ export default {
     new: "New Meal Plan",
     create: "Create",
     delete: "Delete",
+    disabledDelete: "You can't delete your default meal plan",
     manage: "Manage Meal Plans",
     setAsDefault: "Set as default",
     share: "Invite others",
