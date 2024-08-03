@@ -1,4 +1,4 @@
-import { MealPlanEntry } from "@/components/mealPlan/MealPlanEntry";
+import { MealPlanEntry } from "@/components/mealEntries/MealPlanEntry";
 import { getMealPlans } from "@/dal/mealPlans/getMealPlans";
 import { getUserId } from "@/functions/user/getUserId";
 import { getScopedI18n } from "@/locales/server";

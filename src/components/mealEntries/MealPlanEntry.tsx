@@ -6,7 +6,7 @@ import { faCrown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { MealPlan, MealPlanAssignment } from "@prisma/client";
 import { ProfileImage } from "../common/ProfileImage";
-import { MealPlanActions } from "./MealPlanActions";
+import { MealPlanActions } from "../mealPlan/MealPlanActions";
 
 type BasicProps = {
   mealPlan: MealPlan;

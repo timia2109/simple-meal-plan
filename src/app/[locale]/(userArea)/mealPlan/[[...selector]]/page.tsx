@@ -1,5 +1,5 @@
+import { MealPlanEntry } from "@/components/mealEntries/MealPlanEntry";
 import { MealPlanContainer } from "@/components/mealPlan/MealPlanContainer";
-import { MealPlanEntry } from "@/components/mealPlan/MealPlanEntry";
 import { getMealPlan } from "@/dal/mealPlans/getMealPlan";
 import { createKeyDate } from "@/functions/dateTime/createKeyDate";
 import { getUserId } from "@/functions/user/getUserId";

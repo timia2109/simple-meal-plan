@@ -10,8 +10,8 @@ import { getCurrentLocale, getI18n } from "@/locales/server";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import type { MealPlan } from "@prisma/client";
 import { DateTime } from "luxon";
-import { MealEntryComponent } from "./MealEntry";
-import { MoveMonthButton } from "./MoveMonthButton";
+import { MealEntryComponent } from "../mealEntries/MealEntry";
+import { MoveMonthButton } from "../mealEntries/MoveMonthButton";
 
 type Props = {
   mealPlan: MealPlan;
