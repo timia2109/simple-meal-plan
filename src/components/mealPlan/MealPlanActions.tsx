@@ -10,8 +10,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { MealPlan, MealPlanAssignment } from "@prisma/client";
-import Link from "next/link";
 import type { FC } from "react";
+import { TooltipButton } from "../common/TooltipButton";
+import { TooltipLink } from "../common/TooltipLink";
 
 type Props = {
   mealPlan: MealPlan;
@@ -28,33 +29,38 @@ export const MealPlanActions: FC<Props> = ({
   return (
     <div className="join">
       {!mealPlanAssignment.userDefault && (
-        <button
+        <TooltipButton
           onClick={() => setDefaultMealPlan(id)}
           className="btn btn-primary join-item"
           title={t("manageMealPlans.setAsDefault")}
         >
           <FontAwesomeIcon icon={faCrown} />
-        </button>
+        </TooltipButton>
       )}
-      <Link
+      <TooltipLink
         href={`mealPlan/${mealPlan.id}`}
         className="btn btn-outline btn-secondary join-item"
         title={t("manageMealPlans.open")}
       >
         <FontAwesomeIcon icon={faEye} />
-      </Link>
-      <button
+      </TooltipLink>
+      <TooltipButton
         className="btn btn-outline btn-secondary join-item"
         title={t("manageMealPlans.share")}
       >
         <FontAwesomeIcon icon={faUserPlus} />
-      </button>
-      <button
+      </TooltipButton>
+      <TooltipButton
         className="btn btn-outline btn-error join-item"
-        title={t("manageMealPlans.delete")}
+        title={
+          mealPlanAssignment.userDefault
+            ? t("manageMealPlans.disabledDelete")
+            : t("manageMealPlans.delete")
+        }
+        disabled={mealPlanAssignment.userDefault}
       >
         <FontAwesomeIcon icon={faTrash} />
-      </button>
+      </TooltipButton>
     </div>
   );
 };
