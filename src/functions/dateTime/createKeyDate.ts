@@ -1,17 +1,21 @@
 import { DateTime } from "luxon";
+import { notFound } from "next/navigation";
 
 /**
  * Creates the key date (if any value is undefined, the current datetime is used)
- * @param year Year (or undefined)
- * @param month Month (or undefined)
+ * @param stringYear Year (or undefined)
+ * @param stringMonth Month (or undefined)
  * @returns Key Date
  */
 export function createKeyDate(
-  year: string | undefined,
-  month: string | undefined
+  stringYear: string | undefined,
+  stringMonth: string | undefined
 ) {
-  const nYear = year ? parseInt(year) : DateTime.now().year;
-  const nMonth = month ? parseInt(month) : DateTime.now().month;
+  const year = stringYear ? parseInt(stringYear) : DateTime.now().year;
+  const month = stringMonth ? parseInt(stringMonth) : DateTime.now().month;
 
-  return DateTime.fromObject({ year: nYear, month: nMonth, day: 1 });
+  const date = DateTime.fromObject({ year, month, day: 1 });
+  if (date.isValid) return date;
+
+  notFound();
 }

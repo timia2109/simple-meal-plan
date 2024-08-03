@@ -1,9 +1,11 @@
-import { getScopedI18n } from "@/locales/server";
+import type { useI18n } from "@/locales/client";
 import type { MealPlan } from "@prisma/client";
 
-export async function getMealPlanLabel(mealPlan: MealPlan): Promise<string> {
+export async function getMealPlanLabel(
+  mealPlan: MealPlan,
+  t: ReturnType<typeof useI18n>
+): Promise<string> {
   if (mealPlan.title.length > 0) return mealPlan.title;
 
-  const text = await getScopedI18n("mealPlan");
-  return text("defaultLabel");
+  return t("mealPlan.defaultLabel");
 }

@@ -1,9 +1,8 @@
-import { useScopedI18n } from "@/locales/client";
-import Image from "next/image";
+import { getScopedI18n } from "@/locales/server";
 import { env } from "../../env/client.mjs";
 
 export async function Footer() {
-  const t = useScopedI18n("landing");
+  const t = await getScopedI18n("landing");
 
   return (
     <footer
@@ -32,7 +31,7 @@ export async function Footer() {
           target="_blank"
           rel="noreferrer"
         >
-          <Image
+          <img
             alt="GitHub Repo stars"
             src="https://img.shields.io/github/stars/timia2109/simple-meal-plan?style=social"
             width={76}

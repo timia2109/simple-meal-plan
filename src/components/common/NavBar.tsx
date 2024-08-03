@@ -1,18 +1,56 @@
 import { auth } from "@/auth";
+import { getMealPlans } from "@/dal/mealPlans/getMealPlans";
+import { getMealPlanLabel } from "@/functions/user/getMealPlanLabel";
+import { getUserId } from "@/functions/user/getUserId";
 import { getLinkWithLocale } from "@/functions/user/redirectWithLocale";
-import { getScopedI18n } from "@/locales/server";
-import Image from "next/image";
+import { getI18n } from "@/locales/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { ProfileImage } from "./ProfileImage";
+
+async function InnerMenu() {
+  const mealPlans = await getMealPlans(await getUserId(true));
+  const t = await getI18n();
+
+  return (
+    <>
+      <li>
+        <details>
+          <summary>{t("landing.myMealPlans")}</summary>
+          <ul className="p-2">
+            {mealPlans.map((mealPlan) => (
+              <li key={mealPlan.mealPlanId}>
+                <Link
+                  href={
+                    mealPlan.userDefault
+                      ? getLinkWithLocale("/mealPlan")
+                      : getLinkWithLocale(`/mealPlan/${mealPlan.mealPlanId}`)
+                  }
+                >
+                  {getMealPlanLabel(mealPlan.mealPlan, t)}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </details>
+      </li>
+      <li>
+        <Link href={getLinkWithLocale("/manage")}>
+          {t("manageMealPlans.manage")}
+        </Link>
+      </li>
+    </>
+  );
+}
 
 export async function NavBar() {
   const currentUser = await auth();
   if (currentUser == null) redirect("/");
 
-  const t = await getScopedI18n("landing");
+  const t = await getI18n();
 
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar mb-3 bg-base-100 shadow-md">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -35,68 +73,23 @@ export async function NavBar() {
             tabIndex={0}
             className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
           >
-            <li>
-              <a>Item 1</a>
-            </li>
-            <li>
-              <a>Parent</a>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a>Item 3</a>
-            </li>
+            <InnerMenu />
           </ul>
         </div>
         <Link
           href={getLinkWithLocale("/mealPlan")}
           className="btn btn-ghost text-xl"
         >
-          {t("title")}
+          {t("landing.title")}
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          <li>
-            <a>Item 1</a>
-          </li>
-          <li>
-            <details>
-              <summary>Parent</summary>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </details>
-          </li>
-          <li>
-            <a>Item 3</a>
-          </li>
+          <InnerMenu />
         </ul>
       </div>
       <div className="navbar-end">
-        {currentUser.user?.image && (
-          <div className="avatar">
-            <div className="w-10 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100">
-              <Image
-                src={currentUser.user.image}
-                width={32}
-                height={32}
-                alt="User profile image"
-              />
-            </div>
-          </div>
-        )}
+        {currentUser.user && <ProfileImage user={currentUser.user} size={40} />}
       </div>
     </div>
   );

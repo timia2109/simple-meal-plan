@@ -10,8 +10,8 @@ import { getCurrentLocale, getI18n } from "@/locales/server";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import type { MealPlan } from "@prisma/client";
 import { DateTime } from "luxon";
-import { MealEntryComponent } from "./MealEntry";
-import { MoveMonthButton } from "./MoveMonthButton";
+import { MealEntryComponent } from "../mealEntries/MealEntry";
+import { MoveMonthButton } from "../mealEntries/MoveMonthButton";
 
 type Props = {
   mealPlan: MealPlan;
@@ -46,13 +46,13 @@ export async function MealPlanContainer({ mealPlan, keyDate }: Props) {
 
   const monthMovementLink = useMonthMovementLink(mealPlan.id, keyDateTime);
   const dates = [...enumerateDates(range)];
-  const label = await getMealPlanLabel(mealPlan);
+  const label = await getMealPlanLabel(mealPlan, t);
   const title = label + " | " + t("landing.title");
 
   return (
     <div className="w-full">
       <title>{title}</title>
-      <div className="flex justify-between">
+      <div className="flex justify-between rounded-b border-b border-e border-s border-accent p-1 pb-3">
         <MoveMonthButton icon={faArrowLeft} href={monthMovementLink(-1)} />
 
         <div className="text-2xl font-extrabold md:text-5xl">
