@@ -1,3 +1,4 @@
+import { Footer } from "@/components/common/Footer";
 import Head from "next/head";
 import "./style.css";
 
@@ -38,7 +39,10 @@ export default async function LocaleLayout({
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
         />
       </Head>
-      <body className="bg-base-100">{children}</body>
+      <body className="flex h-screen flex-col justify-between bg-base-100">
+        <div className="mb-5">{children}</div>
+        <Footer />
+      </body>
     </html>
   );
 }
