@@ -52,7 +52,7 @@ export async function MealPlanContainer({ mealPlan, keyDate }: Props) {
   return (
     <div className="w-full">
       <title>{title}</title>
-      <div className="flex justify-between">
+      <div className="flex justify-between rounded-b border-b border-e border-s border-accent p-1 pb-3">
         <MoveMonthButton icon={faArrowLeft} href={monthMovementLink(-1)} />
 
         <div className="text-2xl font-extrabold md:text-5xl">
