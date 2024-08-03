@@ -40,12 +40,13 @@ export const MealPlanActions: FC<Props> = ({
       >
         <FontAwesomeIcon icon={faEye} />
       </TooltipLink>
-      <TooltipButton
+      <TooltipLink
+        href={`mealPlan/invite/${mealPlan.id}`}
         className="btn btn-outline btn-secondary join-item"
         title={t("manageMealPlans.share")}
       >
         <FontAwesomeIcon icon={faUserPlus} />
-      </TooltipButton>
+      </TooltipLink>
       <LeaveMealPlanButton mealPlanAssignment={mealPlanAssignment} />
     </div>
   );
