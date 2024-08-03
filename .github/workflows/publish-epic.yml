@@ -1,4 +1,4 @@
-name: Containerize
+name: Publish Epic
 on:
   push:
     branches:
