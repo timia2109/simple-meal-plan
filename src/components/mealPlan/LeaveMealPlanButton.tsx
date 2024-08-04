@@ -7,8 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { MealPlan, MealPlanAssignment } from "@prisma/client";
 import type { FC } from "react";
 import { createRef } from "react";
-import { Heading } from "../common/Heading";
-import { Modal } from "../common/Modal";
+import { FormModal } from "../common/Modal";
 import { TooltipButton } from "../common/TooltipButton";
 
 type Props = {
@@ -26,26 +25,17 @@ export const LeaveMealPlanButton: FC<Props> = ({
 
   return (
     <>
-      <Modal modalRef={dialogRef}>
-        <Heading>{t("leaveTitle")}</Heading>
+      <FormModal
+        cancelContent={tModal("cancel")}
+        heading={t("leaveTitle")}
+        modalRef={dialogRef}
+        submitContent={tModal("confirm")}
+        action={leaveMealPlanAction}
+      >
         <p className="py-4">{t("leaveMessage", { name: mealPlan.title })}</p>
-        <form method="dialog">
-          <input type="hidden" name="mealPlanId" value={mealPlan.id} />
-          <div className="modal-action">
-            <button
-              formAction={leaveMealPlanAction}
-              type="submit"
-              onClick={() => dialogRef.current?.close()}
-              className="btn btn-primary "
-            >
-              {tModal("confirm")}
-            </button>
-            <button className="btn btn-outline btn-secondary " type="submit">
-              {tModal("cancel")}
-            </button>
-          </div>
-        </form>
-      </Modal>
+        <input type="hidden" name="mealPlanId" value={mealPlan.id} />
+      </FormModal>
+
       <TooltipButton
         className="btn btn-outline btn-error join-item"
         onClick={() => dialogRef.current?.showModal()}

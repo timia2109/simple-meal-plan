@@ -6,8 +6,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { FC } from "react";
 import { createRef } from "react";
-import { Heading } from "../common/Heading";
-import { Modal } from "../common/Modal";
+import { FormModal } from "../common/Modal";
 
 export const CreateMealPlanButton: FC = () => {
   const dialogRef = createRef<HTMLDialogElement>();
@@ -21,38 +20,23 @@ export const CreateMealPlanButton: FC = () => {
       >
         <FontAwesomeIcon icon={faPlus} /> {t("create")}
       </button>
-      <Modal modalRef={dialogRef}>
-        <Heading>{t("createMealPlan")}</Heading>
-        <form method="dialog">
-          <label className="input input-bordered flex items-center gap-2">
-            {t("name")}
-            <input
-              name="mealPlanName"
-              type="text"
-              className="grow"
-              placeholder={t("new")}
-            />
-          </label>
-
-          <div className="modal-action">
-            <button
-              type="submit"
-              formAction={createMealPlanAction}
-              onClick={() => dialogRef.current?.close()}
-              className="btn btn-primary "
-            >
-              {t("create")}
-            </button>
-            <button
-              type="submit"
-              onClick={() => dialogRef.current?.close()}
-              className="btn btn-outline btn-secondary "
-            >
-              {t("cancel")}
-            </button>
-          </div>
-        </form>
-      </Modal>
+      <FormModal
+        modalRef={dialogRef}
+        cancelContent={t("cancel")}
+        heading={t("createMealPlan")}
+        submitContent={t("create")}
+        action={createMealPlanAction}
+      >
+        <label className="input input-bordered flex items-center gap-2">
+          {t("name")}
+          <input
+            name="mealPlanName"
+            type="text"
+            className="grow"
+            placeholder={t("new")}
+          />
+        </label>
+      </FormModal>
     </>
   );
 };
