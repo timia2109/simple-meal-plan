@@ -1,4 +1,4 @@
-import { MealPlanEntry } from "@/components/mealEntries/MealPlanEntry";
+import { MealPlanComponent } from "@/components/mealPlan/MealPlanComponent";
 import { getMealPlans } from "@/dal/mealPlans/getMealPlans";
 import { getUserId } from "@/functions/user/getUserId";
 import { getScopedI18n } from "@/locales/server";
@@ -14,7 +14,7 @@ export default async function ManageMealPlansPage() {
       <title>{t("manage")}</title>
       <div>
         {mealPlanAssignments.map((assignment) => (
-          <MealPlanEntry
+          <MealPlanComponent
             key={assignment.mealPlanId}
             mealPlanAssignment={assignment}
             mealPlan={assignment.mealPlan}

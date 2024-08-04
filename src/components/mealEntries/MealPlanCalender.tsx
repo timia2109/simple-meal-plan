@@ -10,8 +10,8 @@ import { getCurrentLocale, getI18n } from "@/locales/server";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import type { MealPlan } from "@prisma/client";
 import { DateTime } from "luxon";
-import { MealEntryComponent } from "../mealEntries/MealEntry";
-import { MoveMonthButton } from "../mealEntries/MoveMonthButton";
+import { MealEntryComponent } from "./MealEntry";
+import { MoveMonthButton } from "./MoveMonthButton";
 
 type Props = {
   mealPlan: MealPlan;
@@ -27,7 +27,7 @@ const useMonthMovementLink = (mealPlanId: string, keyDate: DateTime) => {
   };
 };
 
-export async function MealPlanContainer({ mealPlan, keyDate }: Props) {
+export async function MealPlanCalender({ mealPlan, keyDate }: Props) {
   const locale = getCurrentLocale();
   const keyDateTime = convertToDateTime(keyDate).setLocale(locale);
   const range = getMonthRange(keyDateTime);

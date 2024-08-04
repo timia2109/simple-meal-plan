@@ -6,7 +6,7 @@ import { faCrown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { MealPlan, MealPlanAssignment } from "@prisma/client";
 import { ProfileImage } from "../common/ProfileImage";
-import { MealPlanActions } from "../mealPlan/MealPlanActions";
+import { MealPlanActions } from "./MealPlanActions";
 
 type BasicProps = {
   mealPlan: MealPlan;
@@ -26,7 +26,7 @@ type WithUsersProps = BasicProps & {
 
 type Props = WithActionsProps | WithUsersProps;
 
-export async function MealPlanEntry({
+export async function MealPlanComponent({
   mealPlan,
   mealPlanAssignment,
   withActions,

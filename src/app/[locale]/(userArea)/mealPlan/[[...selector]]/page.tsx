@@ -1,5 +1,5 @@
-import { MealPlanEntry } from "@/components/mealEntries/MealPlanEntry";
-import { MealPlanContainer } from "@/components/mealPlan/MealPlanContainer";
+import { MealPlanCalender } from "@/components/mealEntries/MealPlanCalender";
+import { MealPlanComponent } from "@/components/mealPlan/MealPlanComponent";
 import { getMealPlan } from "@/dal/mealPlans/getMealPlan";
 import { createKeyDate } from "@/functions/dateTime/createKeyDate";
 import { getUserId } from "@/functions/user/getUserId";
@@ -22,8 +22,8 @@ export default async function MealPlanPage({ params }: Props) {
 
   return (
     <div className="container mx-auto">
-      <MealPlanEntry mealPlan={mealPlan} withUsers />
-      <MealPlanContainer keyDate={keyDate} mealPlan={mealPlan} />
+      <MealPlanComponent mealPlan={mealPlan} withUsers />
+      <MealPlanCalender keyDate={keyDate} mealPlan={mealPlan} />
     </div>
   );
 }
