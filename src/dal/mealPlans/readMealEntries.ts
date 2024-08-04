@@ -1,4 +1,4 @@
-import { prisma } from "@/server/db/client";
+import { prisma } from "@/server/db";
 import { toDateRange, type DateLikeRange } from "../../types/TimeRange";
 
 type Props = {

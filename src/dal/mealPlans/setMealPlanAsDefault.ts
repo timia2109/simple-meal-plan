@@ -1,4 +1,4 @@
-import { prisma } from "@/server/db/client";
+import { prisma } from "@/server/db";
 
 /**
  * Sets a MealPlan as default for a User

@@ -1,4 +1,4 @@
-import { prisma } from "@/server/db/client";
+import { prisma } from "@/server/db";
 
 /**
  * Gets the given mealplan if this user is allowed
