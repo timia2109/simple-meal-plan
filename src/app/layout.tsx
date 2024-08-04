@@ -1,4 +1,5 @@
 import { Footer } from "@/components/common/Footer";
+import { getTheme } from "@/functions/user/preferences";
 import Head from "next/head";
 import "./style.css";
 
@@ -8,7 +9,7 @@ export default async function LocaleLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html data-theme="light">
+    <html data-theme={getTheme()}>
       <Head>
         <meta name="description" content="A very simple meal plan" />
         <link rel="icon" href="/favicon.ico" />

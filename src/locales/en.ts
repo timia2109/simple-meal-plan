@@ -59,4 +59,10 @@ export default {
     header: "Invitation",
     accept: "Join {mealPlanTitle}",
   },
+  profile: {
+    title: "Profile",
+    settings: "Settings",
+    theme: "Theme",
+    themeFooter: "Select your preferred theme. Thanks to ",
+  },
 } as const;

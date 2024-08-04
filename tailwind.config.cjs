@@ -5,6 +5,11 @@ module.exports = {
     themes: [
       "light",
       "dark",
+      "synthwave",
+      "cyberpunk",
+      "aqua",
+      "wireframe",
+      "nord",
       {
         jenin: {
           ...require("daisyui/src/theming/themes")["light"],

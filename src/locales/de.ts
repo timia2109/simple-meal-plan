@@ -59,4 +59,10 @@ export default {
     header: "Einladung",
     accept: "{mealPlanTitle} beitreten",
   },
+  profile: {
+    title: "Profil",
+    settings: "Einstellungen",
+    theme: "Design",
+    themeFooter: "Wähle ein Design für die Anwendung. Danke an ",
+  },
 } as const;
