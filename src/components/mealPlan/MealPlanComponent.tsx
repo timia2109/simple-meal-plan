@@ -6,6 +6,7 @@ import { getRoute } from "@/routes";
 import { faCrown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { MealPlan, MealPlanAssignment } from "@prisma/client";
+import classNames from "classnames";
 import Link from "next/link";
 import { ProfileImage } from "../common/ProfileImage";
 import { MealPlanActions } from "./MealPlanActions";
@@ -39,9 +40,16 @@ export async function MealPlanComponent({
   const users = withUsers ? await getMealPlanUsers(mealPlan.id) : [];
 
   return (
-    <div className="flex justify-between border-e border-s border-t border-accent p-3 first:rounded-t last:rounded-b last:border-b">
+    <div
+      className={classNames({
+        "grid justify-between gap-4 border-e border-s border-t border-accent p-3 first:rounded-t last:rounded-b last:border-b":
+          true,
+        "grid-cols-4": withActions,
+        "grid-cols-3": !withActions,
+      })}
+    >
       <Link
-        className="btn btn-ghost text-xl"
+        className="btn btn-ghost col-span-2 w-full justify-start text-start text-xl"
         href={getRoute("mealPlan", mealPlan.id)}
       >
         {getMealPlanLabel(mealPlan, t)}
@@ -53,7 +61,7 @@ export async function MealPlanComponent({
         )}
       </Link>
 
-      <div>
+      <div className="last:justify-self-end">
         <div className="avatar-group -space-x-6 rtl:space-x-reverse">
           {users.map((user) => (
             <ProfileImage key={user.id} user={user} />

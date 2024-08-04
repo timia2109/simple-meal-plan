@@ -1,3 +1,4 @@
+import { Heading } from "@/components/common/Heading";
 import { MealPlanComponent } from "@/components/mealPlan/MealPlanComponent";
 import { getMealPlans } from "@/dal/mealPlans/getMealPlans";
 import { getUserId } from "@/functions/user/getUserId";
@@ -10,7 +11,7 @@ export default async function ManageMealPlansPage() {
 
   return (
     <div className="container mx-auto">
-      <h1 className="mb-1 text-3xl font-extrabold">{t("manage")}</h1>
+      <Heading>{t("manage")}</Heading>
       <title>{t("manage")}</title>
       <div>
         {mealPlanAssignments.map((assignment) => (
