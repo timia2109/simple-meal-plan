@@ -44,22 +44,20 @@ export const RenameMealPlanButton: FC<Props> = ({ mealPlan }) => {
           <input type="hidden" name="mealPlanId" value={mealPlan.id} />
 
           <div className="modal-action">
-            <div className="join">
-              <button
-                type="submit"
-                onClick={() => dialogRef.current?.close()}
-                className="btn btn-primary join-item"
-              >
-                {t("rename")}
-              </button>
-              <button
-                type="reset"
-                onClick={() => dialogRef.current?.close()}
-                className="btn btn-outline btn-secondary join-item"
-              >
-                {t("cancel")}
-              </button>
-            </div>
+            <button
+              type="submit"
+              onClick={() => dialogRef.current?.close()}
+              className="btn btn-primary "
+            >
+              {t("rename")}
+            </button>
+            <button
+              type="reset"
+              onClick={() => dialogRef.current?.close()}
+              className="btn btn-outline btn-secondary "
+            >
+              {t("cancel")}
+            </button>
           </div>
         </form>
       </Modal>

@@ -3,8 +3,15 @@
 import { leaveMealPlan } from "@/dal/mealPlans/leaveMealPlan";
 import { getUserId } from "@/functions/user/getUserId";
 import { revalidateRoute } from "@/routes";
+import { z } from "zod";
+import { zfd } from "zod-form-data";
 
-export async function leaveMealPlanAction(mealPlanId: string) {
+const schema = zfd.formData({
+  mealPlanId: z.string().max(25),
+});
+
+export async function leaveMealPlanAction(formData: FormData) {
+  const { mealPlanId } = schema.parse(formData);
   const user = await getUserId();
   if (user == null) return;
 

@@ -42,7 +42,10 @@ export const MealPlanActions: FC<Props> = ({
       >
         <FontAwesomeIcon icon={faUserPlus} />
       </TooltipLink>
-      <LeaveMealPlanButton mealPlanAssignment={mealPlanAssignment} />
+      <LeaveMealPlanButton
+        mealPlan={mealPlan}
+        mealPlanAssignment={mealPlanAssignment}
+      />
     </div>
   );
 };

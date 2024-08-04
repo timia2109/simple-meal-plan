@@ -28,7 +28,7 @@ export default {
     open: "View",
     leaveTitle: "Leave Meal Plan?",
     leaveMessage:
-      "Do you really want to leave the meal plan? If there are no other participants, it will be deleted.",
+      "Do you really want to leave the meal plan {name}? If there are no other participants, it will be deleted.",
   },
   confirmModal: {
     confirm: "Confirm",

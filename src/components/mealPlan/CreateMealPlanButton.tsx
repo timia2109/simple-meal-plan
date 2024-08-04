@@ -23,7 +23,7 @@ export const CreateMealPlanButton: FC = () => {
       </button>
       <Modal modalRef={dialogRef}>
         <Heading>{t("createMealPlan")}</Heading>
-        <form method="dialog" action={createMealPlanAction}>
+        <form method="dialog">
           <label className="input input-bordered flex items-center gap-2">
             {t("name")}
             <input
@@ -35,22 +35,21 @@ export const CreateMealPlanButton: FC = () => {
           </label>
 
           <div className="modal-action">
-            <div className="join">
-              <button
-                type="submit"
-                onClick={() => dialogRef.current?.close()}
-                className="btn btn-primary join-item"
-              >
-                {t("create")}
-              </button>
-              <button
-                type="reset"
-                onClick={() => dialogRef.current?.close()}
-                className="btn btn-outline btn-secondary join-item"
-              >
-                {t("cancel")}
-              </button>
-            </div>
+            <button
+              type="submit"
+              formAction={createMealPlanAction}
+              onClick={() => dialogRef.current?.close()}
+              className="btn btn-primary "
+            >
+              {t("create")}
+            </button>
+            <button
+              type="submit"
+              onClick={() => dialogRef.current?.close()}
+              className="btn btn-outline btn-secondary "
+            >
+              {t("cancel")}
+            </button>
           </div>
         </form>
       </Modal>
