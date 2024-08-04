@@ -2,10 +2,9 @@ import { auth } from "@/auth";
 import { getMealPlans } from "@/dal/mealPlans/getMealPlans";
 import { getMealPlanLabel } from "@/functions/user/getMealPlanLabel";
 import { getUserId } from "@/functions/user/getUserId";
-import { getLinkWithLocale } from "@/functions/user/redirectWithLocale";
 import { getI18n } from "@/locales/server";
+import { getRoute, redirectRoute } from "@/routes";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { ProfileImage } from "./ProfileImage";
 
 async function InnerMenu() {
@@ -23,8 +22,8 @@ async function InnerMenu() {
                 <Link
                   href={
                     mealPlan.userDefault
-                      ? getLinkWithLocale("/mealPlan")
-                      : getLinkWithLocale(`/mealPlan/${mealPlan.mealPlanId}`)
+                      ? getRoute("mealPlan")
+                      : getRoute("mealPlan", mealPlan.mealPlanId)
                   }
                 >
                   {getMealPlanLabel(mealPlan.mealPlan, t)}
@@ -35,9 +34,7 @@ async function InnerMenu() {
         </details>
       </li>
       <li>
-        <Link href={getLinkWithLocale("/manage")}>
-          {t("manageMealPlans.manage")}
-        </Link>
+        <Link href={getRoute("manage")}>{t("manageMealPlans.manage")}</Link>
       </li>
     </>
   );
@@ -45,7 +42,7 @@ async function InnerMenu() {
 
 export async function NavBar() {
   const currentUser = await auth();
-  if (currentUser == null) redirect("/");
+  if (currentUser == null) redirectRoute("home");
 
   const t = await getI18n();
 
@@ -76,10 +73,7 @@ export async function NavBar() {
             <InnerMenu />
           </ul>
         </div>
-        <Link
-          href={getLinkWithLocale("/mealPlan")}
-          className="btn btn-ghost text-xl"
-        >
+        <Link href={getRoute("mealPlan")} className="btn btn-ghost text-xl">
           {t("landing.title")}
         </Link>
       </div>

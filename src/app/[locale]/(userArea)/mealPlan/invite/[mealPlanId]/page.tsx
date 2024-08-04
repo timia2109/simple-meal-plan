@@ -2,9 +2,9 @@ import { Heading } from "@/components/common/Heading";
 import { SocialShareLinks } from "@/components/common/SocialShareLinks";
 import { createMealPlanInvitation } from "@/dal/mealPlans/createMealPlanInvitation";
 import { getMealPlan } from "@/dal/mealPlans/getMealPlan";
-import { buildUrl } from "@/functions/buildUrl";
 import { getUserId } from "@/functions/user/getUserId";
 import { getScopedI18n } from "@/locales/server";
+import { getRouteUrl } from "@/routes";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -22,12 +22,10 @@ export default async function InvitePage({ params }: Props) {
 
   const invitation = await createMealPlanInvitation(params.mealPlanId, userId);
 
-  const invitationLink = buildUrl({
-    path: "/",
-    search: {
-      invitationCode: invitation.invitationCode,
-    },
-  });
+  const invitationLink = getRouteUrl(
+    "invitationLink",
+    invitation.invitationCode
+  );
 
   return (
     <div className="container mx-auto">

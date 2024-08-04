@@ -1,8 +1,8 @@
 import { auth } from "@/auth";
 import { InvitationHeader } from "@/components/invitation/InvitationHeader";
 import { getInvitation } from "@/dal/user/getInvitation";
-import { redirectWithLocale } from "@/functions/user/redirectWithLocale";
 import { getScopedI18n } from "@/locales/server";
+import { redirectRoute } from "@/routes";
 import { SignInButtons } from "./SignInButtons";
 
 type Props = {
@@ -20,8 +20,7 @@ async function handleInvitation(
   const invitation = await getInvitation(invitationCode);
 
   if (isSignedIn) {
-    // Redirect to join page
-    redirectWithLocale(`/mealPlan/join/${invitationCode}`);
+    redirectRoute("join", invitationCode);
   }
 
   return invitation;
@@ -35,8 +34,7 @@ export default async function LandingPage({ searchParams }: Props) {
     searchParams.invitationCode,
     currentUser != null
   );
-  if (currentUser != null && invitation == null)
-    redirectWithLocale(`/mealPlan`);
+  if (currentUser != null && invitation == null) redirectRoute("mealPlan");
 
   return (
     <div className="p-12">

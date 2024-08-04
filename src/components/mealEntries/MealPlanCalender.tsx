@@ -5,8 +5,8 @@ import { convertToDateTime } from "@/functions/dateTime/convertToDateTime";
 import { enumerateDates } from "@/functions/dateTime/enumerateDates";
 import { getMonthRange } from "@/functions/dateTime/getMonth";
 import { getMealPlanLabel } from "@/functions/user/getMealPlanLabel";
-import { getLinkWithLocale } from "@/functions/user/redirectWithLocale";
 import { getCurrentLocale, getI18n } from "@/locales/server";
+import { getRoute } from "@/routes";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import type { MealPlan } from "@prisma/client";
 import { DateTime } from "luxon";
@@ -22,8 +22,7 @@ const useMonthMovementLink = (mealPlanId: string, keyDate: DateTime) => {
   return (factor: -1 | 1) => {
     const begin =
       factor == -1 ? keyDate.minus({ month: 1 }) : keyDate.plus({ month: 1 });
-    const linkTemplate = `/mealPlan/${mealPlanId}/${begin.year}/${begin.month}`;
-    return getLinkWithLocale(linkTemplate);
+    return getRoute("mealPlan", mealPlanId, begin.year, begin.month);
   };
 };
 

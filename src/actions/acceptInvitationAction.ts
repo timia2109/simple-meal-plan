@@ -3,7 +3,7 @@
 import { getInvitation } from "@/dal/user/getInvitation";
 import { redeemMealPlanInvitation } from "@/dal/user/redeemMealPlanInvitation";
 import { getUserId } from "@/functions/user/getUserId";
-import { redirectWithLocale } from "@/functions/user/redirectWithLocale";
+import { redirectRoute } from "@/routes";
 
 export async function acceptInvitationAction(invitationCode: string) {
   const userId = await getUserId(null);
@@ -14,5 +14,5 @@ export async function acceptInvitationAction(invitationCode: string) {
   }
 
   await redeemMealPlanInvitation(invitation.invitation, userId);
-  redirectWithLocale(`/mealPlan/${invitation.invitation.mealPlan.id}`);
+  redirectRoute("mealPlan", invitation.invitation.mealPlan.id);
 }

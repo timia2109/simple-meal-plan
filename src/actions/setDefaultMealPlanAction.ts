@@ -2,8 +2,7 @@
 
 import { setMealPlanAsDefault } from "@/dal/mealPlans/setMealPlanAsDefault";
 import { getUserId } from "@/functions/user/getUserId";
-import { getLinkWithLocale } from "@/functions/user/redirectWithLocale";
-import { revalidatePath } from "next/cache";
+import { revalidateRoute } from "@/routes";
 
 export async function setDefaultMealPlanAction(mealPlanId: string) {
   const userId = await getUserId();
@@ -13,5 +12,5 @@ export async function setDefaultMealPlanAction(mealPlanId: string) {
     };
 
   await setMealPlanAsDefault(userId, mealPlanId);
-  revalidatePath(getLinkWithLocale("/manage"));
+  revalidateRoute("manage");
 }
