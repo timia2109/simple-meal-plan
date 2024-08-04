@@ -1,4 +1,3 @@
-import { acceptInvitationAction } from "@/actions/acceptInvitationAction";
 import { ProfileImage } from "@/components/common/ProfileImage";
 import { InvitationHeader } from "@/components/invitation/InvitationHeader";
 import { getInvitation } from "@/dal/user/getInvitation";
@@ -28,11 +27,6 @@ export default async function InvitationPage({ params }: Props) {
     invitation.result === "OK"
       ? await getMealPlanLabel(invitation.invitation.mealPlan, await getI18n())
       : "";
-
-  const acceptAction =
-    invitation.result === "OK"
-      ? acceptInvitationAction.bind(null, invitation.invitation.invitationCode)
-      : undefined;
 
   return (
     <div className="container mx-auto flex justify-center align-middle">
