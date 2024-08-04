@@ -1,6 +1,8 @@
-import Link from "next/link";
+import { setStaticParamsLocale } from "next-international/server";
 
 export default function NotFound() {
+  setStaticParamsLocale("en");
+
   return (
     <div className="hero min-h-screen bg-base-200">
       <title>Not found</title>
@@ -10,9 +12,9 @@ export default function NotFound() {
             404 Not Found
           </h1>
           <p className="py-6">Could not find requested resource.</p>
-          <Link className="btn btn-outline btn-primary" href="/">
+          <a className="btn btn-outline btn-primary" href="/">
             Return Home
-          </Link>
+          </a>
         </div>
       </div>
     </div>
