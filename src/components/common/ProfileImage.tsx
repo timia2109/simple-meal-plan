@@ -19,6 +19,7 @@ export const ProfileImage: FC<Props> = ({ user, withRing }) => {
       <Image
         src={user.image}
         alt={user.name ?? "??"}
+        title={user.name ?? "??"}
         width={40}
         height={40}
         className={classNames({
