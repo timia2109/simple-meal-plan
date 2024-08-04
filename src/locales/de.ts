@@ -7,6 +7,8 @@ export default {
     author: "Tim Ittermann",
     privacy: "Datenschutz",
     myMealPlans: "Meine Essenspläne",
+    logout: "Abmelden",
+    profile: "Profile",
   },
   mealPlan: {
     defaultLabel: "Mein Essensplan",

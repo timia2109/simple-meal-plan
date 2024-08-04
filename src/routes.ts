@@ -23,6 +23,7 @@ const routes = {
     `/?invitationCode=${invitationCode}`,
   join: (invitationCode: string) =>
     withLocale(`/mealPlan/join/${invitationCode}`),
+  profile: () => withLocale("/profile"),
 };
 
 /** Adds the locale to the route */
