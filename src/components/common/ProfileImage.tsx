@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import type { User } from "next-auth";
 import Image from "next/image";
 import type { FC } from "react";
@@ -7,10 +8,10 @@ export type UserLike = Pick<User, "name" | "image">;
 
 type Props = {
   user: UserLike;
-  size: number;
+  withRing?: boolean;
 };
 
-export const ProfileImage: FC<Props> = ({ user, size }) => {
+export const ProfileImage: FC<Props> = ({ user, withRing }) => {
   if (user.image == null) return <NameProfileImage name={user.name ?? "??"} />;
 
   return (
@@ -18,9 +19,12 @@ export const ProfileImage: FC<Props> = ({ user, size }) => {
       <Image
         src={user.image}
         alt={user.name ?? "??"}
-        width={size}
-        height={size}
-        className="w-10 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100"
+        width={40}
+        height={40}
+        className={classNames({
+          "min-w-10 max-w-10 rounded-full ring-offset-base-100": true,
+          "ring ring-primary ring-offset-2": withRing,
+        })}
       />
     </div>
   );

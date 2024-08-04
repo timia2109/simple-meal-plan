@@ -29,4 +29,26 @@ export default {
     confirm: "Bestätigen",
     cancel: "Abbrechen",
   },
+  invite: {
+    title: "Andere einladen",
+    invite: "Lade andere zu deinem Essensplan {title} ein",
+    inviteMessage: "Lade andere ein, um gemeinsam Mahlzeiten zu planen.",
+    inviteHint:
+      "Sende den folgenden Link an deine Freunde, um diese einzuladen.",
+    shareVia: "Teilen über {name}",
+    shareText:
+      "Hey, möchtest du an meinem Essensplan teilnehmen? Dann klicke auf den folgenden Link: {invitationLink}",
+  },
+  invitation: {
+    expired: "Diese Einladung ist abgelaufen",
+    notFound:
+      "Diese Einladung wurde nicht gefunden. Aber du kannst trotzdem einen eigenen Essensplan erstellen",
+    loginToJoinTitle:
+      "{name} hat dich eingeladen, dem Essensplan {mealPlanTitle} beizutreten",
+    loginToJoinSubtitle:
+      "Melde dich an, um diesem Essensplan beizutreten und gemeinsam Mahlzeiten zu planen",
+    unknownUser: "Ein Benutzer",
+    header: "Einladung",
+    accept: "{mealPlanTitle} beitreten",
+  },
 } as const;

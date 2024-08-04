@@ -29,4 +29,26 @@ export default {
     confirm: "Confirm",
     cancel: "Cancel",
   },
+  invite: {
+    title: "Invite others",
+    invite: "Invite to your Meal Plan: {title}",
+    inviteMessage:
+      "Invite others to join your meal plan and plan meals together.",
+    inviteHint: "Send the following link to invite others.",
+    shareVia: "Share via {name}",
+    shareText:
+      "Hey, do you want to join my meal plan? Then click on the following link: {invitationLink}",
+  },
+  invitation: {
+    expired: "This invitation has expired",
+    notFound:
+      "This invitation was not found. But you can still create your own meal plan",
+    loginToJoinTitle:
+      "{name} invited you to join the meal plan {mealPlanTitle}",
+    loginToJoinSubtitle:
+      "Sign in to join this meal plan and plan meals together",
+    unknownUser: "A user",
+    header: "Invitation",
+    accept: "Join {mealPlanTitle}",
+  },
 } as const;

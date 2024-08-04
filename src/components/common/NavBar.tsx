@@ -89,7 +89,7 @@ export async function NavBar() {
         </ul>
       </div>
       <div className="navbar-end">
-        {currentUser.user && <ProfileImage user={currentUser.user} size={40} />}
+        {currentUser.user && <ProfileImage user={currentUser.user} withRing />}
       </div>
     </div>
   );
