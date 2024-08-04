@@ -48,5 +48,7 @@ export default {
     loginToJoinSubtitle:
       "Melde dich an, um diesem Essensplan beizutreten und gemeinsam Mahlzeiten zu planen",
     unknownUser: "Ein Benutzer",
+    header: "Einladung",
+    accept: "{mealPlanTitle} beitreten",
   },
 } as const;

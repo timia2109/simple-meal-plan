@@ -19,7 +19,7 @@ async function handleInvitation(
 
   const invitation = await getInvitation(invitationCode);
 
-  if (isSignedIn && invitation != null && invitation != "EXPIRED") {
+  if (isSignedIn) {
     // Redirect to join page
     redirectWithLocale(`/mealPlan/join/${invitationCode}`);
   }

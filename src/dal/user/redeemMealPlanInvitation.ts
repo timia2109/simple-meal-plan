@@ -3,7 +3,6 @@ import type { MealPlanInvite } from "@prisma/client";
 
 /**
  * Redeems a MealPlanInvitation
- * @returns The joined MealPlan
  */
 export const redeemMealPlanInvitation = async (
   invitation: MealPlanInvite,
@@ -15,13 +14,6 @@ export const redeemMealPlanInvitation = async (
       userDefault: false,
       mealPlanId: invitation.mealPlanId,
       userId: targetUserId,
-    },
-  });
-
-  // Return MealPlan
-  return await prisma.mealPlan.findUniqueOrThrow({
-    where: {
-      id: invitation.mealPlanId,
     },
   });
 };

@@ -1,5 +1,5 @@
 import { prisma } from "@/server/db/client";
-import { MealPlan, MealPlanInvite, User } from "@prisma/client";
+import type { MealPlan, MealPlanInvite, User } from "@prisma/client";
 
 /**
  * Returns if the current invitation is still valid
@@ -11,13 +11,33 @@ const isCurrentlyValid = (invitation: MealPlanInvite) => {
   return invitation.expiresAt >= now;
 };
 
-export type InvitationReturn =
-  | null
-  | "EXPIRED"
-  | (MealPlanInvite & {
-      mealPlan: MealPlan;
-      user: User;
-    });
+type SuccessResult = {
+  result: "OK";
+  invitation: MealPlanInvite & {
+    mealPlan: MealPlan;
+    user: User;
+  };
+};
+
+type ExpiredResult = {
+  result: "EXPIRED";
+};
+
+type NotFoundResult = {
+  result: "NOT_FOUND";
+};
+
+type JoinedResult = {
+  result: "JOINED";
+  invitation: MealPlanInvite & {
+    mealPlan: MealPlan;
+    user: User;
+  };
+};
+
+export type InvitationReturn = SuccessResult | ExpiredResult | NotFoundResult;
+
+export type UserInvitationReturn = InvitationReturn | JoinedResult;
 
 /**
  * Gets an invitation by its code
@@ -26,7 +46,15 @@ export type InvitationReturn =
  */
 export async function getInvitation(
   invitationCode: string
-): Promise<InvitationReturn> {
+): Promise<InvitationReturn>;
+export async function getInvitation(
+  invitationCode: string,
+  userId: string
+): Promise<UserInvitationReturn>;
+export async function getInvitation(
+  invitationCode: string,
+  userId?: string
+): Promise<InvitationReturn | UserInvitationReturn> {
   const invitation = await prisma.mealPlanInvite.findUnique({
     where: {
       invitationCode,
@@ -37,8 +65,28 @@ export async function getInvitation(
     },
   });
 
-  if (invitation === null) return null;
-  if (!isCurrentlyValid(invitation)) return "EXPIRED";
+  if (invitation === null) return { result: "NOT_FOUND" };
+  if (!isCurrentlyValid(invitation)) return { result: "EXPIRED" };
 
-  return invitation;
+  if (userId != undefined) {
+    // Check if user is already a participant
+    const participant = await prisma.mealPlanAssignment.findFirst({
+      where: {
+        userId,
+        mealPlanId: invitation.mealPlanId,
+      },
+    });
+
+    if (participant != null) {
+      return {
+        invitation,
+        result: "JOINED",
+      };
+    }
+  }
+
+  return {
+    invitation,
+    result: "OK",
+  };
 }

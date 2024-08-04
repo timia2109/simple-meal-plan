@@ -1,3 +1,4 @@
+import { Heading } from "@/components/common/Heading";
 import { SocialShareLinks } from "@/components/common/SocialShareLinks";
 import { createMealPlanInvitation } from "@/dal/mealPlans/createMealPlanInvitation";
 import { getMealPlan } from "@/dal/mealPlans/getMealPlan";
@@ -30,7 +31,7 @@ export default async function InvitePage({ params }: Props) {
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-2xl font-bold">{t("invite", mealPlan)}</h1>
+      <Heading>{t("invite", mealPlan)}</Heading>
       <p>{t("inviteMessage")}</p>
       <p>{t("inviteHint")}</p>
       <div className="cursor-grab select-all rounded-sm bg-indigo-50 px-1 text-lg text-indigo-950">

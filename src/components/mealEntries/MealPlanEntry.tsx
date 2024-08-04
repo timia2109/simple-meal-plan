@@ -52,7 +52,7 @@ export async function MealPlanEntry({
       <div>
         <div className="avatar-group -space-x-6 rtl:space-x-reverse">
           {users.map((user) => (
-            <ProfileImage key={user.id} user={user} size={24} />
+            <ProfileImage key={user.id} user={user} />
           ))}
         </div>
       </div>

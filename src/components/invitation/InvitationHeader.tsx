@@ -8,13 +8,16 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type Props = {
+  /** getInvitation Result */
   invitation: InvitationReturn;
+  /** Don't show anything on valid invitations */
+  hideOnSuccess?: boolean;
 };
 
-export async function InvitationHeader({ invitation }: Props) {
+export async function InvitationHeader({ invitation, hideOnSuccess }: Props) {
   const t = await getScopedI18n("invitation");
 
-  if (invitation == null)
+  if (invitation.result == "NOT_FOUND")
     return (
       <div role="alert" className="alert alert-error">
         <FontAwesomeIcon
@@ -25,7 +28,7 @@ export async function InvitationHeader({ invitation }: Props) {
       </div>
     );
 
-  if (invitation == "EXPIRED")
+  if (invitation.result == "EXPIRED")
     return (
       <div role="alert" className="alert alert-error">
         <FontAwesomeIcon
@@ -36,6 +39,8 @@ export async function InvitationHeader({ invitation }: Props) {
       </div>
     );
 
+  if (hideOnSuccess) return <></>;
+
   return (
     <div role="alert" className="alert alert-info">
       <FontAwesomeIcon
@@ -45,9 +50,9 @@ export async function InvitationHeader({ invitation }: Props) {
       <div>
         <h1 className="text-xl">
           {t("loginToJoinTitle", {
-            name: invitation.user.name ?? t("unknownUser"),
+            name: invitation.invitation.user.name ?? t("unknownUser"),
             mealPlanTitle: await getMealPlanLabel(
-              invitation.mealPlan,
+              invitation.invitation.mealPlan,
               await getI18n()
             ),
           })}

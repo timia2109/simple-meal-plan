@@ -48,5 +48,7 @@ export default {
     loginToJoinSubtitle:
       "Sign in to join this meal plan and plan meals together",
     unknownUser: "A user",
+    header: "Invitation",
+    accept: "Join {mealPlanTitle}",
   },
 } as const;
