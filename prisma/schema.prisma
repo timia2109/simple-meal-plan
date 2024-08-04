@@ -27,6 +27,7 @@ model MealPlan {
   title               String               @db.Text
   mealPlanAssignments MealPlanAssignment[]
   mealEntries         MealEntry[]
+  invitations         MealPlanInvite[]
 }
 
 model MealPlanAssignment {
@@ -43,10 +44,11 @@ model MealPlanInvite {
   invitationCode  String   @id @db.Char(12)
   mealPlanId      String   @db.Char(25)
   createdAt       DateTime @default(now())
-  createdByUserId String?
+  createdByUserId String
   expiresAt       DateTime
 
-  user User? @relation(fields: [createdByUserId], references: [id], onDelete: SetNull)
+  user     User?    @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
+  mealPlan MealPlan @relation(fields: [mealPlanId], references: [id], onDelete: Cascade)
 }
 
 model User {
