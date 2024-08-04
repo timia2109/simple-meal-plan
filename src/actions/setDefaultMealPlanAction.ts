@@ -5,7 +5,7 @@ import { getUserId } from "@/functions/user/getUserId";
 import { getLinkWithLocale } from "@/functions/user/redirectWithLocale";
 import { revalidatePath } from "next/cache";
 
-export async function setDefaultMealPlan(mealPlanId: string) {
+export async function setDefaultMealPlanAction(mealPlanId: string) {
   const userId = await getUserId();
   if (userId == null)
     return {

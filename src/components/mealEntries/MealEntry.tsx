@@ -1,5 +1,5 @@
 "use client";
-import { updateMealEntry } from "@/actions/updateMealEntry";
+import { updateMealEntryAction } from "@/actions/updateMealEntryAction";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { MealEntry } from "@prisma/client";
@@ -49,7 +49,7 @@ export const MealEntryComponent: React.FC<MealEntryProps> = ({
 
   return (
     <form
-      action={updateMealEntry}
+      action={updateMealEntryAction}
       ref={formRef}
       onClick={onClick}
       className={classNames({

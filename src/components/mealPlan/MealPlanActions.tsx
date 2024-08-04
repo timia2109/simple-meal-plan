@@ -1,6 +1,6 @@
 "use client";
 
-import { setDefaultMealPlan } from "@/actions/setDefaultMealPlan";
+import { setDefaultMealPlanAction } from "@/actions/setDefaultMealPlanAction";
 import { useI18n } from "@/locales/client";
 import { faCrown, faEye, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,7 +26,7 @@ export const MealPlanActions: FC<Props> = ({
     <div className="join">
       {!mealPlanAssignment.userDefault && (
         <TooltipButton
-          onClick={() => setDefaultMealPlan(id)}
+          onClick={() => setDefaultMealPlanAction(id)}
           className="btn btn-primary join-item"
           title={t("manageMealPlans.setAsDefault")}
         >
