@@ -9,6 +9,7 @@ import type { FC } from "react";
 import { TooltipButton } from "../common/TooltipButton";
 import { TooltipLink } from "../common/TooltipLink";
 import { LeaveMealPlanButton } from "./LeaveMealPlanButton";
+import { RenameMealPlanButton } from "./RenameMealPlanButton";
 
 type Props = {
   mealPlan: MealPlan;
@@ -33,6 +34,7 @@ export const MealPlanActions: FC<Props> = ({
           <FontAwesomeIcon icon={faCrown} />
         </TooltipButton>
       )}
+      <RenameMealPlanButton mealPlan={mealPlan} />
       <TooltipLink
         href={`mealPlan/invite/${mealPlan.id}`}
         className="btn btn-outline btn-secondary join-item"
