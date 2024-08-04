@@ -37,7 +37,7 @@ export default async function InvitePage({ params }: Props) {
     <div className="container mx-1 md:mx-auto">
       <title>{t("invite", { title: mealPlanTitle })}</title>
       <div className="grid md:grid-cols-2">
-        <div>
+        <div className="order-2 md:order-1">
           <Heading>{mealPlanTitle}</Heading>
           <p className="text-xl">{t("members")}</p>
           <div className="py-3 pe-3">
@@ -52,7 +52,7 @@ export default async function InvitePage({ params }: Props) {
             ))}
           </div>
         </div>
-        <div>
+        <div className="order-1 md:order-2">
           <Heading>{t("invite", { title: mealPlanTitle })}</Heading>
           <p>{t("inviteMessage")}</p>
           <p>{t("inviteHint")}</p>
