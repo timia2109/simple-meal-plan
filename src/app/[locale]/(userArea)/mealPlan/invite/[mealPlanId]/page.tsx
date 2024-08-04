@@ -3,7 +3,7 @@ import { createMealPlanInvitation } from "@/dal/mealPlans/createMealPlanInvitati
 import { getMealPlan } from "@/dal/mealPlans/getMealPlan";
 import { buildUrl } from "@/functions/buildUrl";
 import { getUserId } from "@/functions/user/getUserId";
-import { getCurrentLocale, getScopedI18n } from "@/locales/server";
+import { getScopedI18n } from "@/locales/server";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -18,12 +18,14 @@ export default async function InvitePage({ params }: Props) {
   if (mealPlan == null) notFound();
 
   const t = await getScopedI18n("invite");
-  const currentLocale = getCurrentLocale();
 
   const invitation = await createMealPlanInvitation(params.mealPlanId, userId);
 
   const invitationLink = buildUrl({
-    path: `/${currentLocale}/mealPlan/join/${invitation.invitationCode}`,
+    path: "/",
+    search: {
+      invitationCode: invitation.invitationCode,
+    },
   });
 
   return (

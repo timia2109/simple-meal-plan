@@ -39,4 +39,14 @@ export default {
     shareText:
       "Hey, möchtest du an meinem Essensplan teilnehmen? Dann klicke auf den folgenden Link: {invitationLink}",
   },
+  invitation: {
+    expired: "Diese Einladung ist abgelaufen",
+    notFound:
+      "Diese Einladung wurde nicht gefunden. Aber du kannst trotzdem einen eigenen Essensplan erstellen",
+    loginToJoinTitle:
+      "{name} hat dich eingeladen, dem Essensplan {mealPlanTitle} beizutreten",
+    loginToJoinSubtitle:
+      "Melde dich an, um diesem Essensplan beizutreten und gemeinsam Mahlzeiten zu planen",
+    unknownUser: "Ein Benutzer",
+  },
 } as const;

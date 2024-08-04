@@ -16,7 +16,7 @@ function getHostFromHeaders() {
 
 type Props = {
   path: string;
-  search?: string | URLSearchParams;
+  search?: Record<string, string>;
 };
 
 /**
@@ -34,7 +34,9 @@ export function buildUrl({ path, search }: Props) {
   url.pathname = path;
 
   if (search != undefined) {
-    url.search = typeof search === "string" ? search : search.toString();
+    for (const [key, value] of Object.entries(search)) {
+      url.searchParams.set(key, value);
+    }
   }
   return url;
 }
