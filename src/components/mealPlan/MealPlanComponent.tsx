@@ -2,9 +2,11 @@
 import { getMealPlanUsers } from "@/dal/mealPlans/getMealPlanUsers";
 import { getMealPlanLabel } from "@/functions/user/getMealPlanLabel";
 import { getI18n } from "@/locales/server";
+import { getRoute } from "@/routes";
 import { faCrown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { MealPlan, MealPlanAssignment } from "@prisma/client";
+import Link from "next/link";
 import { ProfileImage } from "../common/ProfileImage";
 import { MealPlanActions } from "./MealPlanActions";
 
@@ -38,17 +40,19 @@ export async function MealPlanComponent({
 
   return (
     <div className="flex justify-between border-e border-s border-t border-accent p-3 first:rounded-t last:rounded-b last:border-b">
-      <h2>
-        <span className="text-xl font-bold">
-          {getMealPlanLabel(mealPlan, t)}
-        </span>
+      <Link
+        className="btn btn-ghost text-xl"
+        href={getRoute("mealPlan", mealPlan.id)}
+      >
+        {getMealPlanLabel(mealPlan, t)}
         {mealPlanAssignment?.userDefault && (
           <span className="badge badge-primary ms-1">
             <FontAwesomeIcon icon={faCrown} className="me-1" />
             {t("manageMealPlans.primary")}
           </span>
         )}
-      </h2>
+      </Link>
+
       <div>
         <div className="avatar-group -space-x-6 rtl:space-x-reverse">
           {users.map((user) => (
@@ -56,6 +60,7 @@ export async function MealPlanComponent({
           ))}
         </div>
       </div>
+
       {withActions && (
         <MealPlanActions
           mealPlan={mealPlan}
