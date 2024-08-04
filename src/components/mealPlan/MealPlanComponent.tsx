@@ -42,14 +42,16 @@ export async function MealPlanComponent({
   return (
     <div
       className={classNames({
-        "grid justify-between gap-4 border-e border-s border-t border-accent p-3 first:rounded-t last:rounded-b last:border-b":
+        "grid justify-between gap-4": true,
+        "border-e border-s border-t border-accent p-3 first:rounded-t last:rounded-b last:border-b":
           true,
-        "grid-cols-4": withActions,
-        "grid-cols-3": !withActions,
+        "lg:grid-cols-4": withActions,
+        "lg:grid-cols-3": !withActions,
+        "grid-cols-1 md:grid-cols-2": true,
       })}
     >
       <Link
-        className="btn btn-ghost col-span-2 w-full justify-start text-start text-xl"
+        className="btn btn-ghost w-full justify-start text-start text-xl lg:col-span-2"
         href={getRoute("mealPlan", mealPlan.id)}
       >
         {getMealPlanLabel(mealPlan, t)}
@@ -61,7 +63,7 @@ export async function MealPlanComponent({
         )}
       </Link>
 
-      <div className="last:justify-self-end">
+      <div className="md:justify-self-end lg:justify-self-center lg:last:justify-self-end">
         <div className="avatar-group -space-x-6 rtl:space-x-reverse">
           {users.map((user) => (
             <ProfileImage key={user.id} user={user} />
@@ -70,10 +72,12 @@ export async function MealPlanComponent({
       </div>
 
       {withActions && (
-        <MealPlanActions
-          mealPlan={mealPlan}
-          mealPlanAssignment={mealPlanAssignment}
-        />
+        <div className="lg:last:justify-self-end">
+          <MealPlanActions
+            mealPlan={mealPlan}
+            mealPlanAssignment={mealPlanAssignment}
+          />
+        </div>
       )}
     </div>
   );

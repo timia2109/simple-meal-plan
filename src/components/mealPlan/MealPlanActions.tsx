@@ -24,7 +24,7 @@ export const MealPlanActions: FC<Props> = ({
   const id = mealPlan.id;
 
   return (
-    <div className="join last:justify-self-end">
+    <div className="join">
       {!mealPlanAssignment.userDefault && (
         <TooltipButton
           onClick={() => setDefaultMealPlanAction(id)}

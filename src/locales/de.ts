@@ -43,6 +43,7 @@ export default {
     inviteHint:
       "Sende den folgenden Link an deine Freunde, um diese einzuladen.",
     shareVia: "Teilen über {name}",
+    members: "Mitglieder",
     shareText:
       "Hey, möchtest du an meinem Essensplan teilnehmen? Dann klicke auf den folgenden Link: {invitationLink}",
   },

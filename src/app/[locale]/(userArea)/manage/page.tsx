@@ -11,7 +11,7 @@ export default async function ManageMealPlansPage() {
   const t = await getScopedI18n("manageMealPlans");
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-1 md:mx-auto">
       <Heading>{t("manage")}</Heading>
       <title>{t("manage")}</title>
       <div className="mb-3">

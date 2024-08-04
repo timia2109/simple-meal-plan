@@ -39,6 +39,7 @@ export default {
   invite: {
     title: "Invite others",
     invite: "Invite to your Meal Plan: {title}",
+    members: "Members",
     inviteMessage:
       "Invite others to join your meal plan and plan meals together.",
     inviteHint: "Send the following link to invite others.",
