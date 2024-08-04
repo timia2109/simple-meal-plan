@@ -1,7 +1,12 @@
 import { setStaticParamsLocale } from "next-international/server";
+import { PHASE_PRODUCTION_BUILD } from "next/dist/shared/lib/constants";
 
 export default function NotFound() {
-  setStaticParamsLocale("en");
+  // This guard should protect, that the locale is set only in production build
+  // without the guard, it will always override the current locale
+  if (process.env.NEXT_PHASE === PHASE_PRODUCTION_BUILD) {
+    setStaticParamsLocale("en");
+  }
 
   return (
     <div className="hero min-h-screen bg-base-200">
