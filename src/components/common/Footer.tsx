@@ -18,14 +18,15 @@ export async function Footer() {
           href="https://timitt.dev"
           target="_blank"
           rel="noreferrer"
-          className="underline underline-offset-4 transition-all hover:font-bold
-            hover:text-orange-500"
+          className="link-hover link ms-1"
         >
           {t("author")}
         </a>
       </div>
       {env.NEXT_PUBLIC_PRIVACY_URL && (
-        <a href={env.NEXT_PUBLIC_PRIVACY_URL}>{t("privacy")}</a>
+        <a className="link-hover" href={env.NEXT_PUBLIC_PRIVACY_URL}>
+          {t("privacy")}
+        </a>
       )}
       <div>
         <a
