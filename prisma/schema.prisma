@@ -59,7 +59,7 @@ model User {
   emailVerified DateTime?
   image         String?
   Session       Session[]
-  Account       Account?
+  Account       Account[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -70,7 +70,7 @@ model User {
 
 model Account {
   id                       String  @id @default(cuid()) @db.Char(25)
-  userId                   String  @unique @db.Char(25)
+  userId                   String  @db.Char(25)
   type                     String
   provider                 String
   providerAccountId        String
