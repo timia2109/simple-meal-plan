@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* We are using an SVG to show the github stars. Therefor we use the img tag */
 import { getScopedI18n } from "@/locales/server";
 import { env } from "../../env/client.mjs";
 

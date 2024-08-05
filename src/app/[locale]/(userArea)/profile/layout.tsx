@@ -2,7 +2,7 @@ import { Heading } from "@/components/common/Heading";
 import { getScopedI18n } from "@/locales/server";
 import { getRoute } from "@/routes";
 import Link from "next/link";
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
 
 export default async function ProfileLayout({
   children,

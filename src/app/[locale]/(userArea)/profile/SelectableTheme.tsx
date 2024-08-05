@@ -13,7 +13,7 @@ export const SelectableTheme: FC<{ theme: string; active: boolean }> = ({
     className="theme-controller btn join-item"
     aria-label={theme}
     checked={active}
-    onChange={(e) => setThemeAction(theme)}
+    onChange={() => setThemeAction(theme)}
     value={theme}
   />
 );
