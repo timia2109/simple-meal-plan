@@ -10,13 +10,6 @@ module.exports = {
       "aqua",
       "wireframe",
       "nord",
-      {
-        jenin: {
-          ...require("daisyui/src/theming/themes")["light"],
-          info: "#60a5fa",
-          "base-100": "#5bbad5",
-        },
-      },
     ],
   },
   plugins: [require("daisyui")],
