@@ -14,7 +14,7 @@ module.exports = {
         jenin: {
           ...require("daisyui/src/theming/themes")["light"],
           info: "#60a5fa",
-          base: "#5bbad5",
+          "base-100": "#5bbad5",
         },
       },
     ],
