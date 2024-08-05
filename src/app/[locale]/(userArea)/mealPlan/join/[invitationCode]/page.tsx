@@ -3,8 +3,8 @@ import { InvitationHeader } from "@/components/invitation/InvitationHeader";
 import { getInvitation } from "@/dal/user/getInvitation";
 import { getMealPlanLabel } from "@/functions/user/getMealPlanLabel";
 import { getUserId } from "@/functions/user/getUserId";
-import { redirectWithLocale } from "@/functions/user/redirectWithLocale";
 import { getI18n, getScopedI18n } from "@/locales/server";
+import { redirectRoute } from "@/routes";
 import { AcceptButton } from "./AcceptButton";
 
 type Props = {
@@ -19,7 +19,7 @@ export default async function InvitationPage({ params }: Props) {
 
   // Redirect if joined
   if (invitation.result === "JOINED") {
-    redirectWithLocale(`/mealPlan/${invitation.invitation.mealPlan.id}`);
+    redirectRoute("mealPlan", invitation.invitation.mealPlan.id);
   }
 
   const t = await getScopedI18n("invitation");

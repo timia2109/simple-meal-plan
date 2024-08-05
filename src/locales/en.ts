@@ -7,6 +7,8 @@ export default {
     author: "Tim Ittermann",
     privacy: "Privacy",
     myMealPlans: "My Meal Plans",
+    logout: "Logout",
+    profile: "Profile",
   },
   mealPlan: {
     defaultLabel: "My Meal Plan",
@@ -15,7 +17,12 @@ export default {
     primary: "Default",
     new: "New Meal Plan",
     create: "Create",
+    createMealPlan: "Create a new meal plan",
+    renameMealPlan: "Rename Meal Plan",
+    name: "Name of the Plan",
+    cancel: "Cancel",
     delete: "Delete",
+    rename: "Rename",
     disabledDelete: "You can't delete your default meal plan",
     manage: "Manage Meal Plans",
     setAsDefault: "Set as default",
@@ -23,7 +30,7 @@ export default {
     open: "View",
     leaveTitle: "Leave Meal Plan?",
     leaveMessage:
-      "Do you really want to leave the meal plan? If there are no other participants, it will be deleted.",
+      "Do you really want to leave the meal plan {name}? If there are no other participants, it will be deleted.",
   },
   confirmModal: {
     confirm: "Confirm",
@@ -32,6 +39,7 @@ export default {
   invite: {
     title: "Invite others",
     invite: "Invite to your Meal Plan: {title}",
+    members: "Members",
     inviteMessage:
       "Invite others to join your meal plan and plan meals together.",
     inviteHint: "Send the following link to invite others.",
@@ -50,5 +58,18 @@ export default {
     unknownUser: "A user",
     header: "Invitation",
     accept: "Join {mealPlanTitle}",
+  },
+  profile: {
+    title: "Profile",
+    settings: "Settings",
+    theme: "Theme",
+    themeFooter: "Select your preferred theme. Thanks to ",
+    calendarLayout: "Calendar Layout",
+    calendarLayoutFooter:
+      "Changes the calendar with the Meal Plan. Only affects small devices.",
+    calendarLayoutResponsive: "List",
+    calendarLayoutFixed: "Full",
+    deviceSettings:
+      "This settings are saved as cookies and only affecting the current device.",
   },
 } as const;

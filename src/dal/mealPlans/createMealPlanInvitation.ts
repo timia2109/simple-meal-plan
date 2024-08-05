@@ -1,5 +1,5 @@
 import { env } from "@/env/server.mjs";
-import { prisma } from "@/server/db/client";
+import { prisma } from "@/server/db";
 import { DateTime, Duration } from "luxon";
 import { generate } from "randomstring";
 

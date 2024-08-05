@@ -1,5 +1,6 @@
 "use client";
-import { updateMealEntry } from "@/actions/updateMealEntry";
+import { updateMealEntryAction } from "@/actions/updateMealEntryAction";
+import type { CalendarLayout } from "@/functions/user/preferences";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { MealEntry } from "@prisma/client";
@@ -13,6 +14,7 @@ type MealEntryProps = {
   entry?: MealEntry;
   mealPlanId: string;
   isToday: boolean;
+  layout: CalendarLayout;
 };
 
 /** Component for a MealEntry */
@@ -22,6 +24,7 @@ export const MealEntryComponent: React.FC<MealEntryProps> = ({
   entry,
   mealPlanId,
   isToday,
+  layout,
 }) => {
   const dateTime = DateTime.fromISO(isoDate);
   // Focus State
@@ -49,13 +52,15 @@ export const MealEntryComponent: React.FC<MealEntryProps> = ({
 
   return (
     <form
-      action={updateMealEntry}
+      action={updateMealEntryAction}
       ref={formRef}
       onClick={onClick}
       className={classNames({
-        "box-border h-[30vh] w-full cursor-text border bg-base-100 p-1 transition md:h-32":
+        "box-border w-full cursor-text border bg-base-100 p-1 transition md:h-32":
           true,
+        "h-[30vh]": layout == "FIXED",
         "flex flex-col justify-between": true,
+        "hidden md:inline": layout == "RESPONSIVE" && !isCurrentMonth,
         "border-info": !hasFocus && isCurrentMonth,
         "border-neutral-300": !hasFocus && !isCurrentMonth,
         "border-dashed": !hasFocus && !isToday,

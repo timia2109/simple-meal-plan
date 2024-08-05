@@ -1,5 +1,5 @@
 import { getUserId } from "@/functions/user/getUserId";
-import { prisma } from "@/server/db/client";
+import { prisma } from "@/server/db";
 
 export async function getMealPlanUsers(
   mealPlanId: string,

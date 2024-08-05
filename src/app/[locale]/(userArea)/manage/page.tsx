@@ -1,4 +1,6 @@
-import { MealPlanEntry } from "@/components/mealEntries/MealPlanEntry";
+import { Heading } from "@/components/common/Heading";
+import { CreateMealPlanButton } from "@/components/mealPlan/CreateMealPlanButton";
+import { MealPlanComponent } from "@/components/mealPlan/MealPlanComponent";
 import { getMealPlans } from "@/dal/mealPlans/getMealPlans";
 import { getUserId } from "@/functions/user/getUserId";
 import { getScopedI18n } from "@/locales/server";
@@ -9,12 +11,15 @@ export default async function ManageMealPlansPage() {
   const t = await getScopedI18n("manageMealPlans");
 
   return (
-    <div className="container mx-auto">
-      <h1 className="mb-1 text-3xl font-extrabold">{t("manage")}</h1>
+    <div className="container mx-1 md:mx-auto">
+      <Heading>{t("manage")}</Heading>
       <title>{t("manage")}</title>
+      <div className="mb-3">
+        <CreateMealPlanButton />
+      </div>
       <div>
         {mealPlanAssignments.map((assignment) => (
-          <MealPlanEntry
+          <MealPlanComponent
             key={assignment.mealPlanId}
             mealPlanAssignment={assignment}
             mealPlan={assignment.mealPlan}

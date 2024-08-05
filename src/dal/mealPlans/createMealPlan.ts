@@ -1,4 +1,4 @@
-import { prisma } from "@/server/db/client";
+import { prisma } from "@/server/db";
 
 /**
  * Creates a empty MealPlan and assign it to the user

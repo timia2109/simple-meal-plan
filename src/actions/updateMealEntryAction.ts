@@ -12,7 +12,7 @@ const schema = zfd.formData({
   meal: z.string(),
 });
 
-export async function updateMealEntry(formData: FormData) {
+export async function updateMealEntryAction(formData: FormData) {
   const data = schema.safeParse(formData);
   if (!data.success) {
     return {

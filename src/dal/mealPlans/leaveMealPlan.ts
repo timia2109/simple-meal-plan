@@ -1,4 +1,4 @@
-import { prisma } from "@/server/db/client";
+import { prisma } from "@/server/db";
 
 /**
  * Remove a user from a meal plan and delete the meal plan if there are no participants left

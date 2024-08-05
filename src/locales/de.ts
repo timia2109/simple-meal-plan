@@ -7,6 +7,8 @@ export default {
     author: "Tim Ittermann",
     privacy: "Datenschutz",
     myMealPlans: "Meine Essenspläne",
+    logout: "Abmelden",
+    profile: "Profile",
   },
   mealPlan: {
     defaultLabel: "Mein Essensplan",
@@ -15,7 +17,12 @@ export default {
     primary: "Standart",
     new: "Neuer Essensplan",
     create: "Erstellen",
+    createMealPlan: "Erstelle einen neuen Essensplan",
+    renameMealPlan: "Essensplan umbenennen",
+    name: "Name des Plans",
+    cancel: "Abbrechen",
     delete: "Löschen",
+    rename: "Umbenennen",
     disabledDelete: "Du kannst deinen Standart Essensplan nicht löschen",
     manage: "Essenspläne verwalten",
     setAsDefault: "Als Standart festlegen",
@@ -23,7 +30,7 @@ export default {
     open: "Ansehen",
     leaveTitle: "Essensplan verlassen?",
     leaveMessage:
-      "Möchtest du den Essensplan wirklich verlassen? Wenn niemand weiteres in dem Essensplan ist, wird dieser gelöscht.",
+      "Möchtest du den Essensplan {name} wirklich verlassen? Wenn niemand weiteres in dem Essensplan ist, wird dieser gelöscht.",
   },
   confirmModal: {
     confirm: "Bestätigen",
@@ -36,6 +43,7 @@ export default {
     inviteHint:
       "Sende den folgenden Link an deine Freunde, um diese einzuladen.",
     shareVia: "Teilen über {name}",
+    members: "Mitglieder",
     shareText:
       "Hey, möchtest du an meinem Essensplan teilnehmen? Dann klicke auf den folgenden Link: {invitationLink}",
   },
@@ -50,5 +58,18 @@ export default {
     unknownUser: "Ein Benutzer",
     header: "Einladung",
     accept: "{mealPlanTitle} beitreten",
+  },
+  profile: {
+    title: "Profil",
+    settings: "Einstellungen",
+    theme: "Design",
+    themeFooter: "Wähle ein Design für die Anwendung. Danke an ",
+    calendarLayout: "Kalender Layout",
+    calendarLayoutFooter:
+      "Verändert den Kalender mit dem Essensplan. Hat nur auf kleinen Geräten eine Auswirkung.",
+    calendarLayoutResponsive: "Liste",
+    calendarLayoutFixed: "Vollständig",
+    deviceSettings:
+      "Diese Einstellungen werden als Cookie gespeichert und gelten nur für dieses Gerät.",
   },
 } as const;

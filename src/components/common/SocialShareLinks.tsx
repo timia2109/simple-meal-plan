@@ -42,7 +42,7 @@ export const SocialShareLinks = async ({ messagePayload }: Props) => {
   const t = await getScopedI18n("invite");
 
   return (
-    <div className="join">
+    <div className="join join-vertical xl:join-horizontal">
       {SocialProviders.map((p) => (
         <Link
           prefetch={false}

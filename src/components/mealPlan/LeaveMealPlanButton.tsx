@@ -4,33 +4,41 @@ import { leaveMealPlanAction } from "@/actions/leaveMealPlanAction";
 import { useScopedI18n } from "@/locales/client";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { MealPlanAssignment } from "@prisma/client";
+import type { MealPlan, MealPlanAssignment } from "@prisma/client";
 import type { FC } from "react";
-import { useCallback, useState } from "react";
-import { ConfirmationModal } from "../common/ConfirmationModal";
+import { createRef } from "react";
+import { FormModal } from "../common/Modal";
 import { TooltipButton } from "../common/TooltipButton";
 
 type Props = {
   mealPlanAssignment: MealPlanAssignment;
+  mealPlan: MealPlan;
 };
 
-export const LeaveMealPlanButton: FC<Props> = ({ mealPlanAssignment }) => {
-  const [isOpen, setIsOpen] = useState(false);
+export const LeaveMealPlanButton: FC<Props> = ({
+  mealPlan,
+  mealPlanAssignment,
+}) => {
+  const dialogRef = createRef<HTMLDialogElement>();
   const t = useScopedI18n("manageMealPlans");
-
-  const wrap = useCallback(
-    (action: () => void) => () => {
-      setIsOpen(false);
-      action();
-    },
-    []
-  );
+  const tModal = useScopedI18n("confirmModal");
 
   return (
     <>
+      <FormModal
+        cancelContent={tModal("cancel")}
+        heading={t("leaveTitle")}
+        modalRef={dialogRef}
+        submitContent={tModal("confirm")}
+        action={leaveMealPlanAction}
+      >
+        <p className="py-4">{t("leaveMessage", { name: mealPlan.title })}</p>
+        <input type="hidden" name="mealPlanId" value={mealPlan.id} />
+      </FormModal>
+
       <TooltipButton
         className="btn btn-outline btn-error join-item"
-        onClick={() => setIsOpen(true)}
+        onClick={() => dialogRef.current?.showModal()}
         title={
           mealPlanAssignment.userDefault ? t("disabledDelete") : t("delete")
         }
@@ -38,17 +46,6 @@ export const LeaveMealPlanButton: FC<Props> = ({ mealPlanAssignment }) => {
       >
         <FontAwesomeIcon icon={faTrash} />
       </TooltipButton>
-      {isOpen && (
-        <ConfirmationModal
-          onConfirm={wrap(() =>
-            leaveMealPlanAction(mealPlanAssignment.mealPlanId)
-          )}
-          onCancel={wrap(() => {})}
-        >
-          <h3 className="text-lg font-bold">{t("leaveTitle")}</h3>
-          <p className="py-4">{t("leaveMessage")}</p>
-        </ConfirmationModal>
-      )}
     </>
   );
 };

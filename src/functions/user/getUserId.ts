@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import type { Session } from "next-auth";
-import { redirect } from "next/navigation";
+import { redirectRoute } from "../../routes";
 
 type AppSession = Session & {
   userId: string;
@@ -16,7 +16,7 @@ export async function getUserId(withRedirection: boolean | null = false) {
   const user = await auth();
 
   if (user == null) {
-    if (withRedirection === true) redirect("/");
+    if (withRedirection === true) redirectRoute("home");
     if (withRedirection === null) throw new Error("User not found");
     return null;
   }
