@@ -64,5 +64,12 @@ export default {
     settings: "Einstellungen",
     theme: "Design",
     themeFooter: "Wähle ein Design für die Anwendung. Danke an ",
+    calendarLayout: "Kalender Layout",
+    calendarLayoutFooter:
+      "Verändert den Kalender mit dem Essensplan. Hat nur auf kleinen Geräten eine Auswirkung.",
+    calendarLayoutResponsive: "Liste",
+    calendarLayoutFixed: "Vollständig",
+    deviceSettings:
+      "Diese Einstellungen werden als Cookie gespeichert und gelten nur für dieses Gerät.",
   },
 } as const;

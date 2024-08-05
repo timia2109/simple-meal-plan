@@ -64,5 +64,12 @@ export default {
     settings: "Settings",
     theme: "Theme",
     themeFooter: "Select your preferred theme. Thanks to ",
+    calendarLayout: "Calendar Layout",
+    calendarLayoutFooter:
+      "Changes the calendar with the Meal Plan. Only affects small devices.",
+    calendarLayoutResponsive: "List",
+    calendarLayoutFixed: "Full",
+    deviceSettings:
+      "This settings are saved as cookies and only affecting the current device.",
   },
 } as const;

@@ -1,6 +1,7 @@
 import { Heading } from "@/components/common/Heading";
-import { getTheme } from "@/functions/user/preferences";
+import { getCalendarLayout, getTheme } from "@/functions/user/preferences";
 import { getScopedI18n } from "@/locales/server";
+import { CalendarLayoutSelection } from "./CalendarLayoutSelection";
 import { SelectableTheme } from "./SelectableTheme";
 
 const themes = [
@@ -17,12 +18,20 @@ const themes = [
 export default async function ProfilePage() {
   const t = await getScopedI18n("profile");
   const currentTheme = getTheme();
+  const currentCalendarLayout = getCalendarLayout();
 
   return (
-    <div>
+    <>
       <Heading>{t("settings")}</Heading>
+      <p className="mb-3">{t("deviceSettings")}</p>
       <div className="grid grid-cols-2 gap-1">
         <div>
+          <p className="font-bold">{t("calendarLayout")}</p>
+          <p>{t("calendarLayoutFooter")}</p>
+        </div>
+        <CalendarLayoutSelection current={currentCalendarLayout} />
+
+        <div className="mt-3">
           <p className="font-bold">{t("theme")}</p>
           <p>
             {t("themeFooter")}
@@ -31,8 +40,8 @@ export default async function ProfilePage() {
             </a>
           </p>
         </div>
-        <form>
-          <div className="join join-vertical">
+        <form className="mt-3 w-full">
+          <div className="join join-vertical w-full">
             {themes.map((theme) => (
               <SelectableTheme
                 key={theme}
@@ -43,6 +52,6 @@ export default async function ProfilePage() {
           </div>
         </form>
       </div>
-    </div>
+    </>
   );
 }

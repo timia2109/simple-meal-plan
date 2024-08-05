@@ -13,8 +13,8 @@ export default async function ProfileLayout({
 
   return (
     <div className="container mx-1 md:mx-auto">
-      <div className="grid grid-cols-3">
-        <div>
+      <div className="grid grid-cols-1 md:grid-cols-3">
+        <div className="mb-3 md:mb-0">
           <Heading>{t("title")}</Heading>
           <ul className="menu w-56 rounded-box bg-base-200">
             <li>
