@@ -58,14 +58,20 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
-  Session       Session[]
-  Account       Account[]
+  role          UserRole  @default(User)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  Session             Session[]
+  Account             Account[]
   mealPlanInvites     MealPlanInvite[]
   mealPlanAssignments MealPlanAssignment[]
+}
+
+enum UserRole {
+  User
+  Admin
 }
 
 model Account {

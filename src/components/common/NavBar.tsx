@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { getMealPlans } from "@/dal/mealPlans/getMealPlans";
 import { getMealPlanLabel } from "@/functions/user/getMealPlanLabel";
-import { getUserId } from "@/functions/user/getUserId";
+import { getUserId, getUserRole } from "@/functions/user/getUserId";
 import { getI18n } from "@/locales/server";
 import { getRoute, redirectRoute } from "@/routes";
 import Link from "next/link";
@@ -11,6 +11,7 @@ import { ProfileImage } from "./ProfileImage";
 async function InnerMenu() {
   const mealPlans = await getMealPlans(await getUserId(true));
   const t = await getI18n();
+  const role = await getUserRole();
 
   return (
     <>
@@ -37,6 +38,11 @@ async function InnerMenu() {
       <li>
         <Link href={getRoute("manage")}>{t("manageMealPlans.manage")}</Link>
       </li>
+      {role === "Admin" && (
+        <li>
+          <Link href={getRoute("admin")}>{t("landing.admin")}</Link>
+        </li>
+      )}
     </>
   );
 }

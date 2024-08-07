@@ -1,8 +1,10 @@
+import type { UserRole } from "@prisma/client";
 import type { NextAuthConfig } from "next-auth";
 import type { Provider } from "next-auth/providers";
 import Facebook from "next-auth/providers/facebook";
 import Google from "next-auth/providers/google";
 import { env } from "./env/server.mjs";
+import type { AppSession } from "./functions/user/getUserId";
 
 const providers: Provider[] = [];
 
@@ -36,8 +38,13 @@ export const authConfig: NextAuthConfig = {
   callbacks: {
     async session(props) {
       const { session, token } = props;
-      session.userId = token.id as string;
-      return session;
+      const appSession: AppSession = {
+        ...session,
+        userId: token.id as string,
+        role: token.role as UserRole,
+      };
+
+      return appSession;
     },
   },
   providers,

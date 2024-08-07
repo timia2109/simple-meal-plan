@@ -1,4 +1,5 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import type { User } from "@prisma/client";
 import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
 import { onCreateUser } from "./functions/user/onCreateUser";
@@ -16,8 +17,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     jwt: async (props) => {
       const { token, user } = props;
       if (user) {
-        // Add the user id to the token
+        const appUser = user as User;
         token.id = user.id;
+        token.role = appUser.role;
       }
       return token;
     },
