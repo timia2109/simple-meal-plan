@@ -10,6 +10,30 @@ export default {
     logout: "Abmelden",
     profile: "Profile",
   },
+  features: {
+    featureA: "Einfache Essensplanung",
+    featureADescription: "Plane super einfach den Essensplan",
+    featureAImgAlt: "Bild mit einem Screenshot der Anwendung",
+
+    featureB: "Immer und überall",
+    featureBDescription1:
+      "Diese Webseite funktioniert auf dem Computer und dem Handy.",
+    featureBDescription2: "Somit hast du deinen Essensplan immer dabei!",
+    featureBImgAlt: "Bild von einem Handy und einem Computer",
+
+    featureC: "Gemeinsam planen",
+    featureCDescription:
+      "Lade deine Mitbewohner oder Freunde ein und plane gemeinsam",
+    featureCImgAlt: "Bild von Menschen die gemeinsam essen",
+
+    featureD: "Kostenlos & Werbefrei",
+    featureDDescription:
+      "Diese Anwendung ist kostenfrei und Werbefrei, weil niemand mag Werbung.",
+
+    featureE: "Open-Source",
+    featureEDescription:
+      "Der Quellcode ist auf GitHub verfügbar. Jeder kann mithelfen diese Anwendung zu verbessern.",
+  },
   mealPlan: {
     defaultLabel: "Mein Essensplan",
   },
