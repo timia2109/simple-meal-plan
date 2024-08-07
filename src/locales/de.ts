@@ -111,5 +111,9 @@ export default {
     newUsersThisMonth: "Neue Nutzer diesen Monat",
     newUsersToday: "Neue Nutzer heute",
     usersKpis: "Nutzer Statistiken",
+    userEmail: "E-Mail",
+    userCreatedAt: "Erstellt am",
+    usersQuery: "Suche nach Name oder E-Mail",
+    usersSearch: "Suchen",
   },
 } as const;

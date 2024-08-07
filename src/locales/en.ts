@@ -109,5 +109,9 @@ export default {
     newUsersThisMonth: "New Users this month",
     newUsersToday: "New Users today",
     usersKpis: "Users KPIs",
+    userEmail: "Email",
+    userCreatedAt: "Created at",
+    usersQuery: "Search for name or email",
+    usersSearch: "Search",
   },
 } as const;

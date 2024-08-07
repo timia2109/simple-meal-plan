@@ -25,6 +25,7 @@ const routes = {
     withLocale(`/mealPlan/join/${invitationCode}`),
   profile: () => withLocale("/profile"),
   admin: () => withLocale("/admin"),
+  adminUsers: () => withLocale("/admin/users"),
 };
 
 /** Adds the locale to the route */

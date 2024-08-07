@@ -1,8 +1,8 @@
+import { ActiveLink } from "@/components/common/ActiveLink";
 import { Heading } from "@/components/common/Heading";
 import { ensureIsAdmin } from "@/functions/user/ensureIsAdmin";
 import { getScopedI18n } from "@/locales/server";
 import { getRoute } from "@/routes";
-import Link from "next/link";
 import type { ReactElement } from "react";
 
 export default async function AdminLayout({
@@ -20,9 +20,12 @@ export default async function AdminLayout({
           <Heading>{t("title")}</Heading>
           <ul className="menu w-56 rounded-box bg-base-200">
             <li>
-              <Link href={getRoute("admin")} className="active">
-                {t("kpis")}
-              </Link>
+              <ActiveLink href={getRoute("admin")}>{t("kpis")}</ActiveLink>
+            </li>
+            <li>
+              <ActiveLink href={getRoute("adminUsers")}>
+                {t("users")}
+              </ActiveLink>
             </li>
           </ul>
         </div>
