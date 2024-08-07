@@ -8,9 +8,9 @@ export async function Footer() {
 
   return (
     <footer
-      className=" w-full border-t border-gray-200
-    bg-white p-4 text-white shadow md:flex 
-    md:items-center md:justify-between md:p-6 dark:border-gray-600 dark:bg-gray-800"
+      className="w-full border-t
+    bg-neutral p-4 text-neutral-content shadow md:flex 
+    md:items-center md:justify-between md:p-6"
     >
       <div>
         {t("title")}
