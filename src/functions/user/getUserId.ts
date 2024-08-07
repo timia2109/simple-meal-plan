@@ -1,9 +1,11 @@
 import { auth } from "@/auth";
+import type { UserRole } from "@prisma/client";
 import type { Session } from "next-auth";
 import { redirectRoute } from "../../routes";
 
-type AppSession = Session & {
+export type AppSession = Session & {
   userId: string;
+  role: UserRole;
 };
 
 /** Gets the current UserId (or null if there is no user) */
@@ -22,4 +24,11 @@ export async function getUserId(withRedirection: boolean | null = false) {
   }
 
   return (user as AppSession).userId;
+}
+
+export async function getUserRole(): Promise<UserRole> {
+  const user = await auth();
+  if (user == null) return "User";
+
+  return (user as AppSession).role;
 }
