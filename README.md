@@ -7,7 +7,7 @@ I want to replace the Excel Sheet, my girlfriend was using.
 
 ## Features
 
-![Example Screenshot](docs/example.png)
+![Example Screenshot](public/example.png)
 
 - Plan Meal for any date
 - (Tablet, Desktop): See a complete calendar of the month which is editable
