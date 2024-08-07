@@ -7,7 +7,7 @@ export async function SignInButtons() {
   const t = await getScopedI18n("landing");
 
   return (
-    <div className="flex flex-wrap justify-between gap-4">
+    <div className="join">
       {Object.values(authConfig.providers as OAuth2Config<unknown>[]).map(
         (d) => (
           <SignInButton key={d.id} id={d.id} label={t("signinWith", d)} />

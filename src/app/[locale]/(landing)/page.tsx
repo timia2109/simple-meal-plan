@@ -3,6 +3,8 @@ import { InvitationHeader } from "@/components/invitation/InvitationHeader";
 import { getInvitation } from "@/dal/user/getInvitation";
 import { getScopedI18n } from "@/locales/server";
 import { redirectRoute } from "@/routes";
+import { FeatureBox } from "./FeatureBox";
+import { getFeatures } from "./Features";
 import { SignInButtons } from "./SignInButtons";
 
 type Props = {
@@ -36,13 +38,16 @@ export default async function LandingPage({ searchParams }: Props) {
   );
   if (currentUser != null && invitation == null) redirectRoute("mealPlan");
 
+  const features = await getFeatures();
+
   return (
     <div className="p-12">
-      <div className="fw-bolder flex flex-col items-center justify-center gap-16">
-        <div className="flex flex-col items-center justify-center gap-8 ">
+      <title>{t("title")}</title>
+      <div className="fw-bolder flex flex-col items-center justify-center gap-8">
+        <div className="flex flex-col items-center justify-center gap-4">
           <h1 className="text-6xl">
             {t("welcome")}
-            <span className="bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text font-semibold text-transparent">
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text font-semibold text-transparent">
               {" "}
               {t("title")}
             </span>
@@ -57,23 +62,9 @@ export default async function LandingPage({ searchParams }: Props) {
 
         <SignInButtons />
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          <div className="card w-96 bg-base-300 shadow-2xl">
-            <div className="card-body">
-              <h2 className="card-title flex justify-center">
-                Feature Heading
-              </h2>
-              <p>Feature Box</p>
-            </div>
-          </div>
-
-          <div className="card w-96 bg-base-300 shadow-2xl">
-            <div className="card-body">
-              <h2 className="card-title flex justify-center">Search Params</h2>
-              <p>
-                <code>{JSON.stringify(searchParams)}</code>
-              </p>
-            </div>
-          </div>
+          {features.map((feature, index) => (
+            <FeatureBox key={index} feature={feature} />
+          ))}
         </div>
       </div>
     </div>

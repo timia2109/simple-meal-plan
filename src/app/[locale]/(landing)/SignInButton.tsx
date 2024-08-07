@@ -8,12 +8,10 @@ export const SignInButton: FC<{ id: string; label: string }> = ({
 }) => {
   return (
     <button
-      className="btn-outline-primary btn btn-lg bg-gradient-to-r from-pink-500 to-purple-600 shadow-2xl"
+      className="btn btn-outline btn-primary join-item btn-lg"
       onClick={() => signIn(id)}
     >
-      <span className="px-16 text-xl font-semibold text-purple-950">
-        {label}
-      </span>
+      {label}
     </button>
   );
 };

@@ -4,11 +4,33 @@ export default {
     title: "Simple Meal Plan",
     subtitle: "Plan your meals for the week",
     signinWith: "Sign in with {name}",
-    author: "Tim Ittermann",
-    privacy: "Privacy",
+    author: "from Tim Ittermann",
+    privacy: "Imprint / Privacy",
     myMealPlans: "My Meal Plans",
     logout: "Logout",
     profile: "Profile",
+  },
+  features: {
+    featureA: "Simple Meal Planning",
+    featureADescription: "Plan your meal plan super easily",
+    featureAImgAlt: "Image with a screenshot of the application",
+
+    featureB: "Always and everywhere",
+    featureBDescription1: "This website works on the computer and the phone.",
+    featureBDescription2: "So you always have your meal plan with you!",
+    featureBImgAlt: "Image of a phone and a computer",
+
+    featureC: "Plan together",
+    featureCDescription: "Invite your roommates or friends and plan together",
+    featureCImgAlt: "Image of people eating together",
+
+    featureD: "Free & Ad-Free",
+    featureDDescription:
+      "This application is free and ad-free, because no one likes ads.",
+
+    featureE: "Open-Source",
+    featureEDescription:
+      "The source code is available on GitHub. Everyone can help to improve this application",
   },
   mealPlan: {
     defaultLabel: "My Meal Plan",
