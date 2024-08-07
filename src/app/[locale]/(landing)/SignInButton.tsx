@@ -8,7 +8,7 @@ export const SignInButton: FC<{ id: string; label: string }> = ({
 }) => {
   return (
     <button
-      className="btn btn-outline btn-primary btn-lg"
+      className="btn btn-outline btn-primary join-item btn-lg"
       onClick={() => signIn(id)}
     >
       {label}
