@@ -4,7 +4,7 @@ import type { Provider } from "next-auth/providers";
 import Facebook from "next-auth/providers/facebook";
 import Google from "next-auth/providers/google";
 import { env } from "./env/server.mjs";
-import { AppSession } from "./functions/user/getUserId";
+import type { AppSession } from "./functions/user/getUserId";
 
 const providers: Provider[] = [];
 
