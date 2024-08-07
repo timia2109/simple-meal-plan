@@ -9,6 +9,7 @@ export default {
     myMealPlans: "Meine Essenspläne",
     logout: "Abmelden",
     profile: "Profile",
+    admin: "Admin",
   },
   features: {
     featureA: "Einfache Essensplanung",
@@ -95,5 +96,20 @@ export default {
     calendarLayoutFixed: "Vollständig",
     deviceSettings:
       "Diese Einstellungen werden als Cookie gespeichert und gelten nur für dieses Gerät.",
+  },
+  admin: {
+    title: "Admin",
+    kpis: "Statistiken",
+    invitations: "Einladungen",
+    mealPlans: "Essenspläne",
+    mealEntries: "Mahlzeiten",
+    mealEntriesThisMonth: "Mahlzeiten diesen Monat",
+    mealEntriesToday: "Mahlzeiten heute",
+    users: "Nutzer",
+    generalKpis: "Generelle Statistiken",
+    mealPlanKpis: "Essensplan Statistiken",
+    newUsersThisMonth: "Neue Nutzer diesen Monat",
+    newUsersToday: "Neue Nutzer heute",
+    usersKpis: "Nutzer Statistiken",
   },
 } as const;
