@@ -1,5 +1,5 @@
 import type { NextAuthConfig } from "next-auth";
-import { Provider } from "next-auth/providers";
+import type { Provider } from "next-auth/providers";
 import Facebook from "next-auth/providers/facebook";
 import Google from "next-auth/providers/google";
 import { env } from "./env/server.mjs";
@@ -28,6 +28,7 @@ if (env.AUTH_FACEBOOK_ID && env.AUTH_FACEBOOK_SECRET) {
 
 export const authConfig: NextAuthConfig = {
   secret: env.NEXTAUTH_SECRET,
+  redirectProxyUrl: env.REDIRECT_PROXY_URL,
   session: {
     maxAge: env.SESSION_VALIDITY_IN_SECONDS,
     strategy: "jwt",

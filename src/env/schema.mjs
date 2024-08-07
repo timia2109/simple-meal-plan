@@ -23,6 +23,10 @@ export const serverSchema = z.object({
     .optional()
     .describe("The root URL of the server. Used to generate invitation links"),
   ALLOW_ACCOUNT_LINKING: z.enum(["true", "false"]).default("false"),
+  REDIRECT_PROXY_URL: z
+    .string()
+    .optional()
+    .describe("The URL to the redirect proxy"),
 
   // auth-js Providers
   AUTH_GOOGLE_ID: z.string().optional(),
