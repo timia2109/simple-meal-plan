@@ -11,9 +11,103 @@ datasource db {
 }
 
 model MealEntry {
-  id        String   @id @default(cuid())
-  date      DateTime @unique
-  meal      String
+  date      DateTime @db.Date
+  meal      String   @db.Text
   createdAt DateTime @default(now())
-  updatetAt DateTime @updatedAt
+  updatedAt DateTime @updatedAt
+
+  mealPlanId String   @db.Char(25)
+  mealPlan   MealPlan @relation(fields: [mealPlanId], references: [id], onDelete: Cascade)
+
+  @@unique([date, mealPlanId])
+}
+
+model MealPlan {
+  id                  String               @id @default(cuid()) @db.Char(25)
+  title               String               @db.Text
+  mealPlanAssignments MealPlanAssignment[]
+  mealEntries         MealEntry[]
+  invitations         MealPlanInvite[]
+}
+
+model MealPlanAssignment {
+  mealPlanId  String   @db.Char(25)
+  userId      String   @db.Char(25)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mealPlan    MealPlan @relation(fields: [mealPlanId], references: [id], onDelete: Cascade)
+  userDefault Boolean
+
+  @@unique([mealPlanId, userId])
+}
+
+model MealPlanInvite {
+  invitationCode  String   @id @db.Char(12)
+  mealPlanId      String   @db.Char(25)
+  createdAt       DateTime @default(now())
+  createdByUserId String
+  expiresAt       DateTime
+
+  user     User     @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
+  mealPlan MealPlan @relation(fields: [mealPlanId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid()) @db.Char(25)
+  name          String?
+  username      String?   @unique
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  Session       Session[]
+  Account       Account[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  mealPlanInvites     MealPlanInvite[]
+  mealPlanAssignments MealPlanAssignment[]
+}
+
+model Account {
+  id                       String  @id @default(cuid()) @db.Char(25)
+  userId                   String  @db.Char(25)
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String? @db.Text
+  access_token             String? @db.Text
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String? @db.Text
+  session_state            String?
+  refresh_token_expires_in Int?
+  user                     User?   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid()) @db.Char(25)
+  sessionToken String   @unique
+  userId       String   @db.Char(25)
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
