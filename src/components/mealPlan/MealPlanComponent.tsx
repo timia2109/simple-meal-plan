@@ -63,7 +63,7 @@ export async function MealPlanComponent({
         )}
       </Link>
 
-      <div className="md:justify-self-end lg:justify-self-center lg:last:justify-self-end">
+      <div className="md:justify-self-end lg:justify-self-start lg:last:justify-self-end">
         <div className="avatar-group -space-x-6 rtl:space-x-reverse">
           {users.map((user) => (
             <ProfileImage key={user.id} user={user} />
