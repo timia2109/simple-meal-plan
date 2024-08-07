@@ -75,7 +75,9 @@ export async function NavBar() {
           </ul>
         </div>
         <Link href={getRoute("mealPlan")} className="btn btn-ghost text-xl">
-          {t("landing.title")}
+          <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            {t("landing.title")}
+          </span>
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
