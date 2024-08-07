@@ -1,7 +1,7 @@
 # Simple Meal Plan
 
 This is a very simple meal planner. It's main purpose is to host it as a free SaaS solution.
-You can use it [here](https://example.com). Anyway you can deploy it using Docker.
+You can use it [here](https://simple-meal-plan.app). Anyway you can deploy it using Docker.
 
 I want to replace the Excel Sheet, my girlfriend was using.
 
