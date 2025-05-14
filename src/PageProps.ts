@@ -1,30 +1,33 @@
-import type { Metadata, ResolvingMetadata } from "next"
-import { ReactNode } from "react"
+import type { Metadata, ResolvingMetadata } from "next";
+import { ReactNode } from "react";
 
-type Params<TData extends Record<string, string|string[]>> = Promise<TData>
+export type PageParams = Record<string, string | string[]>;
+export type SearchParams = Record<string, string | string[] | undefined>;
+
+export type Params<TData extends PageParams> = Promise<TData>;
 
 export type PageProps<
-    TParams extends Record<string, string|string[]>,
-    TSearch extends Record<string, string | string[] | undefined> = never
+  TParams extends PageParams,
+  TSearch extends SearchParams = never,
 > = {
-    params: Params<TParams>
-    searchParams: Promise<TSearch>
-}
+  params: Params<TParams>;
+  searchParams: Promise<TSearch>;
+};
 
 export type Page<
-    TParams extends Record<string, string|string[]>,
-    TSearch extends Record<string, string | string[] | undefined> = never
-> = (props: PageProps<TParams, TSearch>) => Promise<ReactNode>
+  TParams extends PageParams,
+  TSearch extends SearchParams = never,
+> = (props: PageProps<TParams, TSearch>) => Promise<ReactNode>;
 
-export type Layout<TParams extends Record<string, string>> = (props: {
-    children: ReactNode
-    params: Params<TParams>
-}) => Promise<ReactNode>
+export type Layout<TParams extends PageParams> = (props: {
+  children: ReactNode;
+  params: Params<TParams>;
+}) => Promise<ReactNode>;
 
 export type GenerateMetadata<
-    TParams extends Record<string, string>,
-    TSearch extends Record<string, string | string[]> = never
+  TParams extends Record<string, string>,
+  TSearch extends PageParams = never,
 > = (
-    props: PageProps<TParams, TSearch>,
-    parent: ResolvingMetadata
-) => Promise<Metadata>
+  props: PageProps<TParams, TSearch>,
+  parent: ResolvingMetadata,
+) => Promise<Metadata>;

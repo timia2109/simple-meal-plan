@@ -2,6 +2,7 @@
 
 import { setDefaultMealPlanAction } from "@/actions/setDefaultMealPlanAction";
 import { useI18n } from "@/locales/client";
+import { faStackpath } from "@fortawesome/free-brands-svg-icons";
 import { faCrown, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { MealPlan, MealPlanAssignment } from "@prisma/client";
@@ -34,6 +35,13 @@ export const MealPlanActions: FC<Props> = ({
           <FontAwesomeIcon icon={faCrown} />
         </TooltipButton>
       )}
+      <TooltipLink
+        href={`mealPlan/summary/${mealPlan.id}`}
+        className="btn btn-outline btn-secondary join-item"
+        title={t("manageMealPlans.summary")}
+      >
+        <FontAwesomeIcon icon={faStackpath} />
+      </TooltipLink>
       <RenameMealPlanButton mealPlan={mealPlan} />
       <TooltipLink
         href={`mealPlan/invite/${mealPlan.id}`}

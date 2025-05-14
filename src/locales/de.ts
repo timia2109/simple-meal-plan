@@ -52,6 +52,7 @@ export default {
     manage: "Essenspläne verwalten",
     setAsDefault: "Als Standart festlegen",
     share: "Andere einladen",
+    summary: "Auswertung",
     open: "Ansehen",
     leaveTitle: "Essensplan verlassen?",
     leaveMessage:

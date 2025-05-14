@@ -50,6 +50,7 @@ export default {
     manage: "Manage Meal Plans",
     setAsDefault: "Set as default",
     share: "Invite others",
+    summary: "Summary",
     open: "View",
     leaveTitle: "Leave Meal Plan?",
     leaveMessage:
