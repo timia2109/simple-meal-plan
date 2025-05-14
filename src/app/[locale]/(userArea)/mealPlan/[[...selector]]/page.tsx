@@ -3,17 +3,14 @@ import { MealPlanComponent } from "@/components/mealPlan/MealPlanComponent";
 import { getMealPlan } from "@/dal/mealPlans/getMealPlan";
 import { createKeyDate } from "@/functions/dateTime/createKeyDate";
 import { getUserId } from "@/functions/user/getUserId";
+import { Page } from "@/PageProps";
 import { notFound } from "next/navigation";
 
-type Props = {
-  params: {
-    selector: string[];
-  };
-};
 
-export default async function MealPlanPage({ params }: Props) {
+const MealPlanPage: Page<{selector: string[]}> = async ({params}) => {
   const user = await getUserId(true);
-  const [mealPlanId, year, month] = params.selector ?? [];
+  const {selector} = await params;
+  const [mealPlanId, year, month] = selector ?? [];
 
   const mealPlan = await getMealPlan(user, mealPlanId ?? null);
   if (mealPlan == null) notFound();
@@ -27,3 +24,5 @@ export default async function MealPlanPage({ params }: Props) {
     </div>
   );
 }
+
+export default MealPlanPage;

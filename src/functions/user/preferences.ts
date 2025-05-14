@@ -10,17 +10,17 @@ const preferences = {
 
 type Preferences = typeof preferences;
 
-function getPreference<TValue extends string>(
+async function getPreference<TValue extends string>(
   key: keyof Preferences,
   defaultValue?: TValue
-): TValue {
-  const cookieContainer = cookies();
+): Promise<TValue> {
+  const cookieContainer = await cookies();
   const value =
     (cookieContainer.get(preferences[key])?.value as TValue) ?? defaultValue;
 
   // Refresh cookie
   try {
-    setPreference(key, value);
+    await setPreference(key, value);
   } catch {
     // Ignored
   }
@@ -28,19 +28,19 @@ function getPreference<TValue extends string>(
   return value;
 }
 
-export function setPreference(key: keyof Preferences, value: string) {
-  const cookieContainer = cookies();
+export async function setPreference(key: keyof Preferences, value: string) {
+  const cookieContainer = await cookies();
   cookieContainer.set(preferences[key], value, {
     expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365),
   });
 }
 
 export function getTheme() {
-  return getPreference("theme");
+  return getPreference("theme", "light");
 }
 
 export type CalendarLayout = "RESPONSIVE" | "FIXED";
 
-export function getCalendarLayout(): CalendarLayout {
+export function getCalendarLayout(): Promise<CalendarLayout> {
   return getPreference<CalendarLayout>("calendarLayout", "RESPONSIVE");
 }

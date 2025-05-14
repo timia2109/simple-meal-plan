@@ -15,24 +15,17 @@ const schema = zfd.formData({
 export async function updateMealEntryAction(formData: FormData) {
   const data = schema.safeParse(formData);
   if (!data.success) {
-    return {
-      message: data.error,
-    };
+    console.error(data.error);
+    return;
   }
 
   const userId = await getUserId();
-  if (userId == null)
-    return {
-      message: "Login expected",
-    };
+  if (userId == null) return;
 
   const { date, meal, mealPlanId } = data.data;
 
   const mealPlan = await getMealPlan(userId, mealPlanId);
-  if (mealPlan == null)
-    return {
-      message: "MealPlan not found",
-    };
+  if (mealPlan == null) return;
 
   await submitMealEntry({
     mealPlanId,

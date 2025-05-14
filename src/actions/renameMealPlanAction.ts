@@ -22,5 +22,5 @@ export async function renameMealPlanAction(formData: FormData) {
   }
 
   await renameMealPlan(mealPlanId, mealPlanName);
-  revalidateRoute("manage");
+  await revalidateRoute("manage");
 }

@@ -29,38 +29,38 @@ const routes = {
 };
 
 /** Adds the locale to the route */
-function withLocale(target: string) {
-  const locale = getCurrentLocale();
+async function withLocale(target: string) {
+  const locale = await getCurrentLocale();
   return `/${locale}${target}`;
 }
 
 type Routes = typeof routes;
 
-export function getRoute<
+export async function getRoute<
   TKey extends keyof Routes,
   TParams extends Parameters<Routes[TKey]>
->(key: TKey, ...params: TParams): string {
-  return (routes[key] as (...params: TParams) => string)(...params);
+>(key: TKey, ...params: TParams): Promise<string> {
+  return await (routes[key] as (...params: TParams) => Promise<string>)(...params);
 }
 
-export function redirectRoute<
+export async function redirectRoute<
   TKey extends keyof Routes,
   TParams extends Parameters<Routes[TKey]>
->(key: TKey, ...params: TParams): never {
-  redirect(getRoute(key, ...params));
+>(key: TKey, ...params: TParams): Promise<never> {
+  redirect(await getRoute(key, ...params));
 }
 
-export function revalidateRoute<
+export async function revalidateRoute<
   TKey extends keyof Routes,
   TParams extends Parameters<Routes[TKey]>
->(key: TKey, ...params: TParams): void {
-  revalidatePath(getRoute(key, ...params));
+>(key: TKey, ...params: TParams): Promise<void> {
+  revalidatePath(await getRoute(key, ...params));
 }
 
-export function getRouteUrl<
+export async function getRouteUrl<
   TKey extends keyof Routes,
   TParams extends Parameters<Routes[TKey]>
->(key: TKey, ...params: TParams): URL {
-  const route = getRoute(key, ...params);
+>(key: TKey, ...params: TParams): Promise<URL> {
+  const route = await getRoute(key, ...params);
   return buildUrl(route);
 }

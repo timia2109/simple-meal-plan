@@ -14,5 +14,5 @@ export async function acceptInvitationAction(invitationCode: string) {
   }
 
   await redeemMealPlanInvitation(invitation.invitation, userId);
-  redirectRoute("mealPlan", invitation.invitation.mealPlan.id);
+  await redirectRoute("mealPlan", invitation.invitation.mealPlan.id);
 }

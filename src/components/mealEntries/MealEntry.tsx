@@ -15,6 +15,7 @@ type MealEntryProps = {
   mealPlanId: string;
   isToday: boolean;
   layout: CalendarLayout;
+  locale: string;
 };
 
 /** Component for a MealEntry */
@@ -25,19 +26,15 @@ export const MealEntryComponent: React.FC<MealEntryProps> = ({
   mealPlanId,
   isToday,
   layout,
+  locale,
 }) => {
-  const dateTime = DateTime.fromISO(isoDate);
+  const dateTime = DateTime.fromISO(isoDate)!.setLocale(locale);
   // Focus State
   const [hasFocus, setHasFocus] = useState(false);
   // Ref to textarea
   const textFieldRef = createRef<HTMLTextAreaElement>();
   // Ref to form
   const formRef = createRef<HTMLFormElement>();
-
-  // Set via Effect (Next issue)
-  /*useEffect(() => {
-    setIsToday(dateTime.hasSame(DateTime.now(), "day"));
-  }, [dateTime]);*/
 
   // Focus the Element, when the div is clicked
   const onClick = () => {
@@ -56,7 +53,7 @@ export const MealEntryComponent: React.FC<MealEntryProps> = ({
       ref={formRef}
       onClick={onClick}
       className={classNames({
-        "box-border w-full cursor-text border bg-base-100 p-1 transition md:h-32":
+        "bg-base-100 box-border w-full cursor-text border p-1 transition md:h-32":
           true,
         "h-[30vh]": layout == "FIXED",
         "flex flex-col justify-between": true,
@@ -64,7 +61,7 @@ export const MealEntryComponent: React.FC<MealEntryProps> = ({
         "border-info": !hasFocus && isCurrentMonth,
         "border-neutral-300": !hasFocus && !isCurrentMonth,
         "border-dashed": !hasFocus && !isToday,
-        "border-2 border-primary": hasFocus,
+        "border-primary border-2": hasFocus,
         "border-2 border-solid": isToday && !hasFocus,
         "text-base-content": isCurrentMonth,
         "text-neutral-400": !isCurrentMonth,
@@ -89,7 +86,7 @@ export const MealEntryComponent: React.FC<MealEntryProps> = ({
         name="meal"
         onBlur={onBlur}
         className={classNames({
-          "h-100 w-full flex-grow resize-none overflow-hidden break-words bg-transparent text-start text-xs focus:border-none focus:outline-none lg:text-base":
+          "h-100 w-full flex-grow resize-none overflow-hidden bg-transparent text-start text-xs break-words focus:border-none focus:outline-none lg:text-base":
             true,
           "text-base-content": isCurrentMonth,
           "text-neutral-400": !isCurrentMonth,

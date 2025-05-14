@@ -2,16 +2,11 @@ import { auth } from "@/auth";
 import { InvitationHeader } from "@/components/invitation/InvitationHeader";
 import { getInvitation } from "@/dal/user/getInvitation";
 import { getScopedI18n } from "@/locales/server";
+import { Page } from "@/PageProps";
 import { redirectRoute } from "@/routes";
 import { FeatureBox } from "./FeatureBox";
 import { getFeatures } from "./Features";
 import { SignInButtons } from "./SignInButtons";
-
-type Props = {
-  searchParams: {
-    invitationCode?: string;
-  };
-};
 
 async function handleInvitation(
   invitationCode: string | undefined,
@@ -22,21 +17,22 @@ async function handleInvitation(
   const invitation = await getInvitation(invitationCode);
 
   if (isSignedIn) {
-    redirectRoute("join", invitationCode);
+    await redirectRoute("join", invitationCode);
   }
 
   return invitation;
 }
 
-export default async function LandingPage({ searchParams }: Props) {
+const LandingPage: Page<never, {invitationCode?: string}> = async ({searchParams})=>{
   const t = await getScopedI18n("landing");
+  const {invitationCode} = await searchParams;
 
   const currentUser = await auth();
   const invitation = await handleInvitation(
-    searchParams.invitationCode,
+    invitationCode,
     currentUser != null
   );
-  if (currentUser != null && invitation == null) redirectRoute("mealPlan");
+  if (currentUser != null && invitation == null) await redirectRoute("mealPlan");
 
   const features = await getFeatures();
 
@@ -70,3 +66,5 @@ export default async function LandingPage({ searchParams }: Props) {
     </div>
   );
 }
+
+export default LandingPage;

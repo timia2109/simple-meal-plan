@@ -12,5 +12,5 @@ export async function setDefaultMealPlanAction(mealPlanId: string) {
     };
 
   await setMealPlanAsDefault(userId, mealPlanId);
-  revalidateRoute("manage");
+  await revalidateRoute("manage");
 }

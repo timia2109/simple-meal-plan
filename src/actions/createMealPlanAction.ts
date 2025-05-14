@@ -15,5 +15,5 @@ export async function createMealPlanAction(formData: FormData) {
   const user = await getUserId(null);
 
   await createMealPlan(user, mealPlanName, false);
-  revalidateRoute("manage");
+  await revalidateRoute("manage");
 }

@@ -21,15 +21,15 @@ type Props = {
 };
 
 const useMonthMovementLink = (mealPlanId: string, keyDate: DateTime) => {
-  return (factor: -1 | 1) => {
+  return async (factor: -1 | 1) => {
     const begin =
       factor == -1 ? keyDate.minus({ month: 1 }) : keyDate.plus({ month: 1 });
-    return getRoute("mealPlan", mealPlanId, begin.year, begin.month);
+    return await getRoute("mealPlan", mealPlanId, begin.year, begin.month);
   };
 };
 
 export async function MealPlanCalender({ mealPlan, keyDate }: Props) {
-  const locale = getCurrentLocale();
+  const locale = await getCurrentLocale();
   const keyDateTime = convertToDateTime(keyDate).setLocale(locale);
   const range = getMonthRange(keyDateTime);
   const t = await getI18n();
@@ -41,7 +41,7 @@ export async function MealPlanCalender({ mealPlan, keyDate }: Props) {
 
   const getEntryFor = (date: DateTime) => {
     return entries.find((e) =>
-      date.hasSame(DateTime.fromJSDate(e.date), "day")
+      date.hasSame(DateTime.fromJSDate(e.date), "day"),
     );
   };
 
@@ -49,19 +49,25 @@ export async function MealPlanCalender({ mealPlan, keyDate }: Props) {
   const dates = [...enumerateDates(range)];
   const label = await getMealPlanLabel(mealPlan, t);
   const title = label + " | " + t("landing.title");
-  const calendarLayout = getCalendarLayout();
+  const calendarLayout = await getCalendarLayout();
 
   return (
     <div className="w-full">
       <title>{title}</title>
-      <div className="flex justify-between rounded-b border-b border-e border-s border-accent p-1 pb-3">
-        <MoveMonthButton icon={faArrowLeft} href={monthMovementLink(-1)} />
+      <div className="border-accent flex justify-between rounded-b border-s border-e border-b p-1 pb-3">
+        <MoveMonthButton
+          icon={faArrowLeft}
+          href={await monthMovementLink(-1)}
+        />
 
         <div className="text-2xl font-extrabold md:text-5xl">
           {keyDateTime.monthLong} {keyDateTime.year}
         </div>
 
-        <MoveMonthButton icon={faArrowRight} href={monthMovementLink(1)} />
+        <MoveMonthButton
+          icon={faArrowRight}
+          href={await monthMovementLink(1)}
+        />
       </div>
       <div
         className={classNames({
@@ -72,6 +78,7 @@ export async function MealPlanCalender({ mealPlan, keyDate }: Props) {
       >
         {dates.map((d) => (
           <MealEntryComponent
+            locale={locale}
             entry={getEntryFor(d)}
             isoDate={d.toISO()!}
             isCurrentMonth={d.month === keyDateTime.month}

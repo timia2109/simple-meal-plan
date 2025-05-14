@@ -1,23 +1,23 @@
-import { daisyui } from "@/../tailwind.config.cjs";
 import { Heading } from "@/components/common/Heading";
 import { getCalendarLayout, getTheme } from "@/functions/user/preferences";
 import { getScopedI18n } from "@/locales/server";
-import type { CustomTheme, Theme } from "daisyui";
 import { CalendarLayoutSelection } from "./CalendarLayoutSelection";
 import { SelectableTheme } from "./SelectableTheme";
 
-const themes = (daisyui.themes! as (Theme | CustomTheme)[]).flatMap((t) => {
-  if (typeof t === "string") {
-    return [t];
-  } else {
-    return Object.keys(t);
-  }
-});
+const themes = [
+      "light",
+      "dark",
+      "synthwave",
+      "cyberpunk",
+      "aqua",
+      "wireframe",
+      "nord",
+    ];
 
 export default async function ProfilePage() {
   const t = await getScopedI18n("profile");
-  const currentTheme = getTheme();
-  const currentCalendarLayout = getCalendarLayout();
+  const currentTheme = await getTheme();
+  const currentCalendarLayout = await getCalendarLayout();
 
   return (
     <>

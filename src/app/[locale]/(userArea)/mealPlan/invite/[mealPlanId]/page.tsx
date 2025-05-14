@@ -7,6 +7,7 @@ import { getMealPlanUsers } from "@/dal/mealPlans/getMealPlanUsers";
 import { getMealPlanLabel } from "@/functions/user/getMealPlanLabel";
 import { getUserId } from "@/functions/user/getUserId";
 import { getI18n, getScopedI18n } from "@/locales/server";
+import { Page } from "@/PageProps";
 import { getRouteUrl } from "@/routes";
 import { notFound } from "next/navigation";
 
@@ -16,22 +17,23 @@ type Props = {
   };
 };
 
-export default async function InvitePage({ params }: Props) {
+const InvitePage: Page<{ mealPlanId: string }> = async ({ params }) => {
+  const { mealPlanId } = await params;
   const userId = await getUserId(true);
-  const mealPlan = await getMealPlan(userId, params.mealPlanId);
+  const mealPlan = await getMealPlan(userId, mealPlanId);
   if (mealPlan == null) notFound();
 
   const t = await getScopedI18n("invite");
 
-  const invitation = await createMealPlanInvitation(params.mealPlanId, userId);
+  const invitation = await createMealPlanInvitation(mealPlanId, userId);
 
-  const invitationLink = getRouteUrl(
+  const invitationLink = await getRouteUrl(
     "invitationLink",
-    invitation.invitationCode
+    invitation.invitationCode,
   );
 
   const mealPlanTitle = await getMealPlanLabel(mealPlan, await getI18n());
-  const users = await getMealPlanUsers(params.mealPlanId);
+  const users = await getMealPlanUsers(mealPlanId);
 
   return (
     <div className="container mx-1 md:mx-auto">
@@ -44,7 +46,7 @@ export default async function InvitePage({ params }: Props) {
             {users.map((user) => (
               <div
                 key={user.id}
-                className="flex items-center justify-start gap-2 border-e border-s border-t border-accent p-3 first:rounded-t last:rounded-b last:border-b"
+                className="border-accent flex items-center justify-start gap-2 border-s border-e border-t p-3 first:rounded-t last:rounded-b last:border-b"
               >
                 <ProfileImage user={user} />
                 {user.name}
@@ -56,7 +58,7 @@ export default async function InvitePage({ params }: Props) {
           <Heading>{t("invite", { title: mealPlanTitle })}</Heading>
           <p>{t("inviteMessage")}</p>
           <p>{t("inviteHint")}</p>
-          <div className="cursor-grab select-all rounded-sm bg-indigo-50 px-1 text-lg text-indigo-950">
+          <div className="cursor-grab rounded-sm bg-indigo-50 px-1 text-lg text-indigo-950 select-all">
             <code>{invitationLink.toString()}</code>
           </div>
           <div className="mt-3">
@@ -70,4 +72,6 @@ export default async function InvitePage({ params }: Props) {
       </div>
     </div>
   );
-}
+};
+
+export default InvitePage;

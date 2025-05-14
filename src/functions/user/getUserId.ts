@@ -18,7 +18,7 @@ export async function getUserId(withRedirection: boolean | null = false) {
   const user = await auth();
 
   if (user == null) {
-    if (withRedirection === true) redirectRoute("home");
+    if (withRedirection === true) await redirectRoute("home");
     if (withRedirection === null) throw new Error("User not found");
     return null;
   }

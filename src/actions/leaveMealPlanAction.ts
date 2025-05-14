@@ -16,5 +16,5 @@ export async function leaveMealPlanAction(formData: FormData) {
   if (user == null) return;
 
   await leaveMealPlan(mealPlanId, user);
-  revalidateRoute("manage");
+  await revalidateRoute("manage");
 }

@@ -19,13 +19,13 @@ async function InnerMenu() {
         <details>
           <summary>{t("landing.myMealPlans")}</summary>
           <ul className="p-2">
-            {mealPlans.map((mealPlan) => (
+            {mealPlans.map(async (mealPlan) => (
               <li key={mealPlan.mealPlanId}>
                 <Link
                   href={
                     mealPlan.userDefault
-                      ? getRoute("mealPlan")
-                      : getRoute("mealPlan", mealPlan.mealPlanId)
+                      ? await getRoute("mealPlan")
+                      : await getRoute("mealPlan", mealPlan.mealPlanId)
                   }
                 >
                   {getMealPlanLabel(mealPlan.mealPlan, t)}
@@ -36,11 +36,11 @@ async function InnerMenu() {
         </details>
       </li>
       <li>
-        <Link href={getRoute("manage")}>{t("manageMealPlans.manage")}</Link>
+        <Link href={await getRoute("manage")}>{t("manageMealPlans.manage")}</Link>
       </li>
       {role === "Admin" && (
         <li>
-          <Link href={getRoute("admin")}>{t("landing.admin")}</Link>
+          <Link href={await getRoute("admin")}>{t("landing.admin")}</Link>
         </li>
       )}
     </>
@@ -49,7 +49,7 @@ async function InnerMenu() {
 
 export async function NavBar() {
   const currentUser = await auth();
-  if (currentUser == null) redirectRoute("home");
+  if (currentUser == null) await redirectRoute("home");
 
   const t = await getI18n();
 
@@ -80,7 +80,7 @@ export async function NavBar() {
             <InnerMenu />
           </ul>
         </div>
-        <Link href={getRoute("mealPlan")} className="btn btn-ghost text-xl">
+        <Link href={await getRoute("mealPlan")} className="btn btn-ghost text-xl">
           <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             {t("landing.title")}
           </span>
@@ -103,7 +103,7 @@ export async function NavBar() {
             className="menu dropdown-content z-[1] w-52 rounded-box bg-base-100 p-2 shadow"
           >
             <li>
-              <Link href={getRoute("profile")}>{t("landing.profile")}</Link>
+              <Link href={await getRoute("profile")}>{t("landing.profile")}</Link>
             </li>
             <li>
               <LogoutButton />
