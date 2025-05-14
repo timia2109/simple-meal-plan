@@ -9,6 +9,7 @@ type Props = {
 
 /** Creates or updates a meal entry */
 export async function submitMealEntry({ date, mealPlanId, meal }: Props) {
+  console.log("SUBMIT", { date, mealPlanId, meal });
   if (meal.trim().length === 0) {
     try {
       const data = await prisma.mealEntry.delete({

@@ -6,10 +6,11 @@ import { getUserId } from "@/functions/user/getUserId";
 import { Page } from "@/PageProps";
 import { notFound } from "next/navigation";
 
+export const revalidate = 0;
 
-const MealPlanPage: Page<{selector: string[]}> = async ({params}) => {
+const MealPlanPage: Page<{ selector: string[] }> = async ({ params }) => {
   const user = await getUserId(true);
-  const {selector} = await params;
+  const { selector } = await params;
   const [mealPlanId, year, month] = selector ?? [];
 
   const mealPlan = await getMealPlan(user, mealPlanId ?? null);
@@ -23,6 +24,6 @@ const MealPlanPage: Page<{selector: string[]}> = async ({params}) => {
       <MealPlanCalender keyDate={keyDate} mealPlan={mealPlan} />
     </div>
   );
-}
+};
 
 export default MealPlanPage;

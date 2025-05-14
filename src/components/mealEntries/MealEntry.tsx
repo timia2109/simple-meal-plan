@@ -1,5 +1,5 @@
 "use client";
-import { updateMealEntryAction } from "@/actions/updateMealEntryAction";
+import { updateMealEntry } from "@/actions/updateMealEntry";
 import type { CalendarLayout } from "@/functions/user/preferences";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,6 +18,11 @@ type MealEntryProps = {
   locale: string;
 };
 
+enum SubmitState {
+  Pending = 0,
+  Idle = 1,
+}
+
 /** Component for a MealEntry */
 export const MealEntryComponent: React.FC<MealEntryProps> = ({
   isoDate,
@@ -31,10 +36,11 @@ export const MealEntryComponent: React.FC<MealEntryProps> = ({
   const dateTime = DateTime.fromISO(isoDate)!.setLocale(locale);
   // Focus State
   const [hasFocus, setHasFocus] = useState(false);
+  // Value State
+  const [meal, setMeal] = useState(entry?.meal ?? "");
+  const [submitState, setSubmitState] = useState<SubmitState>(SubmitState.Idle);
   // Ref to textarea
   const textFieldRef = createRef<HTMLTextAreaElement>();
-  // Ref to form
-  const formRef = createRef<HTMLFormElement>();
 
   // Focus the Element, when the div is clicked
   const onClick = () => {
@@ -44,13 +50,14 @@ export const MealEntryComponent: React.FC<MealEntryProps> = ({
   // Upload the content on blur
   const onBlur = () => {
     setHasFocus(false);
-    formRef.current?.requestSubmit();
+    setSubmitState(SubmitState.Pending);
+    updateMealEntry(dateTime.toSQLDate()!, mealPlanId, meal).finally(() =>
+      setSubmitState(SubmitState.Idle),
+    );
   };
 
   return (
-    <form
-      action={updateMealEntryAction}
-      ref={formRef}
+    <div
       onClick={onClick}
       className={classNames({
         "bg-base-100 box-border w-full cursor-text border p-1 transition md:h-32":
@@ -67,9 +74,6 @@ export const MealEntryComponent: React.FC<MealEntryProps> = ({
         "text-neutral-400": !isCurrentMonth,
       })}
     >
-      <input type="hidden" name="date" value={dateTime.toSQLDate()!} />
-      <input type="hidden" name="mealPlanId" value={mealPlanId} />
-
       <div className="flex justify-between">
         <div className="overflow-hidden text-xs font-extrabold lg:text-lg">
           {dateTime.weekdayShort} {dateTime.day}
@@ -80,18 +84,19 @@ export const MealEntryComponent: React.FC<MealEntryProps> = ({
       </div>
 
       <textarea
-        defaultValue={entry?.meal}
+        value={meal}
+        onChange={(e) => setMeal(e.currentTarget.value)}
         ref={textFieldRef}
         onFocus={() => setHasFocus(true)}
-        name="meal"
+        disabled={submitState == SubmitState.Pending}
         onBlur={onBlur}
         className={classNames({
-          "h-100 w-full flex-grow resize-none overflow-hidden bg-transparent text-start text-xs break-words focus:border-none focus:outline-none lg:text-base":
+          "w-full flex-grow resize-none overflow-hidden bg-transparent text-start text-xs break-words focus:border-none focus:outline-none lg:text-base":
             true,
           "text-base-content": isCurrentMonth,
           "text-neutral-400": !isCurrentMonth,
         })}
       />
-    </form>
+    </div>
   );
 };
