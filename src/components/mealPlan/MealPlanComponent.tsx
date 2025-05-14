@@ -43,7 +43,7 @@ export async function MealPlanComponent({
     <div
       className={classNames({
         "grid justify-between gap-4": true,
-        "border-e border-s border-t border-accent p-3 first:rounded-t last:rounded-b last:border-b":
+        "border-accent border-s border-e border-t p-3 first:rounded-t last:rounded-b last:border-b":
           true,
         "lg:grid-cols-4": withActions,
         "lg:grid-cols-3": !withActions,
@@ -52,7 +52,7 @@ export async function MealPlanComponent({
     >
       <Link
         className="btn btn-ghost w-full justify-start text-start text-xl lg:col-span-2"
-        href={getRoute("mealPlan", mealPlan.id)}
+        href={await getRoute("mealPlan", mealPlan.id)}
       >
         {getMealPlanLabel(mealPlan, t)}
         {mealPlanAssignment?.userDefault && (
