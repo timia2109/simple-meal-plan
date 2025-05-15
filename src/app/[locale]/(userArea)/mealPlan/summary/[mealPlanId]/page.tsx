@@ -1,5 +1,4 @@
 import PagingComponent from "@/components/common/PagingComponent";
-import { SearchParamsFields } from "@/components/common/SearchParamsFields";
 import {
   getMealPlanSummary,
   OrderByEnum,
@@ -8,13 +7,10 @@ import {
 } from "@/dal/mealPlans/getMealPlanSummary";
 import { ZodPage } from "@/functions/zodPage";
 import { getCurrentLocale } from "@/locales/server";
-import { SearchParams } from "@/PageProps";
-import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import classNames from "classnames";
 import { DateTime } from "luxon";
 import { FC } from "react";
 import { z } from "zod";
+import { TableSortHeader } from "./TableSortHeader";
 
 const SearchParamsSchema = z.object({
   startDate: z.coerce
@@ -59,7 +55,6 @@ const SummaryPage = ZodPage<{ mealPlanId: string }, typeof SearchParamsSchema>(
         <SummarySelector {...search} />
 
         <ResultsTable
-          searchParams={plainSearchParams}
           direction={direction}
           orderBy={orderBy}
           results={results}
@@ -82,88 +77,50 @@ const ResultsTable: FC<{
   orderBy: z.infer<typeof OrderByEnum>;
   direction: z.infer<typeof SortDirectionEnum>;
   dateFormat: Intl.DateTimeFormat;
-  searchParams: SearchParams;
-}> = ({ direction, orderBy, results, dateFormat, searchParams }) => {
+}> = ({ direction, orderBy, results, dateFormat }) => {
   return (
     <div>
-      <form method="get">
-        <table className="table">
-          <thead>
-            <tr>
-              <TableSortHeader
-                direction={direction}
-                field="count"
-                orderBy={orderBy}
-                searchParams={searchParams}
-                title="Anzahl"
-              />
-              <TableSortHeader
-                direction={direction}
-                field="meal"
-                orderBy={orderBy}
-                searchParams={searchParams}
-                title="Gericht"
-              />
-              <TableSortHeader
-                direction={direction}
-                field="first"
-                orderBy={orderBy}
-                searchParams={searchParams}
-                title="Zuerst"
-              />
-              <TableSortHeader
-                direction={direction}
-                field="last"
-                orderBy={orderBy}
-                searchParams={searchParams}
-                title="Zuletzt"
-              />
+      <table className="table">
+        <thead>
+          <tr>
+            <TableSortHeader
+              direction={direction}
+              field="count"
+              orderBy={orderBy}
+              title="Anzahl"
+            />
+            <TableSortHeader
+              direction={direction}
+              field="meal"
+              orderBy={orderBy}
+              title="Gericht"
+            />
+            <TableSortHeader
+              direction={direction}
+              field="first"
+              orderBy={orderBy}
+              title="Zuerst"
+            />
+            <TableSortHeader
+              direction={direction}
+              field="last"
+              orderBy={orderBy}
+              title="Zuletzt"
+            />
+          </tr>
+        </thead>
+        <tbody>
+          {results.map((s) => (
+            <tr key={s.meal}>
+              <th scope="row">{s.count}</th>
+              <td>{s.meal}</td>
+              <td>{dateFormat.format(s.first)}</td>
+              <td>{dateFormat.format(s.last)}</td>
             </tr>
-          </thead>
-          <tbody>
-            {results.map((s) => (
-              <tr key={s.meal}>
-                <th scope="row">{s.count}</th>
-                <td>{s.meal}</td>
-                <td>{dateFormat.format(s.first)}</td>
-                <td>{dateFormat.format(s.last)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </form>
+          ))}
+        </tbody>
+      </table>
     </div>
-  );
-};
-
-const TableSortHeader: FC<{
-  orderBy: z.infer<typeof OrderByEnum>;
-  direction: z.infer<typeof SortDirectionEnum>;
-  field: z.infer<typeof OrderByEnum>;
-  searchParams: SearchParams;
-  title: string;
-}> = ({ direction, field, orderBy, searchParams, title }) => {
-  const isActive = field == orderBy;
-
-  return (
-    <th
-      className={classNames({
-        "text-black": isActive,
-      })}
-    >
-      <SearchParamsFields
-        searchParams={searchParams}
-        omit={["orderBy", "direction"]}
-      />
-      <button type="submit" name="orderBy" value={field}>
-        {title}
-        {isActive && (
-          <FontAwesomeIcon
-            icon={direction == "asc" ? faCaretUp : faCaretDown}
-          />
-        )}
-      </button>
-    </th>
   );
 };
 
@@ -172,7 +129,7 @@ const SummarySelector: FC<z.infer<typeof SearchParamsSchema>> = ({
   startDate,
 }) => {
   return (
-    <form method="GET">
+    <form method="get">
       <div className="border-primary mb-3 flex justify-between rounded border p-3">
         <label className="input input-bordered flex items-center gap-2">
           Ab
