@@ -27,10 +27,16 @@ export async function createMealPlan(
     mealPlanId: mealPlanId,
   });
 
-  return db
+  const mealPlan = await db
     .select()
     .from(mealPlans)
     .where(eq(mealPlans.id, mealPlanId))
     .limit(1)
-    .then((r) => r[0]!);
+    .then((r) => r[0]);
+
+  if (!mealPlan) {
+    throw new Error("Failed to create meal plan");
+  }
+
+  return mealPlan;
 }

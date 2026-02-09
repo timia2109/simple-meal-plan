@@ -50,10 +50,16 @@ export async function createMealPlanInvitation(
     invitationCode,
   });
 
-  return db
+  const newInvitation = await db
     .select()
     .from(mealPlanInvites)
     .where(eq(mealPlanInvites.invitationCode, invitationCode))
     .limit(1)
-    .then((r) => r[0]!);
+    .then((r) => r[0]);
+
+  if (!newInvitation) {
+    throw new Error("Failed to create meal plan invitation");
+  }
+
+  return newInvitation;
 }
