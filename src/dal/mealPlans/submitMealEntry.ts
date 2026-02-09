@@ -1,5 +1,6 @@
-import { prisma } from "@/server/db";
-import { type MealEntry } from "@prisma/client";
+import { db } from "@/server/db";
+import { mealEntries, type MealEntry } from "@/server/db/schema";
+import { eq, and } from "drizzle-orm";
 
 type Props = {
   mealPlanId: string;
@@ -11,15 +12,38 @@ type Props = {
 export async function submitMealEntry({ date, mealPlanId, meal }: Props) {
   if (meal.trim().length === 0) {
     try {
-      const data = await prisma.mealEntry.delete({
-        where: {
-          date_mealPlanId: {
-            date,
-            mealPlanId,
-          },
-        },
-      });
-      return data;
+      const existing = await db
+        .select()
+        .from(mealEntries)
+        .where(
+          and(
+            eq(mealEntries.date, date),
+            eq(mealEntries.mealPlanId, mealPlanId)
+          )
+        )
+        .limit(1)
+        .then((r) => r[0]);
+
+      if (existing) {
+        await db
+          .delete(mealEntries)
+          .where(
+            and(
+              eq(mealEntries.date, date),
+              eq(mealEntries.mealPlanId, mealPlanId)
+            )
+          );
+        return existing;
+      }
+
+      const mockItem: MealEntry = {
+        createdAt: new Date(),
+        date,
+        meal: "",
+        mealPlanId,
+        updatedAt: new Date(),
+      };
+      return mockItem;
     } catch {
       // If there is no element, return a mock element
       const mockItem: MealEntry = {
@@ -33,22 +57,32 @@ export async function submitMealEntry({ date, mealPlanId, meal }: Props) {
     }
   }
 
-  const result = await prisma.mealEntry.upsert({
-    create: {
+  const result = await db
+    .insert(mealEntries)
+    .values({
       date,
       meal,
       mealPlanId,
-    },
-    update: {
-      meal,
-    },
-    where: {
-      date_mealPlanId: {
-        date,
-        mealPlanId,
+    })
+    .onDuplicateKeyUpdate({
+      set: {
+        meal,
+        updatedAt: new Date(),
       },
-    },
-  });
+    })
+    .then(() =>
+      db
+        .select()
+        .from(mealEntries)
+        .where(
+          and(
+            eq(mealEntries.date, date),
+            eq(mealEntries.mealPlanId, mealPlanId)
+          )
+        )
+        .limit(1)
+        .then((r) => r[0]!)
+    );
 
   return result;
 }

@@ -1,21 +1,17 @@
-import { prisma } from "@/server/db";
+import { db } from "@/server/db";
+import { mealPlanAssignments } from "@/server/db/schema";
+import { eq } from "drizzle-orm";
 
 /**
  * Gets all mealplans for this user
- * @param client Prisma Client
  * @param userId User Id of the current user
  * @returns List of available Meal Plans
  */
 export function getMealPlans(userId: string) {
-  return prisma.mealPlanAssignment.findMany({
-    where: {
-      userId,
-    },
-    include: { mealPlan: true },
-    orderBy: {
-      mealPlan: {
-        title: "asc",
-      },
+  return db.query.mealPlanAssignments.findMany({
+    where: eq(mealPlanAssignments.userId, userId),
+    with: {
+      mealPlan: true,
     },
   });
 }

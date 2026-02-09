@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import type { UserRole } from "@prisma/client";
+import type { UserRole } from "@/server/db/schema";
 import type { Session } from "next-auth";
 import { redirectRoute } from "../../routes";
 

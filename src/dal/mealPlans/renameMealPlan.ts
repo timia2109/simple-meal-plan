@@ -1,12 +1,17 @@
-import { prisma } from "@/server/db";
+import { db } from "@/server/db";
+import { mealPlans } from "@/server/db/schema";
+import { eq } from "drizzle-orm";
 
-export function renameMealPlan(mealPlanId: string, title: string) {
-  return prisma.mealPlan.update({
-    where: {
-      id: mealPlanId,
-    },
-    data: {
-      title,
-    },
-  });
+export async function renameMealPlan(mealPlanId: string, title: string) {
+  await db
+    .update(mealPlans)
+    .set({ title })
+    .where(eq(mealPlans.id, mealPlanId));
+
+  return db
+    .select()
+    .from(mealPlans)
+    .where(eq(mealPlans.id, mealPlanId))
+    .limit(1)
+    .then((r) => r[0]!);
 }

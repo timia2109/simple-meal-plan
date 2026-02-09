@@ -1,6 +1,9 @@
-import { prisma } from "@/server/db";
+import { db } from "@/server/db";
+import { users } from "@/server/db/schema";
 import type { PagingResult } from "@/types/PagingResult";
-import type { User } from "@prisma/client";
+import type { User } from "@/server/db/schema";
+import { or, like, asc } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 
 /**
  * Searches for users (or returns all)
@@ -14,26 +17,29 @@ export async function getUsers(
   skip: number,
   take: number
 ): Promise<PagingResult<User>> {
-  const dbQuery: Parameters<typeof prisma.user.findMany>[0] = {
-    skip,
-    take,
-  };
+  const whereCondition = query
+    ? or(
+        like(users.email, `%${query}%`),
+        like(users.name, `%${query}%`)
+      )
+    : undefined;
 
-  if (query) {
-    dbQuery.where = {
-      OR: [{ email: { contains: query } }, { name: { contains: query } }],
-    };
-  }
+  const total = await db
+    .select({ count: sql<number>`count(*)` })
+    .from(users)
+    .where(whereCondition)
+    .then((r) => Number(r[0]?.count ?? 0));
 
-  const total = await prisma.user.count({ where: dbQuery.where });
-
-  const users = await prisma.user.findMany({
-    ...dbQuery,
-    orderBy: { name: "asc" },
-  });
+  const usersResult = await db
+    .select()
+    .from(users)
+    .where(whereCondition)
+    .orderBy(asc(users.name))
+    .limit(take)
+    .offset(skip);
 
   return {
-    data: users,
+    data: usersResult,
     total,
     skip,
   };

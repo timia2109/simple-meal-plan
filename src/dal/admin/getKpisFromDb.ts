@@ -1,23 +1,35 @@
-import { prisma } from "@/server/db";
+import { db } from "@/server/db";
+import { users, mealPlans, mealEntries, mealPlanInvites } from "@/server/db/schema";
+import { sql } from "drizzle-orm";
+import { lt } from "drizzle-orm";
 
 /** Return summarized entries from db */
 export async function getKpisFromDb() {
-  const users = await prisma.user.count();
-  const mealPlans = await prisma.mealPlan.count();
-  const mealEntries = await prisma.mealEntry.count();
+  const usersCount = await db
+    .select({ count: sql<number>`count(*)` })
+    .from(users)
+    .then((r) => Number(r[0]?.count ?? 0));
 
-  const invitations = await prisma.mealPlanInvite.count({
-    where: {
-      expiresAt: {
-        lt: new Date(),
-      },
-    },
-  });
+  const mealPlansCount = await db
+    .select({ count: sql<number>`count(*)` })
+    .from(mealPlans)
+    .then((r) => Number(r[0]?.count ?? 0));
+
+  const mealEntriesCount = await db
+    .select({ count: sql<number>`count(*)` })
+    .from(mealEntries)
+    .then((r) => Number(r[0]?.count ?? 0));
+
+  const invitationsCount = await db
+    .select({ count: sql<number>`count(*)` })
+    .from(mealPlanInvites)
+    .where(lt(mealPlanInvites.expiresAt, new Date()))
+    .then((r) => Number(r[0]?.count ?? 0));
 
   return {
-    mealPlans,
-    mealEntries,
-    invitations,
-    users,
+    mealPlans: mealPlansCount,
+    mealEntries: mealEntriesCount,
+    invitations: invitationsCount,
+    users: usersCount,
   };
 }

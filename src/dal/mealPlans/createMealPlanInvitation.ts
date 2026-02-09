@@ -1,7 +1,9 @@
 import { env } from "@/env/server.mjs";
-import { prisma } from "@/server/db";
+import { db } from "@/server/db";
+import { mealPlanInvites } from "@/server/db/schema";
 import { DateTime, Duration } from "luxon";
 import { generate } from "randomstring";
+import { eq, and, gt } from "drizzle-orm";
 
 const stringLength = 12;
 const invitationExpiresIn = Duration.fromISO(env.INVITATION_VALIDITY);
@@ -19,29 +21,39 @@ export async function createMealPlanInvitation(
   const now = new Date();
 
   // Check for existing invitation
-  const existingInvitation = await prisma.mealPlanInvite.findFirst({
-    where: {
-      mealPlanId: mealPlanId,
-      createdByUserId: userId,
-      expiresAt: {
-        gt: now,
-      },
-    },
-  });
+  const existingInvitation = await db
+    .select()
+    .from(mealPlanInvites)
+    .where(
+      and(
+        eq(mealPlanInvites.mealPlanId, mealPlanId),
+        eq(mealPlanInvites.createdByUserId, userId),
+        gt(mealPlanInvites.expiresAt, now)
+      )
+    )
+    .limit(1)
+    .then((r) => r[0]);
 
   if (existingInvitation) return existingInvitation;
 
   const expiration = DateTime.now().plus(invitationExpiresIn);
 
-  return await prisma.mealPlanInvite.create({
-    data: {
-      createdByUserId: userId,
-      mealPlanId: mealPlanId,
-      expiresAt: expiration.toJSDate(),
-      invitationCode: generate({
-        length: stringLength,
-        capitalization: "uppercase",
-      }),
-    },
+  const invitationCode = generate({
+    length: stringLength,
+    capitalization: "uppercase",
   });
+
+  await db.insert(mealPlanInvites).values({
+    createdByUserId: userId,
+    mealPlanId: mealPlanId,
+    expiresAt: expiration.toJSDate(),
+    invitationCode,
+  });
+
+  return db
+    .select()
+    .from(mealPlanInvites)
+    .where(eq(mealPlanInvites.invitationCode, invitationCode))
+    .limit(1)
+    .then((r) => r[0]!);
 }

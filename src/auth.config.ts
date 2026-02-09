@@ -1,10 +1,10 @@
-import type { UserRole } from "@prisma/client";
 import type { NextAuthConfig } from "next-auth";
 import type { Provider } from "next-auth/providers";
 import Facebook from "next-auth/providers/facebook";
 import Google from "next-auth/providers/google";
 import { env } from "./env/server.mjs";
 import type { AppSession } from "./functions/user/getUserId";
+import type { UserRole } from "./server/db/schema";
 
 const providers: Provider[] = [];
 

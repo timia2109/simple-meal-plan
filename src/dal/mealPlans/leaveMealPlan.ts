@@ -1,4 +1,6 @@
-import { prisma } from "@/server/db";
+import { db } from "@/server/db";
+import { mealPlanAssignments, mealPlans } from "@/server/db/schema";
+import { eq, and } from "drizzle-orm";
 
 /**
  * Remove a user from a meal plan and delete the meal plan if there are no participants left
@@ -11,15 +13,31 @@ export async function leaveMealPlan(
   userId: string,
   force = false
 ) {
-  await prisma.$transaction(async (tx) => {
-    const deletedElement = await tx.mealPlanAssignment.delete({
-      where: {
-        mealPlanId_userId: {
-          mealPlanId,
-          userId,
-        },
-      },
-    });
+  await db.transaction(async (tx) => {
+    const deletedElement = await tx
+      .select()
+      .from(mealPlanAssignments)
+      .where(
+        and(
+          eq(mealPlanAssignments.mealPlanId, mealPlanId),
+          eq(mealPlanAssignments.userId, userId)
+        )
+      )
+      .limit(1)
+      .then((r) => r[0]);
+
+    if (!deletedElement) {
+      throw new Error("Assignment not found");
+    }
+
+    await tx
+      .delete(mealPlanAssignments)
+      .where(
+        and(
+          eq(mealPlanAssignments.mealPlanId, mealPlanId),
+          eq(mealPlanAssignments.userId, userId)
+        )
+      );
 
     // Abort if it's the default
     if (deletedElement.userDefault && !force) {
@@ -27,19 +45,14 @@ export async function leaveMealPlan(
     }
 
     // Check if there is any remaining member
-    const assignmentCount = await tx.mealPlanAssignment.count({
-      where: {
-        mealPlanId,
-      },
-    });
+    const remainingAssignments = await tx
+      .select()
+      .from(mealPlanAssignments)
+      .where(eq(mealPlanAssignments.mealPlanId, mealPlanId));
 
     // Delete if this list has no participants
-    if (assignmentCount === 0) {
-      await tx.mealPlan.delete({
-        where: {
-          id: mealPlanId,
-        },
-      });
+    if (remainingAssignments.length === 0) {
+      await tx.delete(mealPlans).where(eq(mealPlans.id, mealPlanId));
     }
   });
 }
