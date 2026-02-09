@@ -17,7 +17,7 @@ I want to replace the Excel Sheet, my girlfriend was using.
 ## Techstack
 
 - [Next.js](https://nextjs.org)
-- [Prisma](https://prisma.io)
+- [Drizzle ORM](https://orm.drizzle.team)
 - [Tailwind CSS](https://tailwindcss.com)
 - [DaisyUI](https://daisyui.com)
 
