@@ -2,9 +2,9 @@
 
 import { renameMealPlanAction } from "@/actions/renameMealPlanAction";
 import { useScopedI18n } from "@/locales/client";
+import type { MealPlan } from "@/server/db/schema";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { MealPlan } from "@prisma/client";
 import type { FC } from "react";
 import { createRef } from "react";
 import { FormModal } from "../common/Modal";

@@ -1,5 +1,7 @@
-import { prisma } from "@/server/db";
+import { db } from "@/server/db";
+import { mealEntries } from "@/server/db/schema";
 import { toDateRange, type DateLikeRange } from "../../types/TimeRange";
+import { eq, and, gte, lte } from "drizzle-orm";
 
 type Props = {
   mealPlanId: string;
@@ -13,13 +15,14 @@ type Props = {
  */
 export async function readMealEntries({ mealPlanId, range }: Props) {
   const { begin, end } = toDateRange(range);
-  return prisma.mealEntry.findMany({
-    where: {
-      mealPlanId,
-      date: {
-        gte: begin,
-        lte: end,
-      },
-    },
-  });
+  return db
+    .select()
+    .from(mealEntries)
+    .where(
+      and(
+        eq(mealEntries.mealPlanId, mealPlanId),
+        gte(mealEntries.date, begin),
+        lte(mealEntries.date, end)
+      )
+    );
 }

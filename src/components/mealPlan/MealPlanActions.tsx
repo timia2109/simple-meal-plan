@@ -2,9 +2,9 @@
 
 import { setDefaultMealPlanAction } from "@/actions/setDefaultMealPlanAction";
 import { useI18n } from "@/locales/client";
+import type { MealPlan, MealPlanAssignment } from "@/server/db/schema";
 import { faCrown, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { MealPlan, MealPlanAssignment } from "@prisma/client";
 import type { FC } from "react";
 import { TooltipButton } from "../common/TooltipButton";
 import { TooltipLink } from "../common/TooltipLink";

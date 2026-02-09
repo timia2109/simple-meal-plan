@@ -8,8 +8,8 @@ import { getMealPlanLabel } from "@/functions/user/getMealPlanLabel";
 import { getCalendarLayout } from "@/functions/user/preferences";
 import { getCurrentLocale, getI18n } from "@/locales/server";
 import { getRoute } from "@/routes";
+import type { MealPlan } from "@/server/db/schema";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import type { MealPlan } from "@prisma/client";
 import classNames from "classnames";
 import { DateTime } from "luxon";
 import { MealEntryComponent } from "./MealEntry";
@@ -20,7 +20,7 @@ type Props = {
   keyDate: DateLike;
 };
 
-const useMonthMovementLink = (mealPlanId: string, keyDate: DateTime) => {
+const getMonthMovementLink = (mealPlanId: string, keyDate: DateTime) => {
   return (factor: -1 | 1) => {
     const begin =
       factor == -1 ? keyDate.minus({ month: 1 }) : keyDate.plus({ month: 1 });
@@ -29,7 +29,7 @@ const useMonthMovementLink = (mealPlanId: string, keyDate: DateTime) => {
 };
 
 export async function MealPlanCalender({ mealPlan, keyDate }: Props) {
-  const locale = getCurrentLocale();
+  const locale = await getCurrentLocale();
   const keyDateTime = convertToDateTime(keyDate).setLocale(locale);
   const range = getMonthRange(keyDateTime);
   const t = await getI18n();
@@ -45,7 +45,7 @@ export async function MealPlanCalender({ mealPlan, keyDate }: Props) {
     );
   };
 
-  const monthMovementLink = useMonthMovementLink(mealPlan.id, keyDateTime);
+  const monthMovementLink = getMonthMovementLink(mealPlan.id, keyDateTime);
   const dates = [...enumerateDates(range)];
   const label = await getMealPlanLabel(mealPlan, t);
   const title = label + " | " + t("landing.title");

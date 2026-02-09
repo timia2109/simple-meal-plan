@@ -2,7 +2,7 @@ import PagingComponent from "@/components/common/PagingComponent";
 import { ProfileImage } from "@/components/common/ProfileImage";
 import { getUsers } from "@/dal/admin/getUsers";
 import { getCurrentLocale, getScopedI18n } from "@/locales/server";
-import type { User } from "@prisma/client";
+import type { User } from "@/server/db/schema";
 
 const pageSize = 50;
 
@@ -15,7 +15,7 @@ type Props = {
 
 async function UserComponent({ user }: { user: User }) {
   const t = await getScopedI18n("admin");
-  const locale = getCurrentLocale();
+  const locale = await getCurrentLocale();
 
   return (
     <div

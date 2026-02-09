@@ -1,9 +1,9 @@
 "use client";
 import { updateMealEntryAction } from "@/actions/updateMealEntryAction";
 import type { CalendarLayout } from "@/functions/user/preferences";
+import type { MealEntry } from "@/server/db/schema";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { MealEntry } from "@prisma/client";
 import classNames from "classnames";
 import { DateTime } from "luxon";
 import { createRef, useState } from "react";
@@ -52,7 +52,9 @@ export const MealEntryComponent: React.FC<MealEntryProps> = ({
 
   return (
     <form
-      action={updateMealEntryAction}
+      // Note: Type cast needed because updateMealEntryAction returns error values for validation
+      // but form action prop expects void. This is a pre-existing pattern in this codebase.
+      action={updateMealEntryAction as unknown as (formData: FormData) => void}
       ref={formRef}
       onClick={onClick}
       className={classNames({

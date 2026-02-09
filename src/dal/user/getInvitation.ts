@@ -1,5 +1,7 @@
-import { prisma } from "@/server/db";
-import type { MealPlan, MealPlanInvite, User } from "@prisma/client";
+import { db } from "@/server/db";
+import { mealPlanInvites, mealPlanAssignments } from "@/server/db/schema";
+import type { MealPlan, MealPlanInvite, User } from "@/server/db/schema";
+import { eq, and } from "drizzle-orm";
 
 /**
  * Returns if the current invitation is still valid
@@ -55,29 +57,32 @@ export async function getInvitation(
   invitationCode: string,
   userId?: string
 ): Promise<InvitationReturn | UserInvitationReturn> {
-  const invitation = await prisma.mealPlanInvite.findUnique({
-    where: {
-      invitationCode,
-    },
-    include: {
+  const invitation = await db.query.mealPlanInvites.findFirst({
+    where: eq(mealPlanInvites.invitationCode, invitationCode),
+    with: {
       mealPlan: true,
       user: true,
     },
   });
 
-  if (invitation === null) return { result: "NOT_FOUND" };
+  if (invitation === undefined) return { result: "NOT_FOUND" };
   if (!isCurrentlyValid(invitation)) return { result: "EXPIRED" };
 
   if (userId != undefined) {
     // Check if user is already a participant
-    const participant = await prisma.mealPlanAssignment.findFirst({
-      where: {
-        userId,
-        mealPlanId: invitation.mealPlanId,
-      },
-    });
+    const participant = await db
+      .select()
+      .from(mealPlanAssignments)
+      .where(
+        and(
+          eq(mealPlanAssignments.userId, userId),
+          eq(mealPlanAssignments.mealPlanId, invitation.mealPlanId)
+        )
+      )
+      .limit(1)
+      .then((r) => r[0]);
 
-    if (participant != null) {
+    if (participant != undefined) {
       return {
         invitation,
         result: "JOINED",

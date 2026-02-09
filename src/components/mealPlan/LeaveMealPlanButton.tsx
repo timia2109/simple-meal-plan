@@ -2,9 +2,9 @@
 
 import { leaveMealPlanAction } from "@/actions/leaveMealPlanAction";
 import { useScopedI18n } from "@/locales/client";
+import type { MealPlan, MealPlanAssignment } from "@/server/db/schema";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { MealPlan, MealPlanAssignment } from "@prisma/client";
 import type { FC } from "react";
 import { createRef } from "react";
 import { FormModal } from "../common/Modal";

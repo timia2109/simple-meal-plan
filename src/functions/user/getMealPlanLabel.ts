@@ -1,5 +1,5 @@
 import type { useI18n } from "@/locales/client";
-import type { MealPlan } from "@prisma/client";
+import type { MealPlan } from "@/server/db/schema";
 
 export async function getMealPlanLabel(
   mealPlan: MealPlan,
