@@ -52,6 +52,8 @@ export const MealEntryComponent: React.FC<MealEntryProps> = ({
 
   return (
     <form
+      // Note: Type cast needed because updateMealEntryAction returns error values for validation
+      // but form action prop expects void. This is a pre-existing pattern in this codebase.
       action={updateMealEntryAction as unknown as (formData: FormData) => void}
       ref={formRef}
       onClick={onClick}

@@ -24,7 +24,7 @@ export const users = mysqlTable("User", {
   role: mysqlEnum("role", ["User", "Admin"]).notNull().default("User"),
   createdAt: datetime("createdAt", { mode: "date", fsp: 3 })
     .notNull()
-    .default(new Date()),
+    .$defaultFn(() => new Date()),
   updatedAt: datetime("updatedAt", { mode: "date", fsp: 3 })
     .notNull()
     .$onUpdate(() => new Date()),
@@ -56,7 +56,7 @@ export const accounts = mysqlTable(
     refresh_token_expires_in: int("refresh_token_expires_in"),
     createdAt: datetime("createdAt", { mode: "date", fsp: 3 })
       .notNull()
-      .default(new Date()),
+      .$defaultFn(() => new Date()),
     updatedAt: datetime("updatedAt", { mode: "date", fsp: 3 })
       .notNull()
       .$onUpdate(() => new Date()),
@@ -86,7 +86,7 @@ export const sessions = mysqlTable(
     expires: datetime("expires", { mode: "date", fsp: 3 }).notNull(),
     createdAt: datetime("createdAt", { mode: "date", fsp: 3 })
       .notNull()
-      .default(new Date()),
+      .$defaultFn(() => new Date()),
     updatedAt: datetime("updatedAt", { mode: "date", fsp: 3 })
       .notNull()
       .$onUpdate(() => new Date()),
@@ -168,7 +168,7 @@ export const mealEntries = mysqlTable(
     meal: text("meal").notNull(),
     createdAt: datetime("createdAt", { mode: "date", fsp: 3 })
       .notNull()
-      .default(new Date()),
+      .$defaultFn(() => new Date()),
     updatedAt: datetime("updatedAt", { mode: "date", fsp: 3 })
       .notNull()
       .$onUpdate(() => new Date()),
@@ -195,7 +195,7 @@ export const mealPlanInvites = mysqlTable("MealPlanInvite", {
   mealPlanId: char("mealPlanId", { length: 25 }).notNull(),
   createdAt: datetime("createdAt", { mode: "date", fsp: 3 })
     .notNull()
-    .default(new Date()),
+    .$defaultFn(() => new Date()),
   createdByUserId: varchar("createdByUserId", { length: 191 }).notNull(),
   expiresAt: datetime("expiresAt", { mode: "date", fsp: 3 }).notNull(),
 });
