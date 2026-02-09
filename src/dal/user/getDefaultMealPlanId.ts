@@ -1,4 +1,4 @@
-import { db } from "@/server/db";
+import type { db } from "@/server/db";
 import { mealPlanAssignments } from "@/server/db/schema";
 import { eq, and } from "drizzle-orm";
 

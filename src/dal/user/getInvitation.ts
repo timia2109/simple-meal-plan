@@ -1,7 +1,7 @@
 import { db } from "@/server/db";
 import { mealPlanInvites, mealPlanAssignments } from "@/server/db/schema";
 import type { MealPlan, MealPlanInvite, User } from "@/server/db/schema";
-import { eq, and, gte } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 
 /**
  * Returns if the current invitation is still valid
